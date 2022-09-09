@@ -2,11 +2,9 @@
   "name": "@infineon/infineon-vue-datatable",
   "version": "0.0.0",
   "private": false,
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/ "
-  },
+  "homepage":  "git://github.com/infineon/infineon-vue-datable",
   "repository": "git://github.com/infineon/infineon-vue-datable",
-  "description": "",
+  "description": "Infineon Vue Datatable on Bootstrap basis",
   "main": "src/index.js",
   "files": [
     "/src/**/*"
