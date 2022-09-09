@@ -1,23 +1,21 @@
 {
   "name": "@infineon/infineon-vue-datatable",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": false,
-  "homepage":  "git://github.com/infineon/infineon-vue-datable",
+  "homepage": "git://github.com/infineon/infineon-vue-datable",
   "repository": "git://github.com/infineon/infineon-vue-datable",
   "description": "Infineon Vue Datatable on Bootstrap basis",
   "main": "src/index.js",
   "files": [
     "/src/**/*"
   ],
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [
     "vue3"
   ],
   "author": "Verena Lechner, Kai Werther",
   "license": "MIT",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "auto": "^10.37.4",
     "vue": ">= 3.0.2",
