@@ -1,0 +1,31 @@
+name: CI
+
+on: [push]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Prepare repository
+        run: git fetch --unshallow --tags
+
+      - name: download + setup auto
+        uses: auto-it/setup-auto@v1
+
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Create Release 
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          auto shipit
