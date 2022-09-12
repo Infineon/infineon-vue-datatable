@@ -376,7 +376,7 @@ Project Link: [https://github.com/Infineon/infineon-vue-datatable](https://githu
 [issues-url]: https://github.com/Infineon/infineon-vue-datatable/issues
 [license-shield]: https://img.shields.io/github/license/Infineon/infineon-vue-datatable.svg?style=for-the-badge
 [license-url]: https://github.com/Infineon/infineon-vue-datatable/blob/master/LICENSE.txt
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: https://github.com/Infineon/infineon-vue-datatable/tree/master/images/screenshot.png
 [Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
 [Vue-url]: https://vuejs.org/
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
