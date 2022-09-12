@@ -92,14 +92,21 @@
         v-if="exportable"
         class="mt-1 ms-1"
       >
-        <button
+        <DownloadCsv
+          :data="data"
+          :fields="downloadFnc"
+        >
+          Download
+          <font-awesome-icon :icon="['fas', 'file-download']" />
+        </DownloadCsv>
+        <!-- <button
           class="btn btn-sm btn-primary"
           title="Download CSV File"
           @click="exportCSV"
         >
           <font-awesome-icon :icon="['fas', 'file-download']" />
           Download
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
@@ -110,7 +117,6 @@
 import {
   toRefs, computed, ref, onMounted, watch,
 } from 'vue';
-import json2Csv from '../json2csv.umd';
 import DatatableRow from './InfineonDatatableRow.vue';
 import DatatablePager from './InfineonDatatablePager.vue';
 import DatatableSortIcon from './InfineonDatatableSortIcon.vue';
@@ -142,6 +148,13 @@ const realColumns = computed(() => columns.value
 
 const shownColumns = computed(() => realColumns.value
   .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
+
+const downloadFnc = (row) => Object.fromEntries(
+  shownColumns.value.map((col) => [
+    col.key,
+    col.valueResolver ? col.valueResolver(row) : row[col.key],
+  ]),
+);
 
 // reset page & item count when data changes
 watch(
@@ -238,29 +251,29 @@ function updatePageSize(size) {
   pageSize.value = size;
 }
 
-async function exportCSV() {
-  const fields = shownColumns.value.map((col) => ({ label: col.title, value: col.key }));
-  const transforms = (row) => Object.fromEntries(
-    shownColumns.value.map((col) => [
-      col.key,
-      col.valueResolver ? col.valueResolver(row) : row[col.key],
-    ]),
-  );
+// async function exportCSV() {
+//   const fields = shownColumns.value.map((col) => ({ label: col.title, value: col.key }));
+//   const transforms = (row) => Object.fromEntries(
+//     shownColumns.value.map((col) => [
+//       col.key,
+//       col.valueResolver ? col.valueResolver(row) : row[col.key],
+//     ]),
+//   );
 
-  const opts = { fields, transforms };
+//   const opts = { fields, transforms };
 
-  json2Csv.parseAsync(data.value, opts)
-    .then((csv) => {
-      const sep = 'sep=,\r\n';
-      const BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
-      const blob = new Blob([BOM, csv], { type: 'text/csv;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'download.csv';
-      link.click();
-      URL.revokeObjectURL(link.href);
-    }).catch((err) => console.log('Error downloading file!'));
-}
+//   json2Csv.parseAsync(data.value, opts)
+//     .then((csv) => {
+//       const sep = 'sep=,\r\n';
+//       const BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
+//       const blob = new Blob([BOM, csv], { type: 'text/csv;charset=utf-8' });
+//       const link = document.createElement('a');
+//       link.href = URL.createObjectURL(blob);
+//       link.download = 'download.csv';
+//       link.click();
+//       URL.revokeObjectURL(link.href);
+//     }).catch((err) => console.log('Error downloading file!'));
+// }
 </script>
 
 <style scoped>
