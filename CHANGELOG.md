@@ -1,3 +1,15 @@
+# v0.2.1 (Mon Sep 12 2022)
+
+#### 🐛 Bug Fix
+
+- Fixed product screenshot for NPM + GitHub [#8](https://github.com/Infineon/infineon-vue-datatable/pull/8) ([@kaiwerther](https://github.com/kaiwerther))
+
+#### Authors: 1
+
+- Kai Werther ([@kaiwerther](https://github.com/kaiwerther))
+
+---
+
 # v0.2.0 (Mon Sep 12 2022)
 
 #### 🚀 Enhancement
