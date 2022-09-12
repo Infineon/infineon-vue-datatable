@@ -78,7 +78,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/Infineon/infineon-vue-datatable)
+<a href="https://github.com/Infineon/infineon-vue-datatable">
+  <img src="https://github.com/Infineon/infineon-vue-datatable/blob/master/images/screenshot.png?raw=true" alt="Datatable Screenshot">
+</a>
 
 This is a feature complete datatable based on Vue3 and Bootstrap. It is under active development.
 If you need new features or want existing ones enhanced feel free to submit an feature request or contribute directly.
@@ -376,7 +378,6 @@ Project Link: [https://github.com/Infineon/infineon-vue-datatable](https://githu
 [issues-url]: https://github.com/Infineon/infineon-vue-datatable/issues
 [license-shield]: https://img.shields.io/github/license/Infineon/infineon-vue-datatable.svg?style=for-the-badge
 [license-url]: https://github.com/Infineon/infineon-vue-datatable/blob/master/LICENSE.txt
-[product-screenshot]: https://github.com/Infineon/infineon-vue-datatable/tree/master/images/screenshot.png
 [Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
 [Vue-url]: https://vuejs.org/
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
