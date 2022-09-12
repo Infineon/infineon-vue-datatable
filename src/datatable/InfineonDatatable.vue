@@ -110,7 +110,7 @@
 import {
   toRefs, computed, ref, onMounted, watch,
 } from 'vue';
-import JSON2CSVAsyncParser from 'json2csv/lib/JSON2CSVAsyncParser';
+import json2Csv from 'json2csv/dist/json2csv.esm';
 import DatatableRow from './InfineonDatatableRow.vue';
 import DatatablePager from './InfineonDatatablePager.vue';
 import DatatableSortIcon from './InfineonDatatableSortIcon.vue';
@@ -249,21 +249,7 @@ async function exportCSV() {
 
   const opts = { fields, transforms };
 
-  const parseAsync = async () => {
-    try {
-      const asyncParser = new JSON2CSVAsyncParser(opts);
-      const promise = asyncParser.promise();
-
-      data.value.forEach((item) => asyncParser.input.push(item));
-      asyncParser.input.push(null);
-
-      return promise;
-    } catch (err) {
-      return Promise.reject(err);
-    }
-  };
-
-  parseAsync()
+  json2Csv.parseAsync(data.value, opts)
     .then((csv) => {
       const sep = 'sep=,\r\n';
       const BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
