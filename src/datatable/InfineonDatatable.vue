@@ -110,7 +110,7 @@
 import {
   toRefs, computed, ref, onMounted, watch,
 } from 'vue';
-import json2Csv from 'json2csv/dist/json2csv.umd';
+import json2Csv from 'json2csv';
 import DatatableRow from './InfineonDatatableRow.vue';
 import DatatablePager from './InfineonDatatablePager.vue';
 import DatatableSortIcon from './InfineonDatatableSortIcon.vue';
