@@ -17,7 +17,7 @@
   "author": "Verena Lechner, Kai Werther",
   "license": "MIT",
   "dependencies": {
-    "json2csv": "^5.0.6"
+    
   },
   "devDependencies": {
     "auto": "^10.37.4",
