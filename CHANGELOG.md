@@ -1,3 +1,15 @@
+# v0.2.0 (Mon Sep 12 2022)
+
+#### 🚀 Enhancement
+
+- 3 add readme with examples [#7](https://github.com/Infineon/infineon-vue-datatable/pull/7) ([@kaiwerther](https://github.com/kaiwerther))
+
+#### Authors: 1
+
+- Kai Werther ([@kaiwerther](https://github.com/kaiwerther))
+
+---
+
 # v0.1.0 (Fri Sep 09 2022)
 
 #### 🚀 Enhancement
