@@ -35,7 +35,6 @@
     "plugins": [
       "npm",
       "released"
-    ],
-    "onlyPublishWithReleaseLabel": true
+    ]
   }
 }
