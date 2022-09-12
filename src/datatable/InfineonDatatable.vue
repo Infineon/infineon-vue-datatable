@@ -110,6 +110,7 @@
 import {
   toRefs, computed, ref, onMounted, watch,
 } from 'vue';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import json2Csv from 'json2csv/dist/json2csv.umd';
 import DatatableRow from './InfineonDatatableRow.vue';
 import DatatablePager from './InfineonDatatablePager.vue';

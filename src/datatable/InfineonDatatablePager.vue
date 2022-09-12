@@ -116,6 +116,7 @@
 </template>
 
 <script setup>
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   defineProps, toRefs, ref, computed, defineEmits,
 } from 'vue';

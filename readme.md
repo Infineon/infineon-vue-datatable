@@ -127,7 +127,7 @@ This example displays the data in "rows"
   ```
   ```html
   <script setup>
-import { InfineonDatatable } from '@infineon/vue-infineon-datatable';
+import { InfineonDatatable } from '@infineon/infineon-vue-datatable';
 
 const rows = [
     { id: 1, name: 'item1'},
@@ -166,7 +166,7 @@ Edit functionality for Text + Drop Downs is build in
   ```
   ```html
   <script setup>
-import { InfineonDatatable } from '@infineon/vue-infineon-datatable';
+import { InfineonDatatable } from '@infineon/infineon-vue-datatable';
 
 const rows = [
     { id: 1, name: 'item1', type: 'A'},
@@ -216,7 +216,7 @@ Columns can be hidden by the user. This feature is used if the table has to many
   ```
   ```html
   <script setup>
-import { InfineonDatatable } from '@infineon/vue-infineon-datatable';
+import { InfineonDatatable } from '@infineon/infineon-vue-datatable';
 
 const rows = [
     { id: 1, name: 'item1', type: 'A'},
@@ -268,7 +268,7 @@ Because we want to keep this example simple we just multiplie a column with anot
   ```
   ```html
   <script setup>
-import { InfineonDatatable } from '@infineon/vue-infineon-datatable';
+import { InfineonDatatable } from '@infineon/infineon-vue-datatable';
 
 const rows = [
     { id: 1, name: 'item1', amount: 5, price: 1.5},

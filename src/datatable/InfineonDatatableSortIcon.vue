@@ -11,6 +11,7 @@
 </template>
 
 <script setup>
+  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   toRefs, computed,
 } from 'vue';

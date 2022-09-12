@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { TreeSelect } from '@/plugins/treeView';
+import { TreeSelect } from '../plugins/treeVssiew';
 import {
   toRefs, computed,
 } from 'vue';
