@@ -16,21 +16,18 @@
   ],
   "author": "Verena Lechner, Kai Werther",
   "license": "MIT",
-  "dependencies": {
-    
-  },
   "devDependencies": {
     "auto": "^10.37.4",
-    "vue": ">= 3.0.2",
     "eslint": "^7.28.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-vue": "^9.1.1"
+    "eslint-plugin-vue": "^9.1.1",
+    "vue": ">= 3.0.2"
   },
   "peerDependencies": {
-    "vue": ">= 3.0.2",
-    "bootstrap": "^5.1.3"
+    "bootstrap": "^5.1.3",
+    "vue": ">= 3.0.2"
   },
   "auto": {
     "plugins": [
