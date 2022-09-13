@@ -24,6 +24,8 @@ jobs:
           node-version: 16
 
       - name: Install and Build
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           cd examples
           npm whoami
