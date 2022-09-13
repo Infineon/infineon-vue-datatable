@@ -32,7 +32,7 @@ jobs:
       - name: Install and Build
         working-directory: examples
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           cat .npmrc
           npm whoami
