@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="count > 0">
     <TreeSelect
       id="showColumnSelect"
       :model-value="shownColumns"
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { TreeSelect } from '../plugins/treeVssiew';
+import { TreeSelect } from '../plugins/treeView';
 import {
   toRefs, computed,
 } from 'vue';

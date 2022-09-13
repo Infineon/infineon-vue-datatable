@@ -61,7 +61,7 @@ import {
   toRefs, computed,
 } from 'vue';
 
-import { TreeSelect } from '@/plugins/treeView';
+import { TreeSelect } from '../plugins/treeView';
 
 const props = defineProps({
   row: { type: Object, default: () => {} },

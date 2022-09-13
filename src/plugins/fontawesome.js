@@ -7,6 +7,11 @@ import {
   faSave,
   faEdit,
   faCaretRight,
+  faSort,
+  faAngleDoubleLeft,
+  faAngleLeft,
+  faAngleRight,
+  faAngleDoubleRight,
 } from '@fortawesome/free-solid-svg-icons';
 library.add(
   faCaretDown,
@@ -15,4 +20,9 @@ library.add(
   faSave,
   faEdit,
   faCaretRight,
+  faSort,
+  faAngleDoubleLeft,
+  faAngleLeft,
+  faAngleRight,
+  faAngleDoubleRight,
 );

@@ -9,10 +9,18 @@
     "vue": ">= 3.0.2",
     "@vue/compiler-sfc": "^3.2.26",
     "@vitejs/plugin-vue": "^1.10.2",
-    "vite": "^2.9.8"
+    "vite": "^2.9.8",
+
+    "fuzzysearch": "^1.0.3",
+    "is-promise": "^4.0.0",
+    "watch-size": "^2.0.0",
+
+    "easings-css": "^2.1.1",
+    "material-colors": "^1.2.6"
   },
   "scripts": {
-    "serve": "vite"
+    "serve": "vite",
+    "build_prod": "vite build --mode production"
   },
   "devDependencies": {
     "eslint": "^7.28.0",

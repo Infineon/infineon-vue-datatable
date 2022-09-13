@@ -8,7 +8,7 @@
       style="overflow:auto"
     >
       <table
-        class="table table-sm table-hover"
+        class="table table-sm table-hover w-100"
         style="border-collapse: separate;border-spacing: 0;"
       >
         <thead>
@@ -106,7 +106,6 @@
 </template>
 
 <script setup>
-// style="max-width: 13em"
 import {
   toRefs, computed, ref, onMounted, watch,
 } from 'vue';

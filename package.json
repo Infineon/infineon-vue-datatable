@@ -14,7 +14,10 @@
     "vue3"
   ],
   "scripts": {
-    "examples_serve": "cd examples && npm install && npm run serve"
+    "install_all": "npm install && cd examples && npm install",
+    "serve_examples": "cd examples && npm run serve",
+    "build_examples": "cd examples && npm run build_prod",
+    "link_datatable": "npm link && cd examples && npm link @infineon/infineon-vue-datatable"
   },
   "author": "Verena Lechner, Kai Werther",
   "license": "MIT",
@@ -28,7 +31,10 @@
 
     "fuzzysearch": "^1.0.3",
     "is-promise": "^4.0.0",
-    "watch-size": "^2.0.0"
+    "watch-size": "^2.0.0",
+
+    "easings-css": "^2.1.1",
+    "material-colors": "^1.2.6"
   },
   "devDependencies": {
     "auto": "^10.37.4",
