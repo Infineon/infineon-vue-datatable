@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import ExampleBasic from '../components/examples/ExampleBasic.vue';
 import ExampleEdit from '../components/examples/ExampleEdit.vue';
 import IntroPage from '../components/IntroPage.vue';
@@ -7,7 +7,7 @@ import IntroPage from '../components/IntroPage.vue';
 // it maps the component of the route to the <router-view> in App.vue
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   routes: [
     {
       path: '/',
