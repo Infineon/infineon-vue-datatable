@@ -20,10 +20,12 @@ jobs:
 
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
+        working-directory: examples
         with:
           node-version: 16
 
       - name: Install and Build
+        working-directory: examples
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
