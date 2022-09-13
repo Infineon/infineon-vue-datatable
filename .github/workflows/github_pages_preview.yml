@@ -22,6 +22,8 @@ jobs:
         run: |
           npm run install_all
           npm run build_examples
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1

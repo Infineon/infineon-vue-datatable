@@ -19,6 +19,8 @@ jobs:
         run: |
           npm run install_all
           npm run build_examples
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
