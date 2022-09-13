@@ -34,7 +34,9 @@
     "watch-size": "^2.0.0",
 
     "easings-css": "^2.1.1",
-    "material-colors": "^1.2.6"
+    "material-colors": "^1.2.6",
+
+    "less": "^4.1.2"
   },
   "devDependencies": {
     "auto": "^10.37.4",
@@ -46,8 +48,7 @@
 
     "@vitejs/plugin-vue": "^1.10.2",
     "@vue/compiler-sfc": "^3.2.26",
-    "vite": "^2.9.8",
-    "less": "^4.1.2"
+    "vite": "^2.9.8"
   },
   "peerDependencies": {
     "bootstrap": "^5.1.3"
