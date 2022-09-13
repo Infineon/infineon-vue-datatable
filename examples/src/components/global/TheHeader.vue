@@ -9,7 +9,7 @@
           >
             <img
               style="height:2em"
-              src="@/assets/Logo.svg"
+              src="../../assets/Logo.svg"
               alt="Infineon Logo"
             >
 
