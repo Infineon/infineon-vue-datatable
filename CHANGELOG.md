@@ -1,3 +1,19 @@
+# v0.2.2 (Tue Sep 13 2022)
+
+#### 🐛 Bug Fix
+
+- removes Json2csv library and added function to convert data to csv [#10](https://github.com/Infineon/infineon-vue-datatable/pull/10) ([@MathewsRe](https://github.com/MathewsRe))
+
+#### ⚠️ Pushed to `master`
+
+- removed json2csv ([@MathewsRe](https://github.com/MathewsRe))
+
+#### Authors: 1
+
+- [@MathewsRe](https://github.com/MathewsRe)
+
+---
+
 # v0.2.1 (Mon Sep 12 2022)
 
 #### 🐛 Bug Fix
