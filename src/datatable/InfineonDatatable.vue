@@ -110,7 +110,7 @@ import {
   toRefs, computed, ref, onMounted, watch,
 } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import json2Csv from 'json2csv/dist/json2csv.umd';
+
 import DatatableRow from './InfineonDatatableRow.vue';
 import DatatablePager from './InfineonDatatablePager.vue';
 import DatatableSortIcon from './InfineonDatatableSortIcon.vue';
@@ -239,27 +239,24 @@ function updatePageSize(size) {
 }
 
 async function exportCSV() {
-  const fields = shownColumns.value.map((col) => ({ label: col.title, value: col.key }));
-  const transforms = (row) => Object.fromEntries(
-    shownColumns.value.map((col) => [
-      col.key,
-      col.valueResolver ? col.valueResolver(row) : row[col.key],
-    ]),
-  );
+  const titles = shownColumns.value.map((col) => col.title);
+  let csv = titles.join(',');
+  csv += '\n';
+  data.value.forEach((row) => {
+    const values = shownColumns.value
+      .map((col) => (col.valueResolver ? col.valueResolver(row) : row[col.key]));
+    csv += values.join(',');
+    csv += '\n';
+  });
 
-  const opts = { fields, transforms };
-
-  json2Csv.parseAsync(data.value, opts)
-    .then((csv) => {
-      const sep = 'sep=,\r\n';
-      const BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
-      const blob = new Blob([BOM, csv], { type: 'text/csv;charset=utf-8' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'download.csv';
-      link.click();
-      URL.revokeObjectURL(link.href);
-    }).catch((err) => console.log('Error downloading file!'));
+  const sep = 'sep=,\r\n';
+  const BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
+  const blob = new Blob([BOM, csv], { type: 'text/csv;charset=utf-8' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'download.csv';
+  link.click();
+  URL.revokeObjectURL(link.href);
 }
 </script>
 

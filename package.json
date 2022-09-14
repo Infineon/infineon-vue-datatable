@@ -22,7 +22,6 @@
   "author": "Verena Lechner, Kai Werther",
   "license": "MIT",
   "dependencies": {
-    "json2csv": "^5.0.6",
     "vue": ">= 3.0.2",
 
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
