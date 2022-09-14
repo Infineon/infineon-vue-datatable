@@ -164,8 +164,11 @@ export default {
         parent: this,
         ...PortalTarget,
       });
+      console.log(this.instance)
+      console.log(this.portalTarget)
       this.portalTarget.provide('instance', this.instance);
       this.portalTarget.mount(el);
+      console.log(this.portalTarget)
       // this.portalTarget = new Vue({
       //   el,
       //   parent: this,
