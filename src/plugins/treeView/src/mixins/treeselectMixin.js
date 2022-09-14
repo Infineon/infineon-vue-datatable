@@ -1424,9 +1424,10 @@ export default {
 
     getMenu() {
       // eslint-disable-next-line no-underscore-dangle
+      console.log(this.$refs.portal.portalTarget);
       const $menu = this.appendToBody
       // eslint-disable-next-line no-underscore-dangle
-        ? this.$refs.portal.portalTarget._instance.root.refs.menu.$refs.menu
+        ? this.$refs.portal.portalTarget.instance.root.refs.menu.$refs.menu
         : this.$refs.menu.$refs.menu;
       return $menu && $menu.nodeName !== '#comment' ? $menu : null;
     },
