@@ -11,8 +11,8 @@
 </template>
 
 <script setup>
-import { InfineonDatatable } from '@infineon/infineon-vue-datatable';
 import { ref } from 'vue';
+import { InfineonDatatable } from '../../../../src';
 
 const rows = ref([
   { id: 1, name: 'item1', type: 'A' },

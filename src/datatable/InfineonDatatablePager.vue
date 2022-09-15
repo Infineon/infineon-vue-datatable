@@ -11,7 +11,7 @@
         >
           <a
             class="page-link"
-            href="#"
+            style="cursor: pointer"
             @click="changePage(0)"
           ><font-awesome-icon
             :icon="['fas', 'angle-double-left']"
@@ -23,7 +23,7 @@
         >
           <a
             class="page-link"
-            href="#"
+            style="cursor: pointer"
             @click="changePage(currentPage+-1)"
           ><font-awesome-icon
             :icon="['fas', 'angle-left']"
@@ -35,7 +35,7 @@
         >
           <a
             class="page-link"
-            href="#"
+            style="cursor: pointer"
           >...</a>
         </li>
         <template
@@ -49,7 +49,7 @@
           >
             <a
               class="page-link"
-              href="#"
+              style="cursor: pointer"
               @click="changePage(currentPage+index-3)"
             >{{ currentPage+index - 2 }}</a>
           </li>
@@ -60,7 +60,7 @@
         >
           <a
             class="page-link"
-            href="#"
+            style="cursor: pointer"
           >...</a>
         </li>
         <li
@@ -69,7 +69,7 @@
         >
           <a
             class="page-link"
-            href="#"
+            style="cursor: pointer"
             @click="changePage(currentPage+1)"
           ><font-awesome-icon
             :icon="['fas', 'angle-right']"
@@ -81,7 +81,7 @@
         >
           <a
             class="page-link"
-            href="#"
+            style="cursor: pointer"
             @click="changePage(pageCount)"
           >
             <font-awesome-icon

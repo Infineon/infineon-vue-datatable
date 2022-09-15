@@ -39,7 +39,7 @@
               />
               <a
                 v-if="column.hidable"
-                href="#"
+                style="cursor: pointer"
                 @click="changeColumnVisibility(column.key)"
               >
                 <font-awesome-icon

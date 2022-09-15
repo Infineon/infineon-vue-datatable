@@ -9,8 +9,8 @@
 </template>
 
 <script setup>
-import { InfineonDatatable } from '@infineon/infineon-vue-datatable';
 import { ref } from 'vue';
+import { InfineonDatatable } from '../../../../src';
 
 const rows = ref([
   {

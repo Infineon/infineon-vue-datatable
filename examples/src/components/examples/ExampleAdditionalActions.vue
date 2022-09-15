@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { InfineonDatatable } from '@infineon/infineon-vue-datatable';
+import { InfineonDatatable } from '../../../../src';
 
 const logToConsole = (row) => {
   console.log('we print to current row to console');

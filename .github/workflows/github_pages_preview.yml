@@ -30,12 +30,11 @@ jobs:
           echo "always-auth: true" >> .npmrc
 
       - name: Install and Build
-        working-directory: examples
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          npm install
-          npm run build_prod
+          npm run install_all
+          npm run build_examples
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1

@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { InfineonDatatable } from '@infineon/infineon-vue-datatable';
+import { InfineonDatatable } from '../../../../src';
 
 const rows = [
   { id: 1, name: 'item1' },

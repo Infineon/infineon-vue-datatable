@@ -1,7 +1,7 @@
 <template>
   <a
     v-if="column.sortable"
-    href="#"
+    style="cursor: pointer"
     @click="changeSort()"
   >
     <font-awesome-icon
@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   toRefs, computed,
 } from 'vue';
