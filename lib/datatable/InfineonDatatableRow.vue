@@ -58,6 +58,7 @@
         v-for="(additionalAction, idx) in additionalActions"
         :key="idx"
         class="btn btn-outline-primary btn-sm"
+        :class="{'ps-1': idx > 0}"
         :title="additionalAction.title"
         @click="additionalAction.action(row)"
       >

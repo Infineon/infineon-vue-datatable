@@ -33,6 +33,7 @@ const withPopper = (dropdownList, component, { width }) => {
        * We need to explicitly define the dropdown width since
        * it is usually inherited from the parent with CSS.
        */
+  // eslint-disable-next-line no-param-reassign
   dropdownList.style.width = width;
 
   /**

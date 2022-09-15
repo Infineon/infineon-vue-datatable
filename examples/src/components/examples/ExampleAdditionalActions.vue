@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { InfineonDatatable } from '../../../../src';
+import { InfineonDatatable } from '../../../../lib';
 
 const logToConsole = (row) => {
   console.log('we print to current row to console');

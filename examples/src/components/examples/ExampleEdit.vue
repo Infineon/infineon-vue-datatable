@@ -12,7 +12,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import { InfineonDatatable } from '../../../../src';
+import { InfineonDatatable } from '../../../../lib';
 
 const rows = ref([
   { id: 1, name: 'item1', type: 'A' },
