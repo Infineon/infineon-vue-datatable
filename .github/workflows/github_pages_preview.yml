@@ -26,10 +26,10 @@ jobs:
 
       - name: Install and Build
         run: |
-          npm run install_all
-          npm run build_examples
+          npm install
+          npm run build:examples
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: ./examples/dist
+          source-dir: ./dist
