@@ -51,6 +51,7 @@
         />
       </button>
       <button
+      v-if="canEdit"
         v-for="(additionalAction, idx) in additionalActions"
         :key="idx"
         class="btn btn-outline-primary btn-sm"
