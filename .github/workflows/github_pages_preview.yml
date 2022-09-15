@@ -18,17 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-
-      - name: Configure NPM
-        working-directory: examples
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" >> .npmrc
-          echo "always-auth: true" >> .npmrc
-
       - name: Install and Build
         working-directory: examples
         env:
