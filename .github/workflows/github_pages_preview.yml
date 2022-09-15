@@ -23,22 +23,19 @@ jobs:
         with:
           node-version: 16
 
-      - name: Configure NPM for examples
-        working-directory: examples
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" >> .npmrc
-          echo "always-auth: true" >> .npmrc
       - name: Configure NPM
+        working-directory: examples
         run: |
           echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" >> .npmrc
           echo "always-auth: true" >> .npmrc
 
       - name: Install and Build
+        working-directory: examples
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          npm run install_all
-          npm run build_examples
+          npm install
+          npm run build_prod
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
