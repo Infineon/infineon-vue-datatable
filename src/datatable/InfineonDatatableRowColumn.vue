@@ -1,19 +1,22 @@
 <template>
   <td style="border-collapse: separate !important;">
-    <TreeSelect
+    <select
       v-if="rowIsInEditMode && column.editable && column.possibleValues"
       :id="column.key"
-      class="d-block"
+      class="form-control form-control-sm"
       style="min-width:15em;max-width:20em;"
-      :model-value="fieldValue"
+      :value="editValue"
       :disabled="fieldReadOnly ? true : false"
-      :options="column.possibleValues"
-      :placeholder="'Edit ' + column.title"
-      :clearable="true"
-      :append-to-body="true"
-      @update:modelValue="$emit('update:editValue', $event)"
-    />
-
+      @input="$emit('update:editValue', $event.target.value)"
+    >
+      <option
+        v-for="possibleValue in column.possibleValues"
+        :key="possibleValue"
+        :value="possibleValue"
+      >
+        {{ possibleValue }}
+      </option>
+    </select>
     <textarea
       v-else-if="rowIsInEditMode && column.editable"
       class="form-control form-control-sm"
@@ -56,12 +59,10 @@
 </template>
 
 <script setup>
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   toRefs, computed,
 } from 'vue';
-
-import { TreeSelect } from '../plugins/treeView';
 
 const props = defineProps({
   row: { type: Object, default: () => {} },

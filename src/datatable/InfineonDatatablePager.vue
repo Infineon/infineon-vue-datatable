@@ -116,9 +116,9 @@
 </template>
 
 <script setup>
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-  defineProps, toRefs, ref, computed, defineEmits,
+  toRefs, ref, computed,
 } from 'vue';
 
 const props = defineProps({

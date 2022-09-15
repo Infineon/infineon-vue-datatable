@@ -1,23 +1,28 @@
 <template>
-  <div v-if="count > 0">
-    <TreeSelect
+  <div>
+    <v-select
+      v-if="columnOptions.length > 0"
       id="showColumnSelect"
-      :model-value="shownColumns"
+      style="min-width:10em"
       :multiple="true"
+      :append-to-body="true"
       :options="columnOptions"
+      :model-value="shownColumns"
       :limit="0"
       placeholder="Click here to show columns"
       :limit-text="(count) => `show ${count +
         columns.length - columnOptions.length} / ${columns.length} columns`"
       :clearable="false"
-      @select="changeColumnVisibility({value: $event})"
-      @deselect="changeColumnVisibility({value: $event})"
+      label="label"
+      @update:model-value="updateValue($event)"
+      @option:selecting="changeColumnVisibility({value: $event})"
+      @option:deselecting="changeColumnVisibility({value: $event})"
     />
   </div>
 </template>
 
 <script setup>
-import { TreeSelect } from '../plugins/treeView';
+import vSelect from 'vue-select';
 import {
   toRefs, computed,
 } from 'vue';
@@ -39,7 +44,9 @@ const columnOptions = computed(() => columns.value.filter((c) => c.hidable)
   .map((c) => ({ id: c.key, label: c.title, isDisabled: !c.hidable })));
 
 function changeColumnVisibility(columnKey) {
-  emit('changeColumnVisibility', columnKey.value.id);
+  emit('changeColumnVisibility', columnKey.value.id || columnKey.value);
 }
 
 </script>
+
+<style src="vue-select/dist/vue-select.css"></style>

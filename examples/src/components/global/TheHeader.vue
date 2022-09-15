@@ -82,6 +82,14 @@ const links = ref([
         label: 'Edit',
         routeName: 'exampleEdit',
       },
+      {
+        label: 'Hideable Columns',
+        routeName: 'exampleHideColumns',
+      },
+      {
+        label: 'Additional Actions',
+        routeName: 'exampleAdditionalActions',
+      },
     ],
   },
 ]);

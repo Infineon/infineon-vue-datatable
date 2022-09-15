@@ -4,7 +4,7 @@
     style="overflow:auto"
   >
     <div
-      class="flex-grow-1 table-responsive"
+      class="flex-grow-1"
       style="overflow:auto"
     >
       <table
@@ -14,15 +14,22 @@
         <thead>
           <tr>
             <th
-              v-if="canEdit"
-              class="stickyHeader"
+              v-if="hiddenColumnKeys.length > 0"
+              style="width:0em"
+              class="p-0"
+            />
+            <th
+              v-if="canEdit || additionalActions.length > 0"
+              style="width:0em"
+              class="ps-2 pe-1"
             >
               Actions
             </th>
+
             <th
               v-for="(column, index) in shownColumns"
               :key="index"
-              class="stickyHeader text-nowrap"
+              class="text-nowrap"
               scope="col"
             >
               {{ column.title }}
@@ -57,9 +64,9 @@
             :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)"
             :can-edit="canEdit"
             :additional-actions="additionalActions"
-            @startEditRow="startEditRow"
-            @saveRow="saveRow"
-            @cancelRow="cancelRow"
+            @start-edit-row="startEditRow"
+            @save-row="saveRow"
+            @cancel-row="cancelRow"
           >
             <template
               v-for="(_, name) in $slots"
@@ -80,13 +87,13 @@
         class="flex-grow-1"
         :page-size="pageSize"
         :count="count"
-        @updatePageSize="updatePageSize"
+        @update-page-size="updatePageSize"
       />
       <DatatableShowColumnsPicker
         style="max-width:15em"
         :columns="realColumns"
         :hidden-column-keys="hiddenColumnKeys"
-        @changeColumnVisibility="changeColumnVisibility"
+        @change-column-visibility="changeColumnVisibility"
       />
       <div
         v-if="exportable"
@@ -122,7 +129,7 @@ const props = defineProps({
   columns: { type: Array, default: () => [] },
   exportable: Boolean,
   defaultSort: { type: Object, default: () => {} }, // {key: '', type: 'A/D'}
-  additionalActions: { type: Object, default: () => {} },
+  additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
 });
 const emit = defineEmits(['saveRow']);
@@ -215,6 +222,7 @@ onMounted(() => {
 });
 
 function changeColumnVisibility(columnKey) {
+  console.log(columnKey);
   if (hiddenColumnKeys.value.includes(columnKey)) {
     const index = hiddenColumnKeys.value.indexOf(columnKey);
     hiddenColumnKeys.value.splice(index, 1);
@@ -249,7 +257,6 @@ async function exportCSV() {
     csv += '\n';
   });
 
-  const sep = 'sep=,\r\n';
   const BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
   const blob = new Blob([BOM, csv], { type: 'text/csv;charset=utf-8' });
   const link = document.createElement('a');

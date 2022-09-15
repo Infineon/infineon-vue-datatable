@@ -15,43 +15,35 @@
   ],
   "scripts": {
     "install_all": "npm install && cd examples && npm install",
-    "serve_examples": "cd examples && npm run serve",
+    "examples": "cd examples && npm run dev",
     "build_examples": "cd examples && npm run build_prod",
-    "link_datatable": "npm link && cd examples && npm link @infineon/infineon-vue-datatable"
+    "link": "npm link && cd examples && npm link @infineon/infineon-vue-datatable"
   },
   "author": "Verena Lechner, Kai Werther",
   "license": "MIT",
   "dependencies": {
-    "vue": ">= 3.0.2",
-
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
-
-    "fuzzysearch": "^1.0.3",
-    "is-promise": "^4.0.0",
-    "watch-size": "^2.0.0",
-
-    "easings-css": "^2.1.1",
-    "material-colors": "^1.2.6",
-
-    "less": "^4.1.2"
+    "@popperjs/core": "^2.11.6",
+    "@vueform/multiselect": "^2.5.2",
+    "vue": ">= 3.0.2",
+    "vue-select": "^4.0.0-beta.5" 
   },
   "devDependencies": {
+    "@vitejs/plugin-vue": "^1.10.2",
+    "@vue/compiler-sfc": "^3.2.26",
     "auto": "^10.37.4",
     "eslint": "^7.28.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-vue": "^9.1.1",
-
-    "@vitejs/plugin-vue": "^1.10.2",
-    "@vue/compiler-sfc": "^3.2.26",
     "vite": "^2.9.8"
   },
   "peerDependencies": {
-    "bootstrap": "^5.1.3"
-  },  
+    "bootstrap": "^5.2.1"
+  },
   "auto": {
     "plugins": [
       "npm",

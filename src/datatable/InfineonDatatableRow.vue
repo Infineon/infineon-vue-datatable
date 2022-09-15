@@ -4,11 +4,10 @@
     class="mainrow"
   >
     <td
-      v-if="canEdit || hiddenColumns.length > 0"
-      class="text-nowrap"
+      v-if="hiddenColumns.length > 0"
+      class="px-1"
     >
       <a
-        v-if="hiddenColumns.length > 0"
         href="javascript:void(0)"
         @click="expanded = !expanded"
       >
@@ -19,6 +18,11 @@
           :icon="['fas', 'caret-right']"
         />
       </a>
+    </td>
+    <td
+      v-if="canEdit || additionalActions.length > 0"
+      class="text-nowrap px-1"
+    >
       <button
         v-if="!rowIsInEditMode && canEdit"
         class="btn btn-outline-primary btn-sm me-1"
@@ -135,7 +139,7 @@
 </template>
 
 <script setup>
-  import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   toRefs, computed, ref,
 } from 'vue';
@@ -160,10 +164,6 @@ const shownColumns = computed(() => columns.value
   .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
 const hiddenColumns = computed(() => columns.value
   .filter((c) => c.hidable && hiddenColumnKeys.value.includes(c.key)));
-
-const fieldValue = ({ key, valueResolver }) => (valueResolver
-  ? valueResolver(row.value) : row.value[key]);
-
 // neues datenobjekt anlegen
 const editRow = ref(row.value);
 const expanded = ref(false);
@@ -179,19 +179,6 @@ function saveRow() {
 function cancelRow() {
   emit('cancelRow');
 }
-function onRowButtonClick(actionType) {
-  emit('onRowButtonClick', actionType, editRow.value);
-}
-
-/*
-
-const emit = defineEmits(['update:currentPage']);
-
-function changePage(newPage) {
-  emit('update:currentPage', newPage);
-}
-*/
-
 </script>
 
 <style scoped>

@@ -4,6 +4,7 @@ import {
   faCaretDown,
   faCaretUp,
   faTimesCircle,
+  faTimes,
   faSave,
   faEdit,
   faCaretRight,
@@ -13,10 +14,12 @@ import {
   faAngleRight,
   faAngleDoubleRight,
 } from '@fortawesome/free-solid-svg-icons';
+
 library.add(
   faCaretDown,
   faCaretUp,
   faTimesCircle,
+  faTimes,
   faSave,
   faEdit,
   faCaretRight,
