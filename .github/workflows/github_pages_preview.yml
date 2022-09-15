@@ -18,13 +18,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+
       - name: Install and Build
         working-directory: examples
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          cat .npmrc
-          npm install
+          npm ci
           npm run build_prod
 
       - name: Deploy preview
