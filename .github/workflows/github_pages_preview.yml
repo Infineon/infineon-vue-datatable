@@ -25,10 +25,9 @@ jobs:
           cache: 'npm'
 
       - name: Install and Build
-        working-directory: examples
         run: |
-          npm ci
-          npm run build_prod
+          npm run install_all
+          npm run build_examples
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
