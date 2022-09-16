@@ -16,7 +16,7 @@
       "import": "./dist/infineon-vue-datatable.js",
       "require": "./dist/infineon-vue-datatable.umd.cjs"
     },
-    "./style.css": {
+    "./dist/style.css": {
       "import": "./dist/style.css",
       "require": "./dist/style.css"
     }
