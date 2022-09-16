@@ -18,26 +18,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js 16.x
+      - name: Use Node.js 16
         uses: actions/setup-node@v3
         with:
           node-version: 16
-
-      - name: Configure NPM
-        working-directory: examples
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" >> .npmrc
-          echo "always-auth: true" >> .npmrc
+          cache: 'npm'
 
       - name: Install and Build
-        working-directory: examples
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           npm install
-          npm run build_prod
+          npm run build:examples
 
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: ./examples/dist
+          source-dir: ./dist

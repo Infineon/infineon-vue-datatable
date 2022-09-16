@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 
 import router from './router/router';
 
-import '@infineon/design-system-bootstrap';
+import './plugins/fontawesome';
 
 import App from './App.vue';
 
