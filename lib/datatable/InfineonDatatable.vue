@@ -235,6 +235,7 @@ function startEditRow(row) {
   rowInEditMode.value = row ? { ...row } : undefined;
 }
 async function saveRow(row) {
+  console.log("saving row", row)
   emit('saveRow', row);
   rowInEditMode.value = undefined;
 }
