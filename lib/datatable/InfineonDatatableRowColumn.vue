@@ -4,17 +4,18 @@
       v-if="rowIsInEditMode && column.editable && column.possibleValues"
       :id="column.key"
       class="form-control form-control-sm"
-      style="min-width:15em;max-width:20em;"
+       style="min-width:15em;max-width:20em;"
       :value="editValue"
       :disabled="fieldReadOnly ? true : false"
       @input="$emit('update:editValue', $event.target.value)"
-    >
+     > 
+     <option :value="''" selected disabled>Please select...</option>
       <option
         v-for="possibleValue in column.possibleValues"
-        :key="possibleValue"
-        :value="possibleValue"
+        :key="possibleValue.id"
+        :value="possibleValue.label"
       >
-        {{ possibleValue }}
+        {{ possibleValue.label }}
       </option>
     </select>
     <textarea
@@ -74,7 +75,8 @@ const {
   row, column, editValue,
 } = toRefs(props);
 
-defineEmits(['update:editValue']);
+
+  defineEmits(['update:editValue']);
 const fieldReadOnly = (column.value.key === 'statusId' && (row.value.sourceReadOnly || row.value.sourceSolved));
 
 const fieldValue = computed(() => {
@@ -82,6 +84,7 @@ const fieldValue = computed(() => {
 
   return valueResolver ? valueResolver(row.value) : row.value[key];
 });
+
 
 async function onClick() {
   column.value.action(row.value);
