@@ -9,12 +9,12 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/my-lib.umd.cjs",
-  "module": "./dist/my-lib.js",
+  "main": "./dist/infineon-vue-datatable.umd.cjs",
+  "module": "./dist/infineon-vue-datatable.js",
   "exports": {
     ".": {
-      "import": "./dist/my-lib.js",
-      "require": "./dist/my-lib.umd.cjs"
+      "import": "./dist/infineon-vue-datatable.js",
+      "require": "./dist/infineon-vue-datatable.umd.cjs"
     }
   },
   "keywords": [

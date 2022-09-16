@@ -222,7 +222,6 @@ onMounted(() => {
 });
 
 function changeColumnVisibility(columnKey) {
-  console.log(columnKey);
   if (hiddenColumnKeys.value.includes(columnKey)) {
     const index = hiddenColumnKeys.value.indexOf(columnKey);
     hiddenColumnKeys.value.splice(index, 1);

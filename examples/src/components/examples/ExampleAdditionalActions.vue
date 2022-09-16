@@ -24,11 +24,14 @@
 import { InfineonDatatable } from '../../../../lib';
 
 const logToConsole = (row) => {
+  // eslint-disable-next-line no-console
   console.log('we print to current row to console');
+  // eslint-disable-next-line no-console
   console.log(row);
 };
 
 const showAlert = (row) => {
+  // eslint-disable-next-line no-alert
   alert(JSON.stringify(row));
 };
 
