@@ -7,7 +7,4 @@ export default defineConfig({
     vue(),
   ],
   base: './',
-  optimizeDeps: {
-    exclude: ['vue-select', '@fortawesome/vue-fontawesome'],
-  },
 });

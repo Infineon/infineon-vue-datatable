@@ -4,19 +4,25 @@
       v-if="rowIsInEditMode && column.editable && column.possibleValues"
       :id="column.key"
       class="form-control form-control-sm"
-       style="min-width:15em;max-width:20em;"
-       :filter-key="editValue"
+      style="min-width:15em;max-width:20em;"
+      :filter-key="editValue"
       :value="editValue"
       :disabled="fieldReadOnly ? true : false"
       @input="updateSelectedValue($event)"
-     > 
-     <option :value="''" selected disabled>Please select...</option>
+    >
+      <option
+        :value="''"
+        selected
+        disabled
+      >
+        Please select...
+      </option>
       <option
         v-for="possibleValue in column.possibleValues"
         :key="possibleValue.id"
-        :value="possibleValue"
+        :value="possibleValue.id"
       >
-         {{ possibleValue.label }}
+        {{ possibleValue.label }}
       </option>
     </select>
     <textarea
@@ -63,7 +69,7 @@
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-  toRefs, computed
+  toRefs, computed,
 } from 'vue';
 
 const props = defineProps({
@@ -85,9 +91,8 @@ const fieldValue = computed(() => {
   return valueResolver ? valueResolver(row.value) : row.value[key];
 });
 
-
-function updateSelectedValue($event){
-   emit('update:editValue', $event.target.options[$event.target.selectedIndex]._value)
+function updateSelectedValue($event) {
+  emit('update:editValue', $event.target.value);
 }
 
 async function onClick() {

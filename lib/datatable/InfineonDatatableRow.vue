@@ -54,23 +54,24 @@
           :icon="['fas', 'times-circle']"
         />
       </button>
-      <button
-      v-if="canEdit"
-        v-for="(additionalAction, idx) in additionalActions"
-        :key="idx"
-        class="btn btn-outline-primary btn-sm"
-        :class="{'ms-1': idx > 0}"
-        :title="additionalAction.title"
-        @click="additionalAction.action(row)"
-      >
-        <font-awesome-icon
-          v-if="additionalAction.icon"
-          :icon="additionalAction.icon"
-        />
-        <span v-if="additionalAction.label">
-          {{ additionalAction.label }}
-        </span>
-      </button>
+      <template v-if="canEdit">
+        <button
+          v-for="(additionalAction, idx) in additionalActions"
+          :key="idx"
+          class="btn btn-outline-primary btn-sm"
+          :class="{'ms-1': idx > 0}"
+          :title="additionalAction.title"
+          @click="additionalAction.action(row)"
+        >
+          <font-awesome-icon
+            v-if="additionalAction.icon"
+            :icon="additionalAction.icon"
+          />
+          <span v-if="additionalAction.label">
+            {{ additionalAction.label }}
+          </span>
+        </button>
+      </template>
     </td>
     <DatatableRowColumn
       v-for="(column, index) in shownColumns"

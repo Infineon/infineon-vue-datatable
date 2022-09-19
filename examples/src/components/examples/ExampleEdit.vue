@@ -15,32 +15,24 @@ import { computed, ref } from 'vue';
 import { InfineonDatatable } from '../../../../lib';
 
 const rows = ref([
-  { id: 1, name: 'item1', type: {'id':11, 'name':'Option A'} },
+  { id: 1, name: 'item1', type: 'A' },
   { id: 2, name: 'item2' },
-  { id: 3, name: 'item3', type: {'id':12, 'name':'Option B'} },
-  { id: 4, name: 'item4', type: {'id':13, 'name':'Option C'}},
+  { id: 3, name: 'item3', type: 'C' },
+  { id: 4, name: 'item4', type: 'B' },
 ]);
 
- 
+const dropdownOptions = computed(() => [
+  { id: 'A', label: 'The letter A' },
+  { id: 'B', label: 'The letter B' },
+  { id: 'C', label: 'The letter C' },
+  { id: 'D', label: 'The letter D' },
+  { id: 'E', label: 'The letter E' },
+  { id: 'F', label: 'The letter F' }]
+  .sort((a, b) => a?.label?.localeCompare(b?.label)));
 
 function getTypeForRow(row) {
-  if (row.type) {
-    if (row.type.name) return row.type.name;
-    else if (row.type.label) return row.type.label
-  }
-  else {
-      return '';
-  }
+  return dropdownOptions.value.find((r) => r.id === row.type)?.label;
 }
-
-const normalize = (item) => ({ id: item.id, label: item.name });
-
-const dropdownOptions = computed(() => {
-   return [{'id':11, 'name':'Option A'},{'id':12, 'name':'Option B'},{'id':13 , 'name':'Option C'}]
-  .map(normalize)
-  .sort((a, b) => a?.label?.localeCompare(b?.label))
-});
-
 
 const saveRow = (changedRow) => {
   // update store here
@@ -70,9 +62,8 @@ const columns = [
     sortType: 'STRING',
     editable: true,
     valueResolver: (row) => getTypeForRow(row),
-    possibleValues: dropdownOptions.value
+    possibleValues: dropdownOptions.value,
   },
 ];
-
 
 </script>
