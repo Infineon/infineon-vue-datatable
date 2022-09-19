@@ -5,17 +5,18 @@
       :id="column.key"
       class="form-control form-control-sm"
        style="min-width:15em;max-width:20em;"
+       :filter-key="editValue"
       :value="editValue"
       :disabled="fieldReadOnly ? true : false"
-      @input="$emit('update:editValue', $event.target.value)"
+      @input="updateSelectedValue($event)"
      > 
      <option :value="''" selected disabled>Please select...</option>
       <option
         v-for="possibleValue in column.possibleValues"
         :key="possibleValue.id"
-        :value="possibleValue.label"
+        :value="possibleValue"
       >
-        {{ possibleValue.label }}
+         {{ possibleValue.label }}
       </option>
     </select>
     <textarea
@@ -62,7 +63,7 @@
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-  toRefs, computed,
+  toRefs, computed
 } from 'vue';
 
 const props = defineProps({
@@ -75,8 +76,7 @@ const {
   row, column, editValue,
 } = toRefs(props);
 
-
-  defineEmits(['update:editValue']);
+const emit = defineEmits(['update:editValue']);
 const fieldReadOnly = (column.value.key === 'statusId' && (row.value.sourceReadOnly || row.value.sourceSolved));
 
 const fieldValue = computed(() => {
@@ -85,6 +85,10 @@ const fieldValue = computed(() => {
   return valueResolver ? valueResolver(row.value) : row.value[key];
 });
 
+
+function updateSelectedValue($event){
+   emit('update:editValue', $event.target.options[$event.target.selectedIndex]._value)
+}
 
 async function onClick() {
   column.value.action(row.value);

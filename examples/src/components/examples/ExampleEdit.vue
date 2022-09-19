@@ -1,7 +1,7 @@
 <template>
   <div>
     <InfineonDatatable
-      :data="filteredRows"
+      :data="rows"
       :columns="columns"
       :default-sort="{ key: 'name', type: 'D' }"
       :can-edit="true"
@@ -17,23 +17,29 @@ import { InfineonDatatable } from '../../../../lib';
 const rows = ref([
   { id: 1, name: 'item1', type: {'id':11, 'name':'Option A'} },
   { id: 2, name: 'item2' },
-  { id: 3, name: 'item3', type: {'id':12, 'name':'Option B'}},
+  { id: 3, name: 'item3', type: {'id':12, 'name':'Option B'} },
   { id: 4, name: 'item4', type: {'id':13, 'name':'Option C'}},
 ]);
 
-// filters to be handled in store
-const filteredRows = rows.value.map((row) => {
+ 
+
+function getTypeForRow(row) {
   if (row.type) {
-    row.type = row.type.name
+    if (row.type.name) return row.type.name;
+    else if (row.type.label) return row.type.label
   }
-  return row;
-});
+  else {
+      return '';
+  }
+}
 
 const normalize = (item) => ({ id: item.id, label: item.name });
 
-const dropdownOptions = computed(() => [{'id':11, 'name':'Option A'},{'id':12, 'name':'Option B'},{'id':13 , 'name':'Option C'}]
+const dropdownOptions = computed(() => {
+   return [{'id':11, 'name':'Option A'},{'id':12, 'name':'Option B'},{'id':13 , 'name':'Option C'}]
   .map(normalize)
-  .sort((a, b) => a?.label?.localeCompare(b?.label)));
+  .sort((a, b) => a?.label?.localeCompare(b?.label))
+});
 
 
 const saveRow = (changedRow) => {
@@ -63,11 +69,10 @@ const columns = [
     sortable: true,
     sortType: 'STRING',
     editable: true,
+    valueResolver: (row) => getTypeForRow(row),
     possibleValues: dropdownOptions.value
   },
 ];
-
-
 
 
 </script>
