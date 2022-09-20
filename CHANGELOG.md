@@ -1,3 +1,21 @@
+# v0.2.3 (Tue Sep 20 2022)
+
+#### 🐛 Bug Fix
+
+- 4 add runable examples as vue sourcecode [#11](https://github.com/Infineon/infineon-vue-datatable/pull/11) ([@kaiwerther](https://github.com/kaiwerther) lechneve@ISCN5CG1201S7M.infineon.com)
+
+#### ⚠️ Pushed to `master`
+
+- Update main.yml ([@kaiwerther](https://github.com/kaiwerther))
+- Update github_pages_master.yml ([@kaiwerther](https://github.com/kaiwerther))
+
+#### Authors: 2
+
+- Kai Werther ([@kaiwerther](https://github.com/kaiwerther))
+- Verena Lechner (lechneve@ISCN5CG1201S7M.infineon.com)
+
+---
+
 # v0.2.2 (Tue Sep 13 2022)
 
 #### 🐛 Bug Fix
