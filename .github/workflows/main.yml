@@ -6,7 +6,8 @@ on:
       - opened
       - reopened
       - synchronize
-      - closed
+  push:
+    branches: [ "master" ]
 
 jobs:
   release:
