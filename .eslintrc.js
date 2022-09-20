@@ -12,20 +12,16 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  rules: {
-    'no-unused-vars': 'off',
-    'no-param-reassign': ['error', {
-      props: true,
-      ignorePropertyModificationsFor: [
-        'store', // for e.returnvalue
-      ],
-    }],
+  globals: {
+    defineProps: 'readonly',
+    defineEmits: 'readonly',
   },
   settings: {
     'import/resolver': {
       alias: {
-        map: [['@', './src']],
-        extensions: ['.js', '.vue'],
+        map: [
+          ['@', './examples/src'],
+        ],
       },
     },
   },
