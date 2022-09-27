@@ -54,6 +54,8 @@ const columns = [
     sortable: true,
     sortType: 'STRING',
     editable: true,
+    includesLink: true,
+    link: 'https://www.example.com',
   },
   {
     key: 'type',
