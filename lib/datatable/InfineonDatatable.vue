@@ -9,14 +9,19 @@
               Actions
             </th>
 
-            <th v-for="(column, index) in shownColumns" :key="index" class="text-nowrap" scope="col">
-              <a v-if="column.includesLink"><a :href="column.link" target="_blank">
-                  {{ column.title }}
-                </a></a>
-              <a v-else>
-                {{ column.title }}
-                <DatatableSortIcon v-model:sort-column="sortColumn" :column="column" />
-              </a>
+            <th
+              v-for="(column, index) in shownColumns"
+              :key="index"
+              class="text-nowrap"
+              scope="col"
+            >
+            <slot name="columnTitle" v-bind="column"></slot>
+
+              <DatatableSortIcon
+                v-model:sort-column="sortColumn"
+                :column="column"
+              />
+
               <a v-if="column.hidable" style="cursor: pointer" @click="changeColumnVisibility(column.key)">
                 <font-awesome-icon class="fa-sm ms-2" :icon="['fas', 'times']" />
               </a>
@@ -71,6 +76,7 @@ const props = defineProps({
   defaultSort: { type: Object, default: () => { } }, // {key: '', type: 'A/D'}
   additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
+  slotProps: { type: String, default: 'Default' }
 });
 const emit = defineEmits(['saveRow']);
 
