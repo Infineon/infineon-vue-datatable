@@ -1,11 +1,28 @@
 <template>
-  <div class="d-flex flex-column justify-content-center flex-grow-1 pt-3" style="overflow:auto">
-    <div class="flex-grow-1" style="overflow:auto">
-      <table class="table table-sm table-hover w-100" style="border-collapse: separate;border-spacing: 0;">
+  <div
+    class="d-flex flex-column justify-content-center flex-grow-1 pt-3"
+    style="overflow:auto"
+  >
+    <div
+      class="flex-grow-1"
+      style="overflow:auto"
+    >
+      <table
+        class="table table-sm table-hover w-100"
+        style="border-collapse: separate;border-spacing: 0;"
+      >
         <thead>
           <tr>
-            <th v-if="hiddenColumnKeys.length > 0" style="width:0em" class="p-0" />
-            <th v-if="canEdit || additionalActions.length > 0" style="width:0em" class="ps-2 pe-1">
+            <th
+              v-if="hiddenColumnKeys.length > 0"
+              style="width:0em"
+              class="p-0"
+            />
+            <th
+              v-if="canEdit || additionalActions.length > 0"
+              style="width:0em"
+              class="ps-2 pe-1"
+            >
               Actions
             </th>
 
@@ -15,40 +32,91 @@
               class="text-nowrap"
               scope="col"
             >
-            <slot name="columnTitle" v-bind="column"></slot>
+              <!--default column title slot - hidden for slot with specified column title-->
+              <slot
+                v-if="!$slots[`col.${column.title}`]"
+                name="col"
+                v-bind="column"
+              >
+                {{ column.title }}
+              </slot>
+
+              <!--special column title slot-->
+              <slot
+                :name="`col.${column.title}`"
+                v-bind="column"
+              />
 
               <DatatableSortIcon
                 v-model:sort-column="sortColumn"
                 :column="column"
               />
 
-              <a v-if="column.hidable" style="cursor: pointer" @click="changeColumnVisibility(column.key)">
-                <font-awesome-icon class="fa-sm ms-2" :icon="['fas', 'times']" />
+              <a
+                v-if="column.hidable"
+                style="cursor: pointer"
+                @click="changeColumnVisibility(column.key)"
+              >
+                <font-awesome-icon
+                  class="fa-sm ms-2"
+                  :icon="['fas', 'times']"
+                />
               </a>
             </th>
           </tr>
         </thead>
 
         <tbody>
-          <DatatableRow v-for="(row,idx) in processedData" :key="row.id" :row-index="idx" :row="row"
-            :columns="realColumns" :hidden-column-keys="hiddenColumnKeys"
-            :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)" :can-edit="canEdit"
-            :additional-actions="additionalActions" @start-edit-row="startEditRow" @save-row="saveRow"
-            @cancel-row="cancelRow">
-            <template v-for="(_, name) in $slots" #[name]="slotData">
-              <slot :name="name" v-bind="slotData || {}" />
+          <DatatableRow
+            v-for="(row,idx) in processedData"
+            :key="row.id"
+            :row-index="idx"
+            :row="row"
+            :columns="realColumns"
+            :hidden-column-keys="hiddenColumnKeys"
+            :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)"
+            :can-edit="canEdit"
+            :additional-actions="additionalActions"
+            @start-edit-row="startEditRow"
+            @save-row="saveRow"
+            @cancel-row="cancelRow"
+          >
+            <template
+              v-for="(_, name) in $slots"
+              #[name]="slotData"
+            >
+              <slot
+                :name="name"
+                v-bind="slotData || {}"
+              />
             </template>
           </DatatableRow>
         </tbody>
       </table>
     </div>
     <div class="mt-1 d-flex flex-row">
-      <DatatablePager v-model:currentPage="currentPage" class="flex-grow-1" :page-size="pageSize" :count="count"
-        @update-page-size="updatePageSize" />
-      <DatatableShowColumnsPicker style="max-width:15em" :columns="realColumns" :hidden-column-keys="hiddenColumnKeys"
-        @change-column-visibility="changeColumnVisibility" />
-      <div v-if="exportable" class="mt-1 ms-1">
-        <button class="btn btn-sm btn-primary" title="Download CSV File" @click="exportCSV">
+      <DatatablePager
+        v-model:currentPage="currentPage"
+        class="flex-grow-1"
+        :page-size="pageSize"
+        :count="count"
+        @update-page-size="updatePageSize"
+      />
+      <DatatableShowColumnsPicker
+        style="max-width:15em"
+        :columns="realColumns"
+        :hidden-column-keys="hiddenColumnKeys"
+        @change-column-visibility="changeColumnVisibility"
+      />
+      <div
+        v-if="exportable"
+        class="mt-1 ms-1"
+      >
+        <button
+          class="btn btn-sm btn-primary"
+          title="Download CSV File"
+          @click="exportCSV"
+        >
           <font-awesome-icon :icon="['fas', 'file-download']" />
           Download
         </button>
@@ -76,7 +144,7 @@ const props = defineProps({
   defaultSort: { type: Object, default: () => { } }, // {key: '', type: 'A/D'}
   additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
-  slotProps: { type: String, default: 'Default' }
+  slotProps: { type: String, default: 'Default' },
 });
 const emit = defineEmits(['saveRow']);
 

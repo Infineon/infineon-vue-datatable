@@ -3,6 +3,7 @@ import ExampleBasic from '../components/examples/ExampleBasic.vue';
 import ExampleEdit from '../components/examples/ExampleEdit.vue';
 import ExampleHideColumns from '../components/examples/ExampleHideColumns.vue';
 import ExampleAdditionalActions from '../components/examples/ExampleAdditionalActions.vue';
+import ExampleDynamicColumnTitle from '../components/examples/ExampleDynamicColumnTitle.vue';
 import IntroPage from '../components/IntroPage.vue';
 
 // this file initializes the vue router
@@ -25,6 +26,11 @@ const router = createRouter({
       path: '/example-edit',
       name: 'exampleEdit',
       component: ExampleEdit,
+    },
+    {
+      path: '/example-dynamic-column-title',
+      name: 'exampleDynamicColumnTitle',
+      component: ExampleDynamicColumnTitle,
     },
     {
       path: '/example-hide-columns',

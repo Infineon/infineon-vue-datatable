@@ -3,10 +3,24 @@
     <InfineonDatatable
       :data="rows"
       :columns="columns"
-      :default-sort="{ key: 'name', type: 'D' }"
+      :default-sort="{ key: 'titleWithHref', type: 'D' }"
       :can-edit="true"
       @save-row="saveRow"
-    />
+    >
+      <!--Default column title slot-->
+      <!-- <template #col="{ title }">
+        {{ title }}
+      </template> -->
+
+      <!--Special column title slot-->
+      <!-- eslint-disable-next-line vue/valid-v-slot -->
+      <template #col.TitleWithHref="{ title, link }">
+        <a
+          :href="link"
+          target="_blank"
+        >{{ title }}</a>
+      </template>
+    </InfineonDatatable>
   </div>
 </template>
 
@@ -15,10 +29,10 @@ import { computed, ref } from 'vue';
 import { InfineonDatatable } from '../../../../lib';
 
 const rows = ref([
-  { id: 1, name: 'item1', type: 'A' },
-  { id: 2, name: 'item2' },
-  { id: 3, name: 'item3', type: 'C' },
-  { id: 4, name: 'item4', type: 'B' },
+  { id: 1, titleWithHref: 'item1', type: 'A' },
+  { id: 2, titleWithHref: 'item2' },
+  { id: 3, titleWithHref: 'item3', type: 'C' },
+  { id: 4, titleWithHref: 'item4', type: 'B' },
 ]);
 
 const dropdownOptions = computed(() => [
@@ -37,7 +51,7 @@ function getTypeForRow(row) {
 const saveRow = (changedRow) => {
   // update store here
   const originalRow = rows.value.find((r) => r.id === changedRow.id);
-  originalRow.name = changedRow.name;
+  originalRow.titleWithHref = changedRow.titleWithHref;
   originalRow.type = changedRow.type;
 };
 
@@ -49,8 +63,8 @@ const columns = [
     sortType: 'NUMBER',
   },
   {
-    key: 'name',
-    title: 'Name',
+    key: 'titleWithHref',
+    title: 'TitleWithHref',
     sortable: true,
     sortType: 'STRING',
     editable: true,
