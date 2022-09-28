@@ -2,8 +2,8 @@
   <div>
     <InfineonDatatable :data="rows" :columns="columns" :default-sort="{ key: 'name', type: 'D' }" :can-edit="true"
       @save-row="saveRow">
-      <template #columnTitle="{ title, link, includesLink }">
-        <a v-if="includesLink" style="padding-right:1em"><a :href="link" target="_blank">
+      <template #columnTitle="{ title, link }">
+        <a v-if="link!==null" style="padding-right:1em"><a :href="link" target="_blank">
             {{ title }}
           </a></a>
         <a v-else style="padding-right:1em">{{title}}</a>
@@ -57,7 +57,6 @@ const columns = [
     sortable: true,
     sortType: 'STRING',
     editable: true,
-    includesLink: true,
     link: 'https://www.example.com',
   },
   {
