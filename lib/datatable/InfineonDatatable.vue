@@ -166,33 +166,36 @@ const processedData = computed(() => {
   const sortedData = data.value.slice(0);
   if (sortColumn.value && sortColumn.value.key) {
     const { key, type } = sortColumn.value;
-    const {
-      sortType,
-      valueResolver,
-      filterResolverKey,
-    } = realColumns.value.find((c) => c.key === key);
 
-    if (filterResolverKey || !valueResolver) {
-      const vKey = filterResolverKey || key;
+    const foundColumn = realColumns.value.find((c) => c.key === key);
+    if (foundColumn) {
+      const {
+        sortType,
+        valueResolver,
+        filterResolverKey,
+      } = foundColumn;
+      if (filterResolverKey || !valueResolver) {
+        const vKey = filterResolverKey || key;
 
-      if (sortType === 'NUMBER' && type === 'D') {
-        sortedData.sort((a, b) => b[vKey] - a[vKey]);
-      } else if (sortType === 'NUMBER' && type === 'A') {
-        sortedData.sort((a, b) => a[vKey] - b[vKey]);
-      } else if (sortType === 'STRING' && type === 'D') {
-        sortedData.sort((a, b) => b[vKey]?.localeCompare(a[vKey]));
-      } else if (sortType === 'STRING' && type === 'A') {
-        sortedData.sort((a, b) => a[vKey]?.localeCompare(b[vKey]));
-      }
-    } else if (valueResolver) {
-      if (sortType === 'NUMBER' && type === 'D') {
-        sortedData.sort((a, b) => valueResolver(b) - valueResolver(a));
-      } else if (sortType === 'NUMBER' && type === 'A') {
-        sortedData.sort((a, b) => valueResolver(a) - valueResolver(b));
-      } else if (sortType === 'STRING' && type === 'D') {
-        sortedData.sort((a, b) => valueResolver(b)?.localeCompare(valueResolver(a)));
-      } else if (sortType === 'STRING' && type === 'A') {
-        sortedData.sort((a, b) => valueResolver(a)?.localeCompare(valueResolver(b)));
+        if (sortType === 'NUMBER' && type === 'D') {
+          sortedData.sort((a, b) => b[vKey] - a[vKey]);
+        } else if (sortType === 'NUMBER' && type === 'A') {
+          sortedData.sort((a, b) => a[vKey] - b[vKey]);
+        } else if (sortType === 'STRING' && type === 'D') {
+          sortedData.sort((a, b) => b[vKey]?.localeCompare(a[vKey]));
+        } else if (sortType === 'STRING' && type === 'A') {
+          sortedData.sort((a, b) => a[vKey]?.localeCompare(b[vKey]));
+        }
+      } else if (valueResolver) {
+        if (sortType === 'NUMBER' && type === 'D') {
+          sortedData.sort((a, b) => valueResolver(b) - valueResolver(a));
+        } else if (sortType === 'NUMBER' && type === 'A') {
+          sortedData.sort((a, b) => valueResolver(a) - valueResolver(b));
+        } else if (sortType === 'STRING' && type === 'D') {
+          sortedData.sort((a, b) => valueResolver(b)?.localeCompare(valueResolver(a)));
+        } else if (sortType === 'STRING' && type === 'A') {
+          sortedData.sort((a, b) => valueResolver(a)?.localeCompare(valueResolver(b)));
+        }
       }
     }
   }
@@ -235,7 +238,7 @@ function startEditRow(row) {
   rowInEditMode.value = row ? { ...row } : undefined;
 }
 async function saveRow(row) {
-  console.log("saving row", row)
+  console.log('saving row', row);
   emit('saveRow', row);
   rowInEditMode.value = undefined;
 }
