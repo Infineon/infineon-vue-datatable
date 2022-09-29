@@ -23,7 +23,17 @@
               style="width:0em"
               class="ps-2 pe-1"
             >
-              Actions
+              <slot
+                :name="`column.actions`"
+                v-bind="{title: 'Actions'}"
+              />
+              <slot
+                v-if="!$slots[`column.actions`]"
+                name="column"
+                v-bind="{title: 'Actions'}"
+              >
+                Actions
+              </slot>
             </th>
 
             <th
@@ -32,11 +42,26 @@
               class="text-nowrap"
               scope="col"
             >
-              {{ column.title }}
+              <!--default column title slot - hidden for slot with specified column title-->
+              <slot
+                v-if="!$slots[`column.${column.title}`]"
+                name="column"
+                v-bind="column"
+              >
+                {{ column.title }}
+              </slot>
+
+              <!--special column title slot-->
+              <slot
+                :name="`column.${column.title}`"
+                v-bind="column"
+              />
+
               <DatatableSortIcon
                 v-model:sort-column="sortColumn"
                 :column="column"
               />
+
               <a
                 v-if="column.hidable"
                 style="cursor: pointer"
@@ -53,11 +78,9 @@
 
         <tbody>
           <DatatableRow
-
             v-for="(row,idx) in processedData"
             :key="row.id"
             :row-index="idx"
-
             :row="row"
             :columns="realColumns"
             :hidden-column-keys="hiddenColumnKeys"
@@ -128,7 +151,7 @@ const props = defineProps({
   data: { type: Array, default: () => [] },
   columns: { type: Array, default: () => [] },
   exportable: Boolean,
-  defaultSort: { type: Object, default: () => {} }, // {key: '', type: 'A/D'}
+  defaultSort: { type: Object, default: () => { } }, // {key: '', type: 'A/D'}
   additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
 });
@@ -235,7 +258,7 @@ function startEditRow(row) {
   rowInEditMode.value = row ? { ...row } : undefined;
 }
 async function saveRow(row) {
-  console.log("saving row", row)
+  console.log('saving row', row);
   emit('saveRow', row);
   rowInEditMode.value = undefined;
 }
@@ -274,8 +297,8 @@ async function exportCSV() {
 }
 
 .stickyHeader {
-  position:sticky;
-  top:0;
+  position: sticky;
+  top: 0;
   border-bottom: 2px solid black;
   background-color: white
 }
