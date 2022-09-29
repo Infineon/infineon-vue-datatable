@@ -23,7 +23,17 @@
               style="width:0em"
               class="ps-2 pe-1"
             >
-              Actions
+              <slot
+                :name="`column.actions`"
+                v-bind="{title: 'Actions'}"
+              />
+              <slot
+                v-if="!$slots[`column.actions`]"
+                name="column"
+                v-bind="{title: 'Actions'}"
+              >
+                Actions
+              </slot>
             </th>
 
             <th
@@ -34,8 +44,8 @@
             >
               <!--default column title slot - hidden for slot with specified column title-->
               <slot
-                v-if="!$slots[`col.${column.title}`]"
-                name="col"
+                v-if="!$slots[`column.${column.title}`]"
+                name="column"
                 v-bind="column"
               >
                 {{ column.title }}
@@ -43,7 +53,7 @@
 
               <!--special column title slot-->
               <slot
-                :name="`col.${column.title}`"
+                :name="`column.${column.title}`"
                 v-bind="column"
               />
 
@@ -144,7 +154,6 @@ const props = defineProps({
   defaultSort: { type: Object, default: () => { } }, // {key: '', type: 'A/D'}
   additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
-  slotProps: { type: String, default: 'Default' },
 });
 const emit = defineEmits(['saveRow']);
 

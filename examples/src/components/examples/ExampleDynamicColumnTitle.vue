@@ -8,15 +8,15 @@
       @save-row="saveRow"
     >
       <!--Default column title slot-->
-      <!-- <template #col="{ title }">
-        {{ title }}
-      </template> -->
+      <template #column="{ title }">
+        <span style="color:red">{{ title }}</span>
+      </template>
 
       <!--Special column title slot-->
       <!-- eslint-disable-next-line vue/valid-v-slot -->
-      <template #col.TitleWithHref="{ title, link }">
+      <template #column.TitleWithHref="{ title }">
         <a
-          :href="link"
+          href="https://www.example.com"
           target="_blank"
         >{{ title }}</a>
       </template>
@@ -68,7 +68,6 @@ const columns = [
     sortable: true,
     sortType: 'STRING',
     editable: true,
-    link: 'https://www.example.com',
   },
   {
     key: 'type',
