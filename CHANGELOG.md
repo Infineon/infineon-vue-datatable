@@ -1,3 +1,16 @@
+# v0.2.4 (Thu Sep 29 2022)
+
+#### 🐛 Bug Fix
+
+- 13 add option to include a link in column header name [#14](https://github.com/Infineon/infineon-vue-datatable/pull/14) ([@verena-ifx](https://github.com/verena-ifx) lechneve@ISCN5CG1201S7M.infineon.com)
+
+#### Authors: 2
+
+- [@verena-ifx](https://github.com/verena-ifx)
+- Verena Lechner (lechneve@ISCN5CG1201S7M.infineon.com)
+
+---
+
 # v0.2.3 (Tue Sep 20 2022)
 
 #### 🐛 Bug Fix
