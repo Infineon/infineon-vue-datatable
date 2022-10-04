@@ -5,7 +5,6 @@
       :model-value="shownColumns"
       :multiple="true"
       :options="columnOptions"
-      :append-to-body="true"
       :limit="0"
       placeholder="Click here to show columns"
       :limit-text="(count) => `show ${count +
@@ -44,3 +43,16 @@ function changeColumnVisibility(columnKey) {
 }
 
 </script>
+
+<style>
+
+.vue-treeselect--open-below:not(.vue-treeselect--append-to-body) .vue-treeselect__menu-container {
+  top: unset;
+  left: unset;
+  width: 15em;
+}
+
+.vue-treeselect--open-below {
+  position: unset;
+}
+</style>
