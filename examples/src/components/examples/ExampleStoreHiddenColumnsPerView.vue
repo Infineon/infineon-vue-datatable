@@ -10,7 +10,6 @@
       label="label"
       :calculate-position="withPopper"
     />
-    {{ localStorageKey === null ? 'test' : localStorageKey }}
 
     <InfineonDatatable
       :data="rows"
