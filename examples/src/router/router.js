@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import ExampleBasic from '../components/examples/ExampleBasic.vue';
 import ExampleEdit from '../components/examples/ExampleEdit.vue';
 import ExampleHideColumns from '../components/examples/ExampleHideColumns.vue';
+import ExampleStoreHiddenColumnsPerView from '../components/examples/ExampleStoreHiddenColumnsPerView.vue';
 import ExampleAdditionalActions from '../components/examples/ExampleAdditionalActions.vue';
 import ExampleDynamicColumnTitle from '../components/examples/ExampleDynamicColumnTitle.vue';
 import IntroPage from '../components/IntroPage.vue';
@@ -36,6 +37,11 @@ const router = createRouter({
       path: '/example-hide-columns',
       name: 'exampleHideColumns',
       component: ExampleHideColumns,
+    },
+    {
+      path: '/example-store-hidden-columns-per-view',
+      name: 'exampleStoreHiddenColumnsPerView',
+      component: ExampleStoreHiddenColumnsPerView,
     },
     {
       path: '/example-additional-Actions',

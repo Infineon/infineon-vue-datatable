@@ -137,7 +137,7 @@
 
 <script setup>
 import {
-  toRefs, computed, ref, onMounted, watch,
+  toRefs, computed, ref, watchEffect, watch,
 } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -150,6 +150,7 @@ const props = defineProps({
   canEdit: Boolean,
   data: { type: Array, default: () => [] },
   columns: { type: Array, default: () => [] },
+  localStorageKey: { type: String, default: undefined },
   exportable: Boolean,
   defaultSort: { type: Object, default: () => { } }, // {key: '', type: 'A/D'}
   additionalActions: { type: Array, default: () => [] },
@@ -157,8 +158,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['saveRow']);
 
-const { data, columns } = toRefs(props);
-
+const { data, columns, localStorageKey } = toRefs(props);
 const sortColumn = ref(props.defaultSort);
 const currentPage = ref(0);
 const pageSize = ref(10);
@@ -166,7 +166,6 @@ const rowInEditMode = ref(undefined);
 const count = ref(0);
 
 const hiddenColumnKeys = ref([]);
-
 const realColumns = computed(() => columns.value
   .filter((c) => c.visible === undefined || c.visible === false));
 
@@ -228,10 +227,10 @@ const processedData = computed(() => {
   return sliced;
 });
 
-// we listen to column changes. so each table will have it's own storage key
-const hiddenColumnsLocalStorageKey = computed(() => realColumns
+// store hidden columns for a predefined property localStorageKey - if not defined, use default
+const hiddenColumnsLocalStorageKey = computed(() => localStorageKey.value || realColumns
   .value.map((c) => c.key).sort().join());
-onMounted(() => {
+watchEffect(() => {
   if (localStorage.getItem(hiddenColumnsLocalStorageKey.value)) {
     try {
       hiddenColumnKeys.value = JSON
@@ -251,7 +250,7 @@ function changeColumnVisibility(columnKey) {
   } else {
     hiddenColumnKeys.value.push(columnKey);
   }
-  localStorage.setItem(hiddenColumnsLocalStorageKey.value, JSON.stringify(hiddenColumnKeys.value));
+  localStorage.setItem(localStorageKey.value, JSON.stringify(hiddenColumnKeys.value));
 }
 
 function startEditRow(row) {
