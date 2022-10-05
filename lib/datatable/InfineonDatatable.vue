@@ -14,7 +14,7 @@
         <thead>
           <tr>
             <th
-              v-if="hiddenColumnKeys.length > 0"
+              v-if="hiddenColumns.length > 0"
               style="width:0em"
               class="p-0"
             />
@@ -166,6 +166,9 @@ const rowInEditMode = ref(undefined);
 const count = ref(0);
 
 const hiddenColumnKeys = ref([]);
+
+const hiddenColumns = computed(() => columns.value
+  .filter((c) => c.hidable && hiddenColumnKeys.value.includes(c.key)));
 
 const realColumns = computed(() => columns.value
   .filter((c) => c.visible === undefined || c.visible === false));
