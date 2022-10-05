@@ -1,3 +1,15 @@
+# v0.3.0 (Wed Oct 05 2022)
+
+#### 🚀 Enhancement
+
+- 12 replace dropdown for field select by something better looking [#13](https://github.com/Infineon/infineon-vue-datatable/pull/13) ([@kaiwerther](https://github.com/kaiwerther))
+
+#### Authors: 1
+
+- Kai Werther ([@kaiwerther](https://github.com/kaiwerther))
+
+---
+
 # v0.2.4 (Thu Sep 29 2022)
 
 #### 🐛 Bug Fix
