@@ -4,3 +4,6 @@
 /examples/dist/
 /dist/
 /.vscode/
+
+# VS Code related files and folders
+.vscode/
