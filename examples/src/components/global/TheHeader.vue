@@ -91,6 +91,14 @@ const links = ref([
         routeName: 'exampleHideColumns',
       },
       {
+        label: 'Conditionally Hideable Columns',
+        routeName: 'exampleConditionallyHideColumns',
+      },
+      {
+        label: 'Hideable Columns per view',
+        routeName: 'exampleStoreHiddenColumnsPerView',
+      },
+      {
         label: 'Additional Actions',
         routeName: 'exampleAdditionalActions',
       },

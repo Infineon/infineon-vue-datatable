@@ -14,7 +14,7 @@
         <thead>
           <tr>
             <th
-              v-if="hiddenColumnKeys.length > 0"
+              v-if="hiddenColumns.length > 0"
               style="width:0em"
               class="p-0"
             />
@@ -137,7 +137,7 @@
 
 <script setup>
 import {
-  toRefs, computed, ref, onMounted, watch,
+  toRefs, computed, ref, watchEffect, watch,
 } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -150,6 +150,7 @@ const props = defineProps({
   canEdit: Boolean,
   data: { type: Array, default: () => [] },
   columns: { type: Array, default: () => [] },
+  localStorageKey: { type: String, default: undefined },
   exportable: Boolean,
   defaultSort: { type: Object, default: () => { } }, // {key: '', type: 'A/D'}
   additionalActions: { type: Array, default: () => [] },
@@ -157,8 +158,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['saveRow']);
 
-const { data, columns } = toRefs(props);
-
+const { data, columns, localStorageKey } = toRefs(props);
 const sortColumn = ref(props.defaultSort);
 const currentPage = ref(0);
 const pageSize = ref(10);
@@ -166,6 +166,9 @@ const rowInEditMode = ref(undefined);
 const count = ref(0);
 
 const hiddenColumnKeys = ref([]);
+
+const hiddenColumns = computed(() => columns.value
+  .filter((c) => c.hidable && hiddenColumnKeys.value.includes(c.key)));
 
 const realColumns = computed(() => columns.value
   .filter((c) => c.visible === undefined || c.visible === false));
@@ -189,33 +192,36 @@ const processedData = computed(() => {
   const sortedData = data.value.slice(0);
   if (sortColumn.value && sortColumn.value.key) {
     const { key, type } = sortColumn.value;
-    const {
-      sortType,
-      valueResolver,
-      filterResolverKey,
-    } = realColumns.value.find((c) => c.key === key);
 
-    if (filterResolverKey || !valueResolver) {
-      const vKey = filterResolverKey || key;
+    const foundColumn = realColumns.value.find((c) => c.key === key);
+    if (foundColumn) {
+      const {
+        sortType,
+        valueResolver,
+        filterResolverKey,
+      } = foundColumn;
+      if (filterResolverKey || !valueResolver) {
+        const vKey = filterResolverKey || key;
 
-      if (sortType === 'NUMBER' && type === 'D') {
-        sortedData.sort((a, b) => b[vKey] - a[vKey]);
-      } else if (sortType === 'NUMBER' && type === 'A') {
-        sortedData.sort((a, b) => a[vKey] - b[vKey]);
-      } else if (sortType === 'STRING' && type === 'D') {
-        sortedData.sort((a, b) => b[vKey]?.localeCompare(a[vKey]));
-      } else if (sortType === 'STRING' && type === 'A') {
-        sortedData.sort((a, b) => a[vKey]?.localeCompare(b[vKey]));
-      }
-    } else if (valueResolver) {
-      if (sortType === 'NUMBER' && type === 'D') {
-        sortedData.sort((a, b) => valueResolver(b) - valueResolver(a));
-      } else if (sortType === 'NUMBER' && type === 'A') {
-        sortedData.sort((a, b) => valueResolver(a) - valueResolver(b));
-      } else if (sortType === 'STRING' && type === 'D') {
-        sortedData.sort((a, b) => valueResolver(b)?.localeCompare(valueResolver(a)));
-      } else if (sortType === 'STRING' && type === 'A') {
-        sortedData.sort((a, b) => valueResolver(a)?.localeCompare(valueResolver(b)));
+        if (sortType === 'NUMBER' && type === 'D') {
+          sortedData.sort((a, b) => b[vKey] - a[vKey]);
+        } else if (sortType === 'NUMBER' && type === 'A') {
+          sortedData.sort((a, b) => a[vKey] - b[vKey]);
+        } else if (sortType === 'STRING' && type === 'D') {
+          sortedData.sort((a, b) => b[vKey]?.localeCompare(a[vKey]));
+        } else if (sortType === 'STRING' && type === 'A') {
+          sortedData.sort((a, b) => a[vKey]?.localeCompare(b[vKey]));
+        }
+      } else if (valueResolver) {
+        if (sortType === 'NUMBER' && type === 'D') {
+          sortedData.sort((a, b) => valueResolver(b) - valueResolver(a));
+        } else if (sortType === 'NUMBER' && type === 'A') {
+          sortedData.sort((a, b) => valueResolver(a) - valueResolver(b));
+        } else if (sortType === 'STRING' && type === 'D') {
+          sortedData.sort((a, b) => valueResolver(b)?.localeCompare(valueResolver(a)));
+        } else if (sortType === 'STRING' && type === 'A') {
+          sortedData.sort((a, b) => valueResolver(a)?.localeCompare(valueResolver(b)));
+        }
       }
     }
   }
@@ -228,10 +234,10 @@ const processedData = computed(() => {
   return sliced;
 });
 
-// we listen to column changes. so each table will have it's own storage key
-const hiddenColumnsLocalStorageKey = computed(() => realColumns
+// store hidden columns for a predefined property localStorageKey - if not defined, use default
+const hiddenColumnsLocalStorageKey = computed(() => localStorageKey.value || realColumns
   .value.map((c) => c.key).sort().join());
-onMounted(() => {
+watchEffect(() => {
   if (localStorage.getItem(hiddenColumnsLocalStorageKey.value)) {
     try {
       hiddenColumnKeys.value = JSON
@@ -251,14 +257,13 @@ function changeColumnVisibility(columnKey) {
   } else {
     hiddenColumnKeys.value.push(columnKey);
   }
-  localStorage.setItem(hiddenColumnsLocalStorageKey.value, JSON.stringify(hiddenColumnKeys.value));
+  localStorage.setItem(localStorageKey.value, JSON.stringify(hiddenColumnKeys.value));
 }
 
 function startEditRow(row) {
   rowInEditMode.value = row ? { ...row } : undefined;
 }
 async function saveRow(row) {
-  console.log('saving row', row);
   emit('saveRow', row);
   rowInEditMode.value = undefined;
 }

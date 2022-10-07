@@ -97,13 +97,13 @@
     :class="{'row-odd': rowIndex % 2 === 0 }"
   >
     <td
-      :colspan="columns.length"
+      :colspan="calculateColspan"
       class="p-0 m-0"
-      :class="{'border-0': !expanded}"
+      :class="{'border-0': !expanded || !hiddenColumns.length > 0}"
     >
       <div
         class="subrow d-flex ms-3 my-0 py-0 px-1 me-2 flex-wrap"
-        :class="{'expanded my-2': expanded}"
+        :class="{'expanded my-2': expanded && hiddenColumns.length > 0}"
       >
         <table class="table table-sm">
           <tr class="p-0">
@@ -159,14 +159,26 @@ const props = defineProps({
 });
 
 const {
-  row, columns, rowIndex, hiddenColumnKeys,
+  row, columns, rowIndex, hiddenColumnKeys, canEdit, additionalActions,
 } = toRefs(props);
 const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick']);
 
 const shownColumns = computed(() => columns.value
   .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
+
 const hiddenColumns = computed(() => columns.value
   .filter((c) => c.hidable && hiddenColumnKeys.value.includes(c.key)));
+
+const calculateColspan = computed(() => {
+  let colspan = shownColumns.value.length;
+  if (canEdit || additionalActions.length > 0) {
+    colspan += 1;
+  }
+  if (hiddenColumns.value.length > 0) {
+    colspan += 1;
+  }
+  return colspan;
+});
 // neues datenobjekt anlegen
 const editRow = ref(row.value);
 const expanded = ref(false);

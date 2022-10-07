@@ -27,10 +27,10 @@
     "datatable"
   ],
   "scripts": {
-    "dev": "vite --config vite.examples.config.js --port 5002",
+    "dev": "vite --config vite.examples.config.js --port 5003",
     "build:lib": "vite build --config vite.lib.config.js",
     "build:examples": "vite build --config vite.examples.config.js",
-    "preview": "npm run build:examples && vite preview --port 5002"
+    "preview": "npm run build:examples && vite preview --port 5003"
   },
   "author": "Verena Lechner, Kai Werther",
   "license": "MIT",
