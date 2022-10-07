@@ -1,3 +1,21 @@
+# v0.4.0 (Fri Oct 07 2022)
+
+#### 🚀 Enhancement
+
+- merge with branch 16 [#17](https://github.com/Infineon/infineon-vue-datatable/pull/17) (hboifx)
+
+#### 🐛 Bug Fix
+
+- 15 calculation of the column length [#16](https://github.com/Infineon/infineon-vue-datatable/pull/16) (hboifx vlifx [@hboifx](https://github.com/hboifx))
+
+#### Authors: 3
+
+- [@hboifx](https://github.com/hboifx)
+- hboifx (hboifx)
+- vlifx (vlifx)
+
+---
+
 # v0.3.0 (Wed Oct 05 2022)
 
 #### 🚀 Enhancement
