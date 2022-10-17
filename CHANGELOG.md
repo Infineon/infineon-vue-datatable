@@ -1,3 +1,16 @@
+# v0.4.1 (Mon Oct 17 2022)
+
+#### 🐛 Bug Fix
+
+- Example for CSV export added, [#20](https://github.com/Infineon/infineon-vue-datatable/pull/20) (hboifx [@hboifx](https://github.com/hboifx))
+
+#### Authors: 2
+
+- [@hboifx](https://github.com/hboifx)
+- hboifx (hboifx)
+
+---
+
 # v0.4.0 (Fri Oct 07 2022)
 
 #### 🚀 Enhancement
