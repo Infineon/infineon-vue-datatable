@@ -275,12 +275,12 @@ function updatePageSize(size) {
 }
 
 async function exportCSV() {
-  const titles = shownColumns.value.map((col) => col.title);
+  const titles = shownColumns.value.map((col) => `"${col.title}"`);
   let csv = titles.join(',');
   csv += '\n';
   data.value.forEach((row) => {
     const values = shownColumns.value
-      .map((col) => (col.valueResolver ? col.valueResolver(row) : row[col.key]));
+      .map((col) => (col.valueResolver ? `"${col.valueResolver(row)}"` : `"${row[col.key]}"`));
     csv += values.join(',');
     csv += '\n';
   });
