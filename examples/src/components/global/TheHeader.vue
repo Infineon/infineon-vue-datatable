@@ -102,6 +102,10 @@ const links = ref([
         label: 'Additional Actions',
         routeName: 'exampleAdditionalActions',
       },
+      {
+        label: 'CSV Export',
+        routeName: 'exampleCsvExport',
+      },
     ],
   },
 ]);

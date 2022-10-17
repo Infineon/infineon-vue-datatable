@@ -6,6 +6,7 @@ import ExampleStoreHiddenColumnsPerView from '../components/examples/ExampleStor
 import ExampleAdditionalActions from '../components/examples/ExampleAdditionalActions.vue';
 import ExampleDynamicColumnTitle from '../components/examples/ExampleDynamicColumnTitle.vue';
 import ExampleConditionallyHideColumns from '../components/examples/ExampleConditionallyHideColumns.vue';
+import ExampleCsvExport from '../components/examples/ExampleCsvExport.vue';
 import IntroPage from '../components/IntroPage.vue';
 
 // this file initializes the vue router
@@ -53,6 +54,11 @@ const router = createRouter({
       path: '/example-conditionally-hide-columns',
       name: 'exampleConditionallyHideColumns',
       component: ExampleConditionallyHideColumns,
+    },
+    {
+      path: '/example-csv-export',
+      name: 'exampleCsvExport',
+      component: ExampleCsvExport,
     },
   ],
 });
