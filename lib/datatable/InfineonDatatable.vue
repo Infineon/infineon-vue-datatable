@@ -282,7 +282,7 @@ async function exportCSV() {
     const values = shownColumns.value
       .map((col) => (col.valueResolver
         ? `"${(col.valueResolver(row).replace && col.valueResolver(row).replace(/(["])/g, '"$1')) || col.valueResolver(row)}"`
-        : `"${(row[col.key].replace && row[col.key].replace?.(/(["])/g, '"$1')) || row[col.key]}"`));
+        : `"${(row[col.key] && row[col.key].replace && row[col.key].replace?.(/(["])/g, '"$1')) || row[col.key]}"`));
     csv += values.join(',');
     csv += '\n';
   });
