@@ -275,13 +275,13 @@ function updatePageSize(size) {
 }
 
 async function exportCSV() {
-  const titles = shownColumns.value.map((col) => `"${(col.title.replace && col.title.replace(/(["])/g, '"$1')) || col.title}"`);
+  const titles = shownColumns.value.map((col) => `"${(col.title && col.title.replace && col.title.replace(/(["])/g, '"$1')) || col.title}"`);
   let csv = titles.join(',');
   csv += '\n';
   data.value.forEach((row) => {
     const values = shownColumns.value
       .map((col) => (col.valueResolver
-        ? `"${(col.valueResolver(row).replace && col.valueResolver(row).replace(/(["])/g, '"$1')) || col.valueResolver(row)}"`
+        ? `"${(col.valueResolver(row) && col.valueResolver(row).replace && col.valueResolver(row).replace(/(["])/g, '"$1')) || col.valueResolver(row)}"`
         : `"${(row[col.key] && row[col.key].replace && row[col.key].replace?.(/(["])/g, '"$1')) || row[col.key]}"`));
     csv += values.join(',');
     csv += '\n';
