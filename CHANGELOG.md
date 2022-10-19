@@ -1,3 +1,16 @@
+# v0.5.0 (Wed Oct 19 2022)
+
+#### 🚀 Enhancement
+
+- modified vue-treeselect class only for the showColumns treeselect com… [#23](https://github.com/Infineon/infineon-vue-datatable/pull/23) (vlifx [@verena-ifx](https://github.com/verena-ifx))
+
+#### Authors: 2
+
+- [@verena-ifx](https://github.com/verena-ifx)
+- vlifx (vlifx)
+
+---
+
 # v0.4.1 (Mon Oct 17 2022)
 
 #### 🐛 Bug Fix
