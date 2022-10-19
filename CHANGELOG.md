@@ -1,3 +1,16 @@
+# v0.5.1 (Wed Oct 19 2022)
+
+#### 🐛 Bug Fix
+
+- Handling of single and double quotes, backslashes and newlines [#22](https://github.com/Infineon/infineon-vue-datatable/pull/22) (hboifx [@hboifx](https://github.com/hboifx))
+
+#### Authors: 2
+
+- [@hboifx](https://github.com/hboifx)
+- hboifx (hboifx)
+
+---
+
 # v0.5.0 (Wed Oct 19 2022)
 
 #### 🚀 Enhancement
