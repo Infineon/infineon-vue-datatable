@@ -46,13 +46,13 @@ function changeColumnVisibility(columnKey) {
 
 <style>
 
-.vue-treeselect--open-below:not(.vue-treeselect--append-to-body) .vue-treeselect__menu-container {
+#showColumnSelect.vue-treeselect--open-below:not(.vue-treeselect--append-to-body) .vue-treeselect__menu-container {
   top: unset;
   left: unset;
   width: 15em;
 }
 
-.vue-treeselect--open-below {
+#showColumnSelect.vue-treeselect--open-below {
   position: unset;
 }
 </style>
