@@ -90,6 +90,7 @@
             @start-edit-row="startEditRow"
             @save-row="saveRow"
             @cancel-row="cancelRow"
+            @edit-mode-value="editModeValue"
           >
             <template
               v-for="(_, name) in $slots"
@@ -156,7 +157,7 @@ const props = defineProps({
   additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
 });
-const emit = defineEmits(['saveRow']);
+const emit = defineEmits(['saveRow', 'editModeValue']);
 
 const { data, columns, localStorageKey } = toRefs(props);
 const sortColumn = ref(props.defaultSort);
@@ -266,6 +267,9 @@ function startEditRow(row) {
 async function saveRow(row) {
   emit('saveRow', row);
   rowInEditMode.value = undefined;
+}
+function editModeValue(row) {
+  emit('editModeValue', row);
 }
 function cancelRow() {
   rowInEditMode.value = undefined;
