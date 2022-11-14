@@ -163,7 +163,7 @@ const props = defineProps({
 const {
   row, columns, rowIndex, hiddenColumnKeys, canEdit, additionalActions,
 } = toRefs(props);
-const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick']);
+const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick', 'editRow', 'editModeValue']);
 
 const shownColumns = computed(() => columns.value
   .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));

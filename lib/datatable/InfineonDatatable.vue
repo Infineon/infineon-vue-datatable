@@ -263,6 +263,7 @@ function changeColumnVisibility(columnKey) {
 
 function startEditRow(row) {
   rowInEditMode.value = row ? { ...row } : undefined;
+  emit('editModeValue', row);
 }
 async function saveRow(row) {
   emit('saveRow', row);
@@ -271,6 +272,7 @@ async function saveRow(row) {
 function editModeValue(row) {
   emit('editModeValue', row);
 }
+
 function cancelRow() {
   rowInEditMode.value = undefined;
 }
