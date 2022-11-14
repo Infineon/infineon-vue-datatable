@@ -6,6 +6,7 @@
       :default-sort="{ key: 'name', type: 'D' }"
       :can-edit="true"
       @save-row="saveRow"
+      @edit-mode-value="editModeValue"
     />
   </div>
 </template>
@@ -33,6 +34,14 @@ const dropdownOptions = computed(() => [
 function getTypeForRow(row) {
   return dropdownOptions.value.find((r) => r.id === row.type)?.label;
 }
+
+const editModeValue = (changedRow) => {
+  // update store here
+  const originalRow = rows.value.find((r) => r.id === changedRow.id);
+  console.log('get current row vals while in editMode:', originalRow, changedRow);
+  originalRow.name = changedRow.name;
+  originalRow.type = changedRow.type;
+};
 
 const saveRow = (changedRow) => {
   // update store here
