@@ -1,7 +1,40 @@
 <template>
   <td style="border-collapse: separate !important;">
-    <select
+    <!-- <slot
+      v-if="rowIsInEditMode && column.editable && column.possibleValues && column.template"
+      :name="`column(${column.key})`"
+      :row="row"
+    >
+      <span v-html="column.template" />
+    </slot> -->
+
+    <TreeSelect
       v-if="rowIsInEditMode && column.editable && column.possibleValues"
+      :model-value="editValue"
+      :options="normalizedOptions"
+      :multiple="false"
+      :default-expand-level="1"
+      placeholder="Please select"
+      :clearable="true"
+      @update:model-value="updateSelectedValue($event)"
+    >
+      <!--<template>
+         <font-awesome-icon
+          v-if="node.level === 1"
+          class="fa-sm fa-fw text-primary"
+          :icon="['fas', 'building']"
+        />
+        <font-awesome-icon
+          v-if="node.level === 2"
+          class="fa-sm fa-fw text-primary"
+          :icon="['fas', 'sitemap']"
+        />
+        {{ node.label }}
+      </template> -->
+    </TreeSelect>
+
+    <!-- <select
+      v-else-if="rowIsInEditMode && column.editable && column.possibleValues"
       :id="column.key"
       class="form-control form-control-sm"
       style="min-width:15em;max-width:20em;"
@@ -24,7 +57,8 @@
       >
         {{ possibleValue.label }}
       </option>
-    </select>
+    </select> -->
+
     <textarea
       v-else-if="rowIsInEditMode && column.editable"
       class="form-control form-control-sm"
@@ -71,6 +105,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   toRefs, computed,
 } from 'vue';
+import { TreeSelect } from '../plugins/treeView';
 
 const props = defineProps({
   row: { type: Object, default: () => {} },
@@ -92,11 +127,22 @@ const fieldValue = computed(() => {
 });
 
 function updateSelectedValue($event) {
-  emit('update:editValue', $event.target.value);
+  emit('update:editValue', $event);
 }
 
 async function onClick() {
   column.value.action(row.value);
 }
+
+const normalizedOptions = computed(() => (column.value.possibleValues?.length > 0 ? [{ id: 'all', label: 'All', children: column.value.possibleValues }] : []));
+
+// const sortedOptions = computed(() => (column.possibleValues?.length > 0 ? [{
+//   id: 'all',
+//   label: 'All',
+//   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+//   children: column.possibleValues?.sort(
+//     (a, b) => a.label?.localeCompare(b.label),
+//   ),
+// }] : []));
 
 </script>

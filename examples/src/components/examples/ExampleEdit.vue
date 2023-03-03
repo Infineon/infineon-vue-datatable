@@ -58,11 +58,13 @@ const columns = [
   {
     key: 'type',
     title: 'Type',
+    name: 'type',
     sortable: true,
     sortType: 'STRING',
     editable: true,
     valueResolver: (row) => getTypeForRow(row),
     possibleValues: dropdownOptions.value,
+    // template: false,
   },
 ];
 
