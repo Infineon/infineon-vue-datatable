@@ -136,13 +136,4 @@ async function onClick() {
 
 const normalizedOptions = computed(() => (column.value.possibleValues?.length > 0 ? [{ id: 'all', label: 'All', children: column.value.possibleValues }] : []));
 
-// const sortedOptions = computed(() => (column.possibleValues?.length > 0 ? [{
-//   id: 'all',
-//   label: 'All',
-//   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-//   children: column.possibleValues?.sort(
-//     (a, b) => a.label?.localeCompare(b.label),
-//   ),
-// }] : []));
-
 </script>
