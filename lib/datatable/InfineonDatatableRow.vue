@@ -81,6 +81,7 @@
       :column="column"
       :row-is-in-edit-mode="rowIsInEditMode"
       @input="editModeValue"
+      @update="editModeValue"
     >
       <template
         v-for="(_, name) in $slots"
@@ -125,6 +126,7 @@
               :column="column"
               :row-is-in-edit-mode="rowIsInEditMode"
               @input="editModeValue"
+              @update="editModeValue"
             >
               <template
                 v-for="(_, name) in $slots"
