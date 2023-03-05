@@ -81,7 +81,7 @@
       :column="column"
       :row-is-in-edit-mode="rowIsInEditMode"
       @input="editModeValue"
-      @update="editModeValue"
+      @update-selected-value="editModeValue"
     >
       <template
         v-for="(_, name) in $slots"
@@ -126,7 +126,7 @@
               :column="column"
               :row-is-in-edit-mode="rowIsInEditMode"
               @input="editModeValue"
-              @update="editModeValue"
+              @update-selected-value="editModeValue"
             >
               <template
                 v-for="(_, name) in $slots"
@@ -199,6 +199,7 @@ function editModeValue() {
   // console.log('get current row while in editMode', editRow.value);
   emit('editModeValue', editRow.value);
 }
+
 function cancelRow() {
   emit('cancelRow');
 }

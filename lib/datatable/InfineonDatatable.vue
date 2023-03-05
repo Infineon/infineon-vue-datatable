@@ -272,6 +272,7 @@ async function saveRow(row) {
 function editModeValue(row) {
   emit('editModeValue', row);
 }
+
 function cancelRow() {
   rowInEditMode.value = undefined;
 }

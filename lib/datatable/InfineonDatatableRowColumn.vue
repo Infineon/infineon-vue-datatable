@@ -17,6 +17,7 @@
       placeholder="Please select"
       :clearable="true"
       @update:model-value="updateSelectedValue($event)"
+      @input:model-value="updateSelectedValue($event)"
     >
       <!--<template>
          <font-awesome-icon
@@ -117,7 +118,7 @@ const {
   row, column, editValue,
 } = toRefs(props);
 
-const emit = defineEmits(['update:editValue']);
+const emit = defineEmits(['update:editValue', 'updateSelectedValue']);
 const fieldReadOnly = (column.value.key === 'statusId' && (row.value.sourceReadOnly || row.value.sourceSolved));
 
 const fieldValue = computed(() => {
@@ -126,9 +127,10 @@ const fieldValue = computed(() => {
   return valueResolver ? valueResolver(row.value) : row.value[key];
 });
 
-function updateSelectedValue($event) {
-  console.log('treeselect update', $event);
-  emit('update:editValue', $event);
+function updateSelectedValue(selected) {
+  // console.log('treeselect update', selected);
+  emit('update:editValue', selected);
+  emit('updateSelectedValue', selected);
 }
 
 async function onClick() {
