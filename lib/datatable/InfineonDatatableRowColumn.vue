@@ -127,6 +127,7 @@ const fieldValue = computed(() => {
 });
 
 function updateSelectedValue($event) {
+  console.log('treeselect update', $event);
   emit('update:editValue', $event);
 }
 
