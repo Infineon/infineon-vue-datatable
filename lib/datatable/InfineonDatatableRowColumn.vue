@@ -1,13 +1,5 @@
 <template>
   <td style="border-collapse: separate !important;">
-    <!-- <slot
-      v-if="rowIsInEditMode && column.editable && column.possibleValues && column.template"
-      :name="`column(${column.key})`"
-      :row="row"
-    >
-      <span v-html="column.template" />
-    </slot> -->
-
     <TreeSelect
       v-if="rowIsInEditMode && column.editable && column.possibleValues"
       :model-value="editValue"
@@ -17,48 +9,8 @@
       placeholder="Please select"
       :clearable="true"
       @update:model-value="updateSelectedValue($event)"
-      @input:model-value="updateSelectedValue($event)"
-    >
-      <!--<template>
-         <font-awesome-icon
-          v-if="node.level === 1"
-          class="fa-sm fa-fw text-primary"
-          :icon="['fas', 'building']"
-        />
-        <font-awesome-icon
-          v-if="node.level === 2"
-          class="fa-sm fa-fw text-primary"
-          :icon="['fas', 'sitemap']"
-        />
-        {{ node.label }}
-      </template> -->
-    </TreeSelect>
-
-    <!-- <select
-      v-else-if="rowIsInEditMode && column.editable && column.possibleValues"
-      :id="column.key"
-      class="form-control form-control-sm"
-      style="min-width:15em;max-width:20em;"
-      :filter-key="editValue"
-      :value="editValue"
-      :disabled="fieldReadOnly ? true : false"
-      @input="updateSelectedValue($event)"
-    >
-      <option
-        :value="''"
-        selected
-        disabled
-      >
-        Please select...
-      </option>
-      <option
-        v-for="possibleValue in column.possibleValues"
-        :key="possibleValue.id"
-        :value="possibleValue.id"
-      >
-        {{ possibleValue.label }}
-      </option>
-    </select> -->
+      @input:model-value="updateInputOfSelect($event)"
+    />
 
     <textarea
       v-else-if="rowIsInEditMode && column.editable"
@@ -127,9 +79,11 @@ const fieldValue = computed(() => {
   return valueResolver ? valueResolver(row.value) : row.value[key];
 });
 
-function updateSelectedValue(selected) {
-  // console.log('treeselect update', selected);
+function updateInputOfSelect(selected) {
   emit('update:editValue', selected);
+}
+
+function updateSelectedValue(selected) {
   emit('updateSelectedValue', selected);
 }
 
