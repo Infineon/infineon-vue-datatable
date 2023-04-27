@@ -275,6 +275,7 @@ function updatePageSize(size) {
 }
 
 async function exportCSV() {
+  console.log('shown cols ', shownColumns.value);
   const titles = shownColumns.value.map((col) => `"${(col.title && col.title.replace && col.title.replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || col.title}"`);
   let csv = titles.join(',');
   csv += '\n';
