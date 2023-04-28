@@ -35,6 +35,7 @@ const emit = defineEmits(['changeColumnVisibility']);
 
 const shownColumns = computed(() => columns.value
   .filter((c) => !hiddenColumnKeys.value.includes(c.key) && c.hidable).map((c) => c.key));
+
 const columnOptions = computed(() => columns.value.filter((c) => c.hidable)
   .map((c) => ({ id: c.key, label: c.title, isDisabled: !c.hidable })));
 
