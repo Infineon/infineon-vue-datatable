@@ -6,9 +6,6 @@
   "repository": "https://github.com/infineon/infineon-vue-datable",
   "description": "Infineon Vue Datatable on Bootstrap basis",
   "type": "module",
-  "publishConfig": {
-    "access": "public"
-  },
   "files": [
     "dist"
   ],
