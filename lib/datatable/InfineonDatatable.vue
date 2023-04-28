@@ -155,10 +155,14 @@ const props = defineProps({
   defaultSort: { type: Object, default: () => { } }, // {key: '', type: 'A/D'}
   additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
+  shownInExportOnly: { type: Object, default: () => { 'Shown in export only'; } },
+
 });
 const emit = defineEmits(['saveRow']);
 
-const { data, columns, localStorageKey } = toRefs(props);
+const {
+  data, columns, localStorageKey, shownInExportOnly,
+} = toRefs(props);
 const sortColumn = ref(props.defaultSort);
 const currentPage = ref(0);
 const pageSize = ref(10);
@@ -173,8 +177,12 @@ const hiddenColumns = computed(() => columns.value
 const realColumns = computed(() => columns.value
   .filter((c) => c.visible === undefined || c.visible === false));
 
-const shownColumns = computed(() => realColumns.value
-  .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
+const shownColumns = computed(() => {
+  const cols = realColumns.value
+    .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key));
+
+  return cols;
+});
 
 // reset page & item count when data changes
 watch(
@@ -273,17 +281,27 @@ function cancelRow() {
 function updatePageSize(size) {
   pageSize.value = size;
 }
-
 async function exportCSV() {
-  console.log('shown cols ', shownColumns.value);
-  const titles = shownColumns.value.map((col) => `"${(col.title && col.title.replace && col.title.replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || col.title}"`);
+  const shownInExportOnlyColumnKey = 'shownInExportOnly';
+  const shownInExportOnlyColumnTitle = `${shownInExportOnly.value.title}`; // Title for the hidden column to be exported is being passed from the parent component as a prop
+  const columnsToExport = [...shownColumns.value];
+
+  // Add the custom column title to the CSV header
+  const titles = columnsToExport.map((col) => `"${(col.title && col.title.replace && col.title.replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || col.title}"`);
+  titles.push(shownInExportOnlyColumnTitle);
   let csv = titles.join(',');
   csv += '\n';
+
   data.value.forEach((row) => {
-    const values = shownColumns.value
+    const values = columnsToExport
       .map((col) => (col.valueResolver
         ? `"${(col.valueResolver(row) && col.valueResolver(row).replace && col.valueResolver(row).replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || col.valueResolver(row)}"`
         : `"${(row[col.key] && row[col.key].replace && row[col.key].replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || row[col.key]}"`));
+
+    // Add the custom column data to the current row
+    const customColumnData = row[shownInExportOnlyColumnKey];
+    values.push(`"${(customColumnData && customColumnData.replace && customColumnData.replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || customColumnData}"`);
+
     csv += values.join(',');
     csv += '\n';
   });
@@ -296,6 +314,7 @@ async function exportCSV() {
   link.click();
   URL.revokeObjectURL(link.href);
 }
+
 </script>
 
 <style scoped>

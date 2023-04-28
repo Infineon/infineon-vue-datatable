@@ -5,15 +5,10 @@
       :columns="columns"
       :default-sort="{ key: 'name', type: 'D' }"
       :exportable="true"
+      :shown-in-export-only="{ title: 'Custom column title only shown in export'}"
     >
-      <!-- eslint-disable-next-line vue/valid-v-slot -->
-      <template #column.Hidden="{ title, link }">
-        <a
-          :href="link"
-          target="_blank"
-        >{{ title }}</a>
-      </template>
-    </InfineonDatatable>
+      />
+    </infineondatatable>
   </div>
 </template>
 
@@ -24,7 +19,7 @@ import { InfineonDatatable } from '../../../../lib';
 const rows = ref([
   {
     id: 1,
-    hidden: 'hidden text',
+    shownInExportOnly: 'hidden text 1',
     name: 'item1',
     type: 'Label A',
     column_a: 'Lorem',
@@ -37,7 +32,7 @@ const rows = ref([
   },
   {
     id: 2,
-    hidden: 'hidden text',
+    shownInExportOnly: 'hidden text 2',
     name: 'item2',
     column_a: 'Lorem',
     column_b: 'ipsum',
@@ -49,6 +44,7 @@ const rows = ref([
   },
   {
     id: 3,
+    shownInExportOnly: 'hidden text 3',
     name: 'item3',
     type: 'Label B',
     column_a: 'Lorem',
@@ -61,6 +57,7 @@ const rows = ref([
   },
   {
     id: 4,
+    shownInExportOnly: 'hidden text 4',
     name: 'item4',
     type: 'Label A',
     column_a: 'Lorem',
@@ -73,6 +70,7 @@ const rows = ref([
   },
   {
     id: 5,
+    shownInExportOnly: 'hidden text 5',
     name: 'item5',
     type: 'Label A',
     column_a: 'Lorem',
@@ -85,6 +83,7 @@ const rows = ref([
   },
   {
     id: 6,
+    shownInExportOnly: 'hidden text 6',
     name: 'item6',
     type: 'Label A',
     column_a: 'Lorem',
@@ -97,6 +96,7 @@ const rows = ref([
   },
   {
     id: 7,
+    shownInExportOnly: 'hidden text 7',
     name: 'item7',
     type: 'Label A',
     column_a: 'Lorem',
@@ -112,13 +112,13 @@ const rows = ref([
 const columns = computed(() => {
   const predefinedColumns = [];
 
-  // if () {
   predefinedColumns.push({
     key: 'id',
     title: 'ID',
     sortable: true,
     sortType: 'NUMBER',
   },
+
   {
     key: 'name',
     title: 'Name',
@@ -171,7 +171,6 @@ const columns = computed(() => {
     sortable: false,
     hidable: true,
   });
-  // }
 
   return predefinedColumns;
 });
