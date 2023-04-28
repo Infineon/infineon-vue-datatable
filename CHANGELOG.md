@@ -1,3 +1,16 @@
+# v0.5.2 (Fri Apr 28 2023)
+
+#### 🐛 Bug Fix
+
+- 26 replace select within datatable with treeselect to allow tree like structure in dropdown options [#27](https://github.com/Infineon/infineon-vue-datatable/pull/27) (vlifx [@verena-ifx](https://github.com/verena-ifx))
+
+#### Authors: 2
+
+- [@verena-ifx](https://github.com/verena-ifx)
+- vlifx (vlifx)
+
+---
+
 # v0.5.1 (Wed Oct 19 2022)
 
 #### 🐛 Bug Fix
