@@ -23,13 +23,14 @@ jobs:
         uses: auto-it/setup-auto@v1
 
       - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v1
         with:
           node-version: 16
-          cache: 'npm'
+          registry-url: "https://registry.npmjs.org"
 
       - name: Create Release 
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm install
