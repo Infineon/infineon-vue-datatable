@@ -156,13 +156,12 @@ const props = defineProps({
   defaultSort: { type: Object, default: () => { } }, // {key: '', type: 'A/D'}
   additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
-  shownInExportOnly: { type: Object, default: () => { 'Shown in export only'; } },
-
+  customColHidden: { type: String, default: 'Custom column' },
 });
 const emit = defineEmits(['saveRow', 'editModeValue']);
 
 const {
-  data, columns, localStorageKey, shownInExportOnly,
+  data, columns, localStorageKey, customColHidden,
 } = toRefs(props);
 const sortColumn = ref(props.defaultSort);
 const currentPage = ref(0);
@@ -184,6 +183,9 @@ const shownColumns = computed(() => {
 
   return cols;
 });
+
+// Custom column key passed as customColHidden prop => to be used to export column despite it not being shown
+const colShownInExportOnly = computed(() => customColHidden.value);
 
 // reset page & item count when data changes
 watch(
@@ -288,13 +290,12 @@ function updatePageSize(size) {
   pageSize.value = size;
 }
 async function exportCSV() {
-  const shownInExportOnlyColumnKey = 'shownInExportOnly';
-  const shownInExportOnlyColumnTitle = `${shownInExportOnly.value.title}`; // Title for the hidden column to be exported is being passed from the parent component as a prop
+  const shownInExportOnlyColumnKey = `${colShownInExportOnly.value}`; // Title for the hidden column to be exported is being passed from the parent component as a prop
   const columnsToExport = [...shownColumns.value];
 
   // Add the custom column title to the CSV header
   const titles = columnsToExport.map((col) => `"${(col.title && col.title.replace && col.title.replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || col.title}"`);
-  titles.push(shownInExportOnlyColumnTitle);
+  titles.push(shownInExportOnlyColumnKey);
   let csv = titles.join(',');
   csv += '\n';
 

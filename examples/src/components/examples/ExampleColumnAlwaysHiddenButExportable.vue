@@ -5,7 +5,7 @@
       :columns="columns"
       :default-sort="{ key: 'name', type: 'D' }"
       :exportable="true"
-      :shown-in-export-only="{ title: 'Custom column title only shown in export'}"
+      :custom-col-hidden="idCol.key"
     >
       />
     </infineondatatable>
@@ -19,7 +19,7 @@ import { InfineonDatatable } from '../../../../lib';
 const rows = ref([
   {
     id: 1,
-    shownInExportOnly: 'hidden text 1',
+    customCol: 'hidden text 1',
     name: 'item1',
     type: 'Label A',
     column_a: 'Lorem',
@@ -32,7 +32,7 @@ const rows = ref([
   },
   {
     id: 2,
-    shownInExportOnly: 'hidden text 2',
+    customColHidden: 'hidden text 2',
     name: 'item2',
     column_a: 'Lorem',
     column_b: 'ipsum',
@@ -44,7 +44,7 @@ const rows = ref([
   },
   {
     id: 3,
-    shownInExportOnly: 'hidden text 3',
+    customColHidden: 'hidden text 3',
     name: 'item3',
     type: 'Label B',
     column_a: 'Lorem',
@@ -57,7 +57,7 @@ const rows = ref([
   },
   {
     id: 4,
-    shownInExportOnly: 'hidden text 4',
+    customColHidden: 'hidden text 4',
     name: 'item4',
     type: 'Label A',
     column_a: 'Lorem',
@@ -70,7 +70,7 @@ const rows = ref([
   },
   {
     id: 5,
-    shownInExportOnly: 'hidden text 5',
+    customColHidden: 'hidden text 5',
     name: 'item5',
     type: 'Label A',
     column_a: 'Lorem',
@@ -83,7 +83,7 @@ const rows = ref([
   },
   {
     id: 6,
-    shownInExportOnly: 'hidden text 6',
+    customColHidden: 'hidden text 6',
     name: 'item6',
     type: 'Label A',
     column_a: 'Lorem',
@@ -96,7 +96,7 @@ const rows = ref([
   },
   {
     id: 7,
-    shownInExportOnly: 'hidden text 7',
+    customColHidden: 'hidden text 7',
     name: 'item7',
     type: 'Label A',
     column_a: 'Lorem',
@@ -108,6 +108,14 @@ const rows = ref([
     longText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices gravida. Quisque condimentum pretium feugiat. Nam vel gravida ipsum. Fusce dapibus justo ut neque molestie, sed scelerisque leo aliquet. Curabitur convallis dictum maximus. Nullam a facilisis leo. Morbi dignissim facilisis nisi, quis hendrerit mi porta a. Sed id accumsan ipsum. Aenean rutrum iaculis feugiat. Proin feugiat enim sed tortor mollis, id elementum dolor pretium. Mauris condimentum arcu vitae tortor elementum tincidunt.',
   },
 ]);
+
+const idCol = {
+  key: 'id',
+  title: 'ID',
+  customColHidden: 'TEST',
+  sortable: true,
+  sortType: 'NUMBER',
+};
 
 const columns = computed(() => {
   const predefinedColumns = [];
