@@ -90,6 +90,7 @@
             @start-edit-row="startEditRow"
             @save-row="saveRow"
             @cancel-row="cancelRow"
+            @edit-mode-value="editModeValue"
           >
             <template
               v-for="(_, name) in $slots"
@@ -158,7 +159,7 @@ const props = defineProps({
   shownInExportOnly: { type: Object, default: () => { 'Shown in export only'; } },
 
 });
-const emit = defineEmits(['saveRow']);
+const emit = defineEmits(['saveRow', 'editModeValue']);
 
 const {
   data, columns, localStorageKey, shownInExportOnly,
@@ -270,11 +271,16 @@ function changeColumnVisibility(columnKey) {
 
 function startEditRow(row) {
   rowInEditMode.value = row ? { ...row } : undefined;
+  emit('editModeValue', row);
 }
 async function saveRow(row) {
   emit('saveRow', row);
   rowInEditMode.value = undefined;
 }
+function editModeValue(row) {
+  emit('editModeValue', row);
+}
+
 function cancelRow() {
   rowInEditMode.value = undefined;
 }

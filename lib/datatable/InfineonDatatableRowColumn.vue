@@ -1,30 +1,17 @@
 <template>
   <td style="border-collapse: separate !important;">
-    <select
+    <TreeSelect
       v-if="rowIsInEditMode && column.editable && column.possibleValues"
-      :id="column.key"
-      class="form-control form-control-sm"
-      style="min-width:15em;max-width:20em;"
-      :filter-key="editValue"
-      :value="editValue"
-      :disabled="fieldReadOnly ? true : false"
-      @input="updateSelectedValue($event)"
-    >
-      <option
-        :value="''"
-        selected
-        disabled
-      >
-        Please select...
-      </option>
-      <option
-        v-for="possibleValue in column.possibleValues"
-        :key="possibleValue.id"
-        :value="possibleValue.id"
-      >
-        {{ possibleValue.label }}
-      </option>
-    </select>
+      :model-value="editValue"
+      :options="normalizedOptions"
+      :multiple="false"
+      :default-expand-level="1"
+      placeholder="Please select"
+      :clearable="true"
+      @update:model-value="updateSelectedValue($event)"
+      @input:model-value="updateInputOfSelect($event)"
+    />
+
     <textarea
       v-else-if="rowIsInEditMode && column.editable"
       class="form-control form-control-sm"
@@ -71,6 +58,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   toRefs, computed,
 } from 'vue';
+import { TreeSelect } from '../plugins/treeView';
 
 const props = defineProps({
   row: { type: Object, default: () => {} },
@@ -82,7 +70,7 @@ const {
   row, column, editValue,
 } = toRefs(props);
 
-const emit = defineEmits(['update:editValue']);
+const emit = defineEmits(['update:editValue', 'updateSelectedValue']);
 const fieldReadOnly = (column.value.key === 'statusId' && (row.value.sourceReadOnly || row.value.sourceSolved));
 
 const fieldValue = computed(() => {
@@ -91,12 +79,18 @@ const fieldValue = computed(() => {
   return valueResolver ? valueResolver(row.value) : row.value[key];
 });
 
-function updateSelectedValue($event) {
-  emit('update:editValue', $event.target.value);
+function updateInputOfSelect(selected) {
+  emit('update:editValue', selected);
+}
+
+function updateSelectedValue(selected) {
+  emit('updateSelectedValue', selected);
 }
 
 async function onClick() {
   column.value.action(row.value);
 }
+
+const normalizedOptions = computed(() => (column.value.possibleValues?.length > 0 ? [{ id: 'all', label: 'All', children: column.value.possibleValues }] : []));
 
 </script>

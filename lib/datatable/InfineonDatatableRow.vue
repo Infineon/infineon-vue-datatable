@@ -80,6 +80,8 @@
       :row="row"
       :column="column"
       :row-is-in-edit-mode="rowIsInEditMode"
+      @input="editModeValue"
+      @update-selected-value="editModeValue"
     >
       <template
         v-for="(_, name) in $slots"
@@ -123,6 +125,8 @@
               :row="row"
               :column="column"
               :row-is-in-edit-mode="rowIsInEditMode"
+              @input="editModeValue"
+              @update-selected-value="editModeValue"
             >
               <template
                 v-for="(_, name) in $slots"
@@ -161,7 +165,7 @@ const props = defineProps({
 const {
   row, columns, rowIndex, hiddenColumnKeys, canEdit, additionalActions,
 } = toRefs(props);
-const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick']);
+const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick', 'editRow', 'editModeValue']);
 
 const shownColumns = computed(() => columns.value
   .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
@@ -191,6 +195,10 @@ function startEditRow() {
 function saveRow() {
   emit('saveRow', editRow.value);
 }
+function editModeValue() {
+  emit('editModeValue', editRow.value);
+}
+
 function cancelRow() {
   emit('cancelRow');
 }
