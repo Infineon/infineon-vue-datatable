@@ -5,10 +5,10 @@
       :columns="columns"
       :default-sort="{ key: 'name', type: 'D' }"
       :exportable="true"
-      :custom-col-hidden="idCol.key"
+      :additional-export-columns="additionalExportColumns"
     >
       />
-    </infineondatatable>
+    </InfineonDatatable>
   </div>
 </template>
 
@@ -109,13 +109,24 @@ const rows = ref([
   },
 ]);
 
-const idCol = {
-  key: 'id',
-  title: 'ID',
-  customColHidden: 'TEST',
-  sortable: true,
-  sortType: 'NUMBER',
-};
+const additionalExportColumns = ref(
+  [
+    // Define your additional columns here that will be added to the export
+
+    {
+      key: 'customColHidden',
+      title: 'customColHidden',
+      sortable: true,
+      sortType: 'STRING',
+    },
+    {
+      key: 'id',
+      title: 'ID',
+      sortable: true,
+      sortType: 'NUMBER',
+    },
+  ],
+);
 
 const columns = computed(() => {
   const predefinedColumns = [];
