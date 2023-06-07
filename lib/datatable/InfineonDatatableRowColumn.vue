@@ -9,7 +9,7 @@
       placeholder="Please select"
       :clearable="true"
       @update:model-value="updateSelectedValue($event)"
-      @input:model-value="updateInputOfSelect($event)"
+      @input:model-value="updateSelectedValue($event)"
     />
 
     <textarea
@@ -80,11 +80,13 @@ const fieldValue = computed(() => {
   return valueResolver ? valueResolver(row.value) : row.value[key];
 });
 
-function updateInputOfSelect(selected) {
-  emit('update:editValue', selected);
-}
+// function updateInputOfSelect(selected) {
+//   emit('update:editValue', selected);
+// }
 
 function updateSelectedValue(selected) {
+  // console.log('treeselect update', selected);
+  emit('update:editValue', selected);
   emit('updateSelectedValue', selected);
 }
 
