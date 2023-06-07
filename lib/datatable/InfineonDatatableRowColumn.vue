@@ -71,7 +71,8 @@ const {
 } = toRefs(props);
 
 const emit = defineEmits(['update:editValue', 'updateSelectedValue']);
-const fieldReadOnly = (column.value.key === 'statusId' && (row.value.sourceReadOnly || row.value.sourceSolved));
+// eslint-disable-next-line max-len
+// const fieldReadOnly = (column.value.key === 'statusId' && (row.value.sourceReadOnly || row.value.sourceSolved));
 
 const fieldValue = computed(() => {
   const { key, valueResolver } = column.value;
