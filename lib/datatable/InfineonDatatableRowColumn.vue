@@ -85,7 +85,7 @@ const fieldValue = computed(() => {
 // }
 
 function updateSelectedValue(selected) {
-  // console.log('treeselect update', selected);
+  console.log('treeselect update', selected);
   emit('update:editValue', selected);
   emit('updateSelectedValue', selected);
 }
