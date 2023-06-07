@@ -157,6 +157,7 @@ const props = defineProps({
   additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
   additionalExportColumns: { type: Array, default: () => [] },
+  // customColHidden: { type: String, default: 'Custom column' },
 
 });
 const emit = defineEmits(['saveRow', 'editModeValue']);
@@ -274,7 +275,7 @@ async function saveRow(row) {
   rowInEditMode.value = undefined;
 }
 function editModeValue(row) {
-  console.log('edit mode val', row);
+  // console.log('edit mode val', row);
   emit('editModeValue', row);
 }
 
