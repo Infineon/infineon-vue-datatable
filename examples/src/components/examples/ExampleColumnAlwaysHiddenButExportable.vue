@@ -5,7 +5,10 @@
       :columns="columns"
       :default-sort="{ key: 'name', type: 'D' }"
       :exportable="true"
+      :can-edit="true"
       :additional-export-columns="additionalExportColumns"
+      @save-row="saveRow"
+      @edit-mode-value="editModeValue"
     >
       />
     </InfineonDatatable>
@@ -128,6 +131,22 @@ const additionalExportColumns = ref(
   ],
 );
 
+const editModeValue = (changedRow) => {
+  // update store here
+  const originalRow = rows.value.find((r) => r.id === changedRow.id);
+  console.log('get current row vals while in editMode:', originalRow, changedRow);
+  originalRow.name = changedRow.name;
+  originalRow.type = changedRow.type;
+};
+
+const saveRow = (changedRow) => {
+  // update store here
+  const originalRow = rows.value.find((r) => r.id === changedRow.id);
+  originalRow.name = changedRow.name;
+  originalRow.type = changedRow.type;
+  console.log('saving row', changedRow);
+};
+
 const columns = computed(() => {
   const predefinedColumns = [];
 
@@ -151,6 +170,8 @@ const columns = computed(() => {
     title: 'Type',
     sortable: true,
     sortType: 'STRING',
+    editable: true,
+
     hidable: true,
   },
   {
@@ -158,12 +179,16 @@ const columns = computed(() => {
     title: 'Text',
     sortable: false,
     hidable: true,
+    editable: true,
+
     defaultHidden: true,
   },
   {
     key: 'column_a',
     title: 'column_a',
     sortable: false,
+    editable: true,
+
     hidable: true,
   },
   {

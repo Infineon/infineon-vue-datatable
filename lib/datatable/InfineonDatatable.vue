@@ -178,12 +178,8 @@ const hiddenColumns = computed(() => columns.value
 const realColumns = computed(() => columns.value
   .filter((c) => c.visible === undefined || c.visible === false));
 
-const shownColumns = computed(() => {
-  const cols = realColumns.value
-    .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key));
-
-  return cols;
-});
+const shownColumns = computed(() => realColumns.value
+  .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
 
 // reset page & item count when data changes
 watch(
@@ -278,6 +274,7 @@ async function saveRow(row) {
   rowInEditMode.value = undefined;
 }
 function editModeValue(row) {
+  console.log('edit mode val', row);
   emit('editModeValue', row);
 }
 
