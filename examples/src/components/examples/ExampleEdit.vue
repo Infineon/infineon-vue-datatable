@@ -7,6 +7,7 @@
       :can-edit="true"
       @save-row="saveRow"
       @edit-mode-value="editModeValue"
+      @cancel-row="cancelRow"
     />
   </div>
 </template>
@@ -50,6 +51,9 @@ const saveRow = (changedRow) => {
   originalRow.type = changedRow.type;
 };
 
+const cancelRow = (changedRow) => {
+  console.log('cancelling row', changedRow);
+};
 const columns = [
   {
     key: 'id',

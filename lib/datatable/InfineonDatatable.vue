@@ -157,7 +157,7 @@ const props = defineProps({
   additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
 });
-const emit = defineEmits(['saveRow', 'editModeValue']);
+const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow']);
 
 const { data, columns, localStorageKey } = toRefs(props);
 const sortColumn = ref(props.defaultSort);
@@ -273,7 +273,8 @@ function editModeValue(row) {
   emit('editModeValue', row);
 }
 
-function cancelRow() {
+function cancelRow(row) {
+  emit('cancelRow', row);
   rowInEditMode.value = undefined;
 }
 function updatePageSize(size) {
