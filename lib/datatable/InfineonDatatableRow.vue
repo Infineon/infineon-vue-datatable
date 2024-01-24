@@ -200,7 +200,7 @@ function editModeValue() {
 }
 
 function cancelRow() {
-  emit('cancelRow');
+  emit('cancelRow', editRow.value);
 }
 </script>
 

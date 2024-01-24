@@ -160,7 +160,7 @@ const props = defineProps({
   // customColHidden: { type: String, default: 'Custom column' },
 
 });
-const emit = defineEmits(['saveRow', 'editModeValue']);
+const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow']);
 
 const {
   data, columns, localStorageKey,
@@ -279,7 +279,8 @@ function editModeValue(row) {
   emit('editModeValue', row);
 }
 
-function cancelRow() {
+function cancelRow(row) {
+  emit('cancelRow', row);
   rowInEditMode.value = undefined;
 }
 function updatePageSize(size) {
