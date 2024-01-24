@@ -1,3 +1,16 @@
+# v0.6.0 (Wed Jan 24 2024)
+
+#### 🚀 Enhancement
+
+- 28 add hidden column to csv export [#29](https://github.com/Infineon/infineon-vue-datatable/pull/29) (vlifx [@verena-ifx](https://github.com/verena-ifx))
+
+#### Authors: 2
+
+- [@verena-ifx](https://github.com/verena-ifx)
+- vlifx (vlifx)
+
+---
+
 # v0.5.2 (Fri Apr 28 2023)
 
 #### 🐛 Bug Fix
