@@ -106,6 +106,10 @@ const links = ref([
         label: 'CSV Export',
         routeName: 'exampleCsvExport',
       },
+      {
+        label: 'Export hidden column',
+        routeName: 'exampleColumnAlwaysHiddenButExportable',
+      },
     ],
   },
 ]);
