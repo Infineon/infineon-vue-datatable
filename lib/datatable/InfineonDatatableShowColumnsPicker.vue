@@ -45,6 +45,7 @@ function changeColumnVisibility(columnKey) {
 
 </script>
 
+<!-- eslint-disable max-len -->
 <style>
 
 #showColumnSelect.vue-treeselect--open-below:not(.vue-treeselect--append-to-body) .vue-treeselect__menu-container {

@@ -156,10 +156,15 @@ const props = defineProps({
   defaultSort: { type: Object, default: () => { } }, // {key: '', type: 'A/D'}
   additionalActions: { type: Array, default: () => [] },
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
+  additionalExportColumns: { type: Array, default: () => [] },
+  // customColHidden: { type: String, default: 'Custom column' },
+
 });
 const emit = defineEmits(['saveRow', 'editModeValue']);
 
-const { data, columns, localStorageKey } = toRefs(props);
+const {
+  data, columns, localStorageKey,
+} = toRefs(props);
 const sortColumn = ref(props.defaultSort);
 const currentPage = ref(0);
 const pageSize = ref(10);
@@ -270,6 +275,7 @@ async function saveRow(row) {
   rowInEditMode.value = undefined;
 }
 function editModeValue(row) {
+  // console.log('edit mode val', row);
   emit('editModeValue', row);
 }
 
@@ -279,16 +285,21 @@ function cancelRow() {
 function updatePageSize(size) {
   pageSize.value = size;
 }
-
 async function exportCSV() {
-  const titles = shownColumns.value.map((col) => `"${(col.title && col.title.replace && col.title.replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || col.title}"`);
+  const { additionalExportColumns } = props;
+
+  const columnsToExport = [...shownColumns.value, ...additionalExportColumns];
+
+  const titles = columnsToExport.map((col) => `"${(col.title && col.title.replace && col.title.replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || col.title}"`);
   let csv = titles.join(',');
   csv += '\n';
+
   data.value.forEach((row) => {
-    const values = shownColumns.value
+    const values = columnsToExport
       .map((col) => (col.valueResolver
         ? `"${(col.valueResolver(row) && col.valueResolver(row).replace && col.valueResolver(row).replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || col.valueResolver(row)}"`
         : `"${(row[col.key] && row[col.key].replace && row[col.key].replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || row[col.key]}"`));
+
     csv += values.join(',');
     csv += '\n';
   });
@@ -301,6 +312,7 @@ async function exportCSV() {
   link.click();
   URL.revokeObjectURL(link.href);
 }
+
 </script>
 
 <style scoped>

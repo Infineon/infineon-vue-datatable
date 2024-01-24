@@ -78,6 +78,7 @@ const columns = computed(() => {
       defaultHidden: true,
     },
   ];
+
   if (selected.value === 'B') {
     predefinedColumns.push({
       key: 'name',

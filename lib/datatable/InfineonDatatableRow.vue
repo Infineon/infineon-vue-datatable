@@ -175,7 +175,7 @@ const hiddenColumns = computed(() => columns.value
 
 const calculateColspan = computed(() => {
   let colspan = shownColumns.value.length;
-  if (canEdit || additionalActions.length > 0) {
+  if (canEdit.value || additionalActions.value.length > 0) {
     colspan += 1;
   }
   if (hiddenColumns.value.length > 0) {

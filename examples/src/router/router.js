@@ -7,6 +7,7 @@ import ExampleAdditionalActions from '../components/examples/ExampleAdditionalAc
 import ExampleDynamicColumnTitle from '../components/examples/ExampleDynamicColumnTitle.vue';
 import ExampleConditionallyHideColumns from '../components/examples/ExampleConditionallyHideColumns.vue';
 import ExampleCsvExport from '../components/examples/ExampleCsvExport.vue';
+import ExampleColumnAlwaysHiddenButExportable from '../components/examples/ExampleColumnAlwaysHiddenButExportable.vue';
 import IntroPage from '../components/IntroPage.vue';
 
 // this file initializes the vue router
@@ -59,6 +60,11 @@ const router = createRouter({
       path: '/example-csv-export',
       name: 'exampleCsvExport',
       component: ExampleCsvExport,
+    },
+    {
+      path: '/example-always-hidden-but-exportable',
+      name: 'exampleColumnAlwaysHiddenButExportable',
+      component: ExampleColumnAlwaysHiddenButExportable,
     },
   ],
 });
