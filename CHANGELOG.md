@@ -1,3 +1,16 @@
+# v0.7.0 (Wed Jan 24 2024)
+
+#### 🚀 Enhancement
+
+- Enhancement: emit event + row object on cancel button click [#33](https://github.com/Infineon/infineon-vue-datatable/pull/33) (vlifx [@verena-ifx](https://github.com/verena-ifx))
+
+#### Authors: 2
+
+- [@verena-ifx](https://github.com/verena-ifx)
+- vlifx (vlifx)
+
+---
+
 # v0.6.0 (Wed Jan 24 2024)
 
 #### 🚀 Enhancement
