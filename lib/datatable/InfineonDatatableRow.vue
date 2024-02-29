@@ -54,9 +54,12 @@
           :icon="['fas', 'times-circle']"
         />
       </button>
-      <template v-if="canEdit">
+      <template 
+        v-if="canEdit" 
+        v-for="(additionalAction, idx) in additionalActions"
+      >
         <button
-          v-for="(additionalAction, idx) in additionalActions"
+          v-if="(!additionalAction.visible || additionalAction.visible(row))"
           :key="idx"
           class="btn btn-outline-primary btn-sm"
           :class="{'ms-1': idx > 0}"
