@@ -1,9 +1,9 @@
 {
   "name": "@infineon/infineon-vue-datatable",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": false,
-  "homepage": "https://github.com/infineon/infineon-vue-datable",
-  "repository": "https://github.com/infineon/infineon-vue-datable",
+  "homepage": "https://github.com/infineon/infineon-vue-datatable",
+  "repository": "https://github.com/infineon/infineon-vue-datatable",
   "description": "Infineon Vue Datatable on Bootstrap basis",
   "type": "module",
   "files": [
