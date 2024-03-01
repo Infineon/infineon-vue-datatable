@@ -1,3 +1,15 @@
+# v0.7.1 (Fri Mar 01 2024)
+
+#### 🐛 Bug Fix
+
+- [PR][0.5.2] Addressed #30 [#31](https://github.com/Infineon/infineon-vue-datatable/pull/31) ([@coderkoala](https://github.com/coderkoala))
+
+#### Authors: 1
+
+- Nobel Dahal ([@coderkoala](https://github.com/coderkoala))
+
+---
+
 # v0.7.0 (Wed Jan 24 2024)
 
 #### 🚀 Enhancement
