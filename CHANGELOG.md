@@ -1,3 +1,16 @@
+# v0.8.0 (Mon Mar 04 2024)
+
+#### 🚀 Enhancement
+
+- Enhancement: Customizable visibility of additional actions [#36](https://github.com/Infineon/infineon-vue-datatable/pull/36) (vlifx [@verena-ifx](https://github.com/verena-ifx))
+
+#### Authors: 2
+
+- [@verena-ifx](https://github.com/verena-ifx)
+- vlifx (vlifx)
+
+---
+
 # v0.7.1 (Fri Mar 01 2024)
 
 #### 🐛 Bug Fix
