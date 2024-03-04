@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/no-use-v-if-with-v-for -->
 <template>
   <tr
     :class="{'row-odd': rowIndex % 2 === 0, 'expanded': expanded }"
@@ -54,9 +55,12 @@
           :icon="['fas', 'times-circle']"
         />
       </button>
-      <template v-if="canEdit">
+      <template
+        v-for="(additionalAction, idx) in additionalActions"
+        v-if="canEdit"
+      >
         <button
-          v-for="(additionalAction, idx) in additionalActions"
+          v-if="(!additionalAction.visible || additionalAction.visible(row))"
           :key="idx"
           class="btn btn-outline-primary btn-sm"
           :class="{'ms-1': idx > 0}"
