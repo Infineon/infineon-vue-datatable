@@ -44,6 +44,7 @@
       v-else
       :name="`column(${column.key})`"
       :row="row"
+      :column="column"
     >
       <span
         style="white-space: pre-wrap"
