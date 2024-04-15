@@ -8,6 +8,7 @@
       :default-expand-level="1"
       placeholder="Please select"
       :clearable="true"
+      :style="column.minWidth ? 'min-width:' + column.minWidth : ''"
       @update:model-value="updateSelectedValue($event)"
       @input:model-value="updateSelectedValue($event)"
     />
@@ -43,6 +44,7 @@
       v-else
       :name="`column(${column.key})`"
       :row="row"
+      :column="column"
     >
       <span
         style="white-space: pre-wrap"
