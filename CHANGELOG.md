@@ -1,3 +1,17 @@
+# v0.9.0 (Mon Apr 15 2024)
+
+#### 🚀 Enhancement
+
+- Enhancement: Optional min width for a column tree select in edit mode [#38](https://github.com/Infineon/infineon-vue-datatable/pull/38) (vlifx [@fb-ifx](https://github.com/fb-ifx) [@verena-ifx](https://github.com/verena-ifx))
+
+#### Authors: 3
+
+- [@fb-ifx](https://github.com/fb-ifx)
+- [@verena-ifx](https://github.com/verena-ifx)
+- vlifx (vlifx)
+
+---
+
 # v0.8.0 (Mon Mar 04 2024)
 
 #### 🚀 Enhancement
