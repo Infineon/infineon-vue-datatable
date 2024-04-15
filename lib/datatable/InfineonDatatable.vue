@@ -87,6 +87,7 @@
             :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)"
             :can-edit="canEdit"
             :additional-actions="additionalActions"
+            :popup-menu-actions="popupMenuActions"
             @start-edit-row="startEditRow"
             @save-row="saveRow"
             @cancel-row="cancelRow"
@@ -158,7 +159,7 @@ const props = defineProps({
   // [ { label: '', action: (row) => {}, icon: ['fas', 'list-ol'] } ]
   additionalExportColumns: { type: Array, default: () => [] },
   // customColHidden: { type: String, default: 'Custom column' },
-
+  popupMenuActions: { type: Array, default: () => [] },
 });
 const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow']);
 
