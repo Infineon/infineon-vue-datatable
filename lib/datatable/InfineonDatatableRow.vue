@@ -80,7 +80,7 @@
         v-if="canEdit && (popupMenuActions.length > 0)"
         ref="menuButtonRef"
         class="btn btn-outline-primary btn-sm me-1"
-        style="margin-left: 4px;"
+        :style="additionalActions.length > 0 ? 'margin-left: 4px;' : ''"
         @click="openPopupMenu"
       >
         <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
