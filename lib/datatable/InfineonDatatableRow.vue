@@ -81,6 +81,7 @@
         ref="menuButtonRef"
         class="btn btn-outline-primary btn-sm me-1"
         :style="additionalActions.length > 0 ? 'margin-left: 4px;' : ''"
+        style="position: relative"
         @click="openPopupMenu"
       >
         <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
@@ -275,7 +276,7 @@ function cancelRow() {
   padding: 8px;
   margin-left: -3px;
   margin-top: -2px;
-  z-index: 256443;
+  z-index: 4656546797;
 }
 .row-odd {
     --bs-table-accent-bg: var(--bs-table-striped-bg);
