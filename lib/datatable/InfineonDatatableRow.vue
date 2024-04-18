@@ -65,15 +65,22 @@
           class="btn btn-outline-primary btn-sm"
           :class="{'ms-1': idx > 0}"
           :title="additionalAction.title"
+          :style="additionalAction.style ? additionalAction.style : ''"
           @click="additionalAction.action(row)"
         >
-          <font-awesome-icon
-            v-if="additionalAction.icon"
-            :icon="additionalAction.icon"
-          />
-          <span v-if="additionalAction.label">
-            {{ additionalAction.label }}
-          </span>
+          <div style="display: flex;">
+            <div 
+              :style="additionalAction.label ? 'margin-right: 4px;' : ''"
+            >
+              <font-awesome-icon
+                v-if="additionalAction.icon"
+                :icon="additionalAction.icon"
+              />
+            </div>  
+            <span v-if="additionalAction.label">
+              {{ additionalAction.label }}
+            </span>
+          </div>
         </button>
       </template>
       <button 
@@ -99,15 +106,22 @@
               class="btn btn-outline-primary btn-sm"
               :class="{'ms-1': idx > 0}"
               :title="popupMenuAction.title"
+              :style="popupMenuAction.style ? popupMenuAction.style : ''"
               @click="popupMenuAction.action(row)"
             >
-              <font-awesome-icon
-                v-if="popupMenuAction.icon"
-                :icon="popupMenuAction.icon"
-              />
-              <span v-if="popupMenuAction.label">
-                {{ popupMenuAction.label }}
-              </span>
+              <div style="display: flex;">
+                <div 
+                  :style="popupMenuAction.label ? 'margin-right: 4px;' : ''"
+                >
+                  <font-awesome-icon
+                    v-if="popupMenuAction.icon"
+                    :icon="popupMenuAction.icon"
+                  />
+                </div>  
+                <span v-if="popupMenuAction.label">
+                  {{ popupMenuAction.label }}
+                </span>
+              </div>
             </button>
           </template>
         </div>
@@ -237,11 +251,8 @@ function openPopupMenu() {
 }
 
 function closeMenuOnClickOutside(event) {
-  if (isMenuOpen.value 
-    && !menuRef.value.contains(event.target) 
-    && !menuButtonRef.value.contains(event.target)
-  ) {
-    isMenuOpen.value = false;
+  if (menuRef.value.contains(event.target)) {
+    isMenuOpen.value = true;
   }
 }
 
