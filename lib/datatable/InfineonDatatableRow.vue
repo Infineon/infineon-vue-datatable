@@ -223,10 +223,10 @@ const {
 const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick', 'editRow', 'editModeValue']);
 
 const shownColumns = computed(() => columns.value
-  .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
+.filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
 
 const hiddenColumns = computed(() => columns.value
-  .filter((c) => c.hidable && hiddenColumnKeys.value.includes(c.key)));
+.filter((c) => c.hidable && hiddenColumnKeys.value.includes(c.key)));
 
 const calculateColspan = computed(() => {
   let colspan = shownColumns.value.length;
@@ -246,8 +246,8 @@ const isMenuOpen = ref(false);
 const menuRef = ref(null);
 const menuButtonRef = ref(null);
 
-function openPopupMenu() {
-  isMenuOpen.value =!isMenuOpen.value;
+function openPopupMenu(event) {
+  isMenuOpen.value =!isMenuOpen.value || !menuButtonRef.value.contains(event.target);
 }
 
 function closeMenuOnClickOutside(event) {
