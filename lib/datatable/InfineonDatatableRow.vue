@@ -107,7 +107,7 @@
               :class="{'ms-1': idx > 0}"
               :title="popupMenuAction.title"
               :style="popupMenuAction.style ? popupMenuAction.style : ''"
-              @click="(row) => popupMenuActionOnClick(row, popupMenuAction.action, popupMenuAction.canCloseMenu)"
+              @click="(event) => popupMenuActionOnClick(event, popupMenuAction.action, popupMenuAction.canCloseMenu)"
             >
               <div style="display: flex;">
                 <div 
@@ -254,11 +254,11 @@ function openPopupMenu(event) {
   showMenu.value =!showMenu.value || !menuButtonRef.value.contains(event.target);
 }
 
-function popupMenuActionOnClick(row, action, canCloseMenu) {
+function popupMenuActionOnClick(_, action, canCloseMenu) {
   if (canCloseMenu) {
     forcedMenuClose.value = true;
   }
-  action(row)
+  action(row.value)
 }
 
 function closeMenuOnClickOutside(event) {
