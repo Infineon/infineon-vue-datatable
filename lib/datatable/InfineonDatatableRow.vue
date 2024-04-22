@@ -262,8 +262,6 @@ function popupMenuActionOnClick(row, action, canCloseMenu) {
 }
 
 function closeMenuOnClickOutside(event) {
-  console.log(`click, on menu: ${menuRef.value.contains(event.target)}`);
-  console.log(event.target);
   if (menuRef.value.contains(event.target)) {
     showMenu.value = !forcedMenuClose.value;
     forcedMenuClose.value = false;
