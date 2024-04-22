@@ -93,7 +93,7 @@
       >
         <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
         <div 
-          v-show="isMenuOpen"
+          v-show="showMenu && isMenuOpen"
           ref="menuRef"
           class="menu"
         >
@@ -101,13 +101,13 @@
             v-for="(popupMenuAction, idx) in popupMenuActions"
           >
             <button
-              v-if="(!popupMenuAction.visible || popupMenuAction.visible(row))"
+              v-if="!popupMenuAction.visible || popupMenuAction.visible(row)"
               :key="idx"
               class="btn btn-outline-primary btn-sm"
               :class="{'ms-1': idx > 0}"
               :title="popupMenuAction.title"
               :style="popupMenuAction.style ? popupMenuAction.style : ''"
-              @click="popupMenuAction.action(row)"
+              @click="(row) => popupMenuActionOnClick(row, popupMenuAction.action, popupMenuAction.canCloseMenu)"
             >
               <div style="display: flex;">
                 <div 
@@ -202,7 +202,7 @@
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-  toRefs, computed, ref, onMounted
+  toRefs, computed, ref, onMounted, watch
 } from 'vue';
 import DatatableRowColumn from './InfineonDatatableRowColumn.vue';
 
@@ -211,6 +211,7 @@ const props = defineProps({
   rowIndex: { type: Number, default: undefined },
   columns: { type: Array, default: () => [] },
   canEdit: Boolean,
+  isMenuOpen: Boolean,
   rowIsInEditMode: Boolean,
   hiddenColumnKeys: { type: Array, default: () => [] },
   additionalActions: { type: Object, default: () => {} }, // { label: '', action: (row) => {} }
@@ -218,9 +219,9 @@ const props = defineProps({
 });
 
 const {
-  row, columns, rowIndex, hiddenColumnKeys, canEdit, additionalActions, popupMenuActions,
+  row, columns, rowIndex, hiddenColumnKeys, canEdit, additionalActions, popupMenuActions, popupMenuOpen, isMenuOpen
 } = toRefs(props);
-const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick', 'editRow', 'editModeValue']);
+const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick', 'editRow', 'editModeValue', 'openActionsPopupMenu']);
 
 const shownColumns = computed(() => columns.value
 .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
@@ -242,23 +243,40 @@ const calculateColspan = computed(() => {
 const editRow = ref(row.value);
 const expanded = ref(false);
 
-const isMenuOpen = ref(false);
 const menuRef = ref(null);
 const menuButtonRef = ref(null);
+const menuActionButtonRefs = ref([]);
+const forcedMenuClose = ref(false);
+const showMenu = ref(false);
 
 function openPopupMenu(event) {
-  isMenuOpen.value =!isMenuOpen.value || !menuButtonRef.value.contains(event.target);
+  emit('openActionsPopupMenu', row.value);
+  showMenu.value =!showMenu.value || !menuButtonRef.value.contains(event.target);
+}
+
+function popupMenuActionOnClick(row, action, canCloseMenu) {
+  if (canCloseMenu) {
+    forcedMenuClose.value = true;
+  }
+  action(row)
 }
 
 function closeMenuOnClickOutside(event) {
   if (menuRef.value.contains(event.target)) {
-    isMenuOpen.value = true;
+    showMenu.value = !forcedMenuClose.value;
+    forcedMenuClose.value = false;
   }
 }
 
 onMounted(() => {
   document.addEventListener('click', closeMenuOnClickOutside);
 });
+
+watch(isMenuOpen, () => {
+  if (!isMenuOpen.value) {
+    showMenu.value = false;
+  }
+})
 
 function startEditRow() {
   // aktuelle row in editier row kopieren

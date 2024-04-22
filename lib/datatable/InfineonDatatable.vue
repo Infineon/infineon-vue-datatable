@@ -88,10 +88,12 @@
             :can-edit="canEdit"
             :additional-actions="additionalActions"
             :popup-menu-actions="popupMenuActions"
+            :is-menu-open="(row.id) === (rowMenuIsOpen?.id)"
             @start-edit-row="startEditRow"
             @save-row="saveRow"
             @cancel-row="cancelRow"
             @edit-mode-value="editModeValue"
+            @open-actions-popup-menu="closeOtherActionsPopupMenus"
           >
             <template
               v-for="(_, name) in $slots"
@@ -170,6 +172,7 @@ const sortColumn = ref(props.defaultSort);
 const currentPage = ref(0);
 const pageSize = ref(10);
 const rowInEditMode = ref(undefined);
+const rowMenuIsOpen = ref(undefined);
 const count = ref(0);
 
 const hiddenColumnKeys = ref([]);
@@ -241,6 +244,8 @@ const processedData = computed(() => {
   return sliced;
 });
 
+const closeRowMenusMap = ref(new Map(processedData.value.map((_, index) => [index, false])));
+
 // store hidden columns for a predefined property localStorageKey - if not defined, use default
 const hiddenColumnsLocalStorageKey = computed(() => localStorageKey.value || realColumns
   .value.map((c) => c.key).sort().join());
@@ -278,6 +283,10 @@ async function saveRow(row) {
 function editModeValue(row) {
   // console.log('edit mode val', row);
   emit('editModeValue', row);
+}
+
+function closeOtherActionsPopupMenus(row) {
+  rowMenuIsOpen.value = row ? row : undefined;
 }
 
 function cancelRow(row) {

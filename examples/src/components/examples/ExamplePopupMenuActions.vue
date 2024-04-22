@@ -21,7 +21,8 @@
                                title: 'Open an alert box',
                                label: 'Alert',
                                action: showAlert,
-                               icon: ['fas', 'terminal']
+                               icon: ['fas', 'terminal'],
+                               canCloseMenu: true
                              } ]"
     />
     <!-- don't forget to load any fontawesome icons in /plugins/fontawesome.js!! -->
