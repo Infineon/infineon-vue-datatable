@@ -99,10 +99,10 @@
         >
           <template
             v-for="(popupMenuAction, idx) in popupMenuActions"
+            :key="idx"
           >
             <button
-              v-if="!popupMenuAction.visible || popupMenuAction.visible(row)"
-              :key="idx"
+              v-show="!popupMenuAction.visible || popupMenuAction.visible(row)"
               class="btn btn-outline-primary btn-sm"
               :class="{'ms-1': idx > 0}"
               :title="popupMenuAction.title"
@@ -262,6 +262,8 @@ function popupMenuActionOnClick(row, action, canCloseMenu) {
 }
 
 function closeMenuOnClickOutside(event) {
+  console.log(`click, on menu: ${menuRef.value.contains(event.target)}`);
+  console.log(event.target);
   if (menuRef.value.contains(event.target)) {
     showMenu.value = !forcedMenuClose.value;
     forcedMenuClose.value = false;
