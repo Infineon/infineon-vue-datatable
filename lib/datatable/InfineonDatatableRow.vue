@@ -262,7 +262,7 @@ function popupMenuActionOnClick(_, action, canCloseMenu) {
 }
 
 function closeMenuOnClickOutside(event) {
-  if (menuRef.value.contains(event.target)) {
+  if (menuRef.value?.contains(event.target)) {
     showMenu.value = !forcedMenuClose.value;
     forcedMenuClose.value = false;
   }
