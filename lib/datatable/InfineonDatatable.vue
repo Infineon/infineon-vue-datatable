@@ -93,7 +93,7 @@
             @save-row="saveRow"
             @cancel-row="cancelRow"
             @edit-mode-value="editModeValue"
-            @open-actions-popup-menu="closeOtherActionsPopupMenus"
+            @on-menu-button-click="closeOtherActionsPopupMenus"
           >
             <template
               v-for="(_, name) in $slots"
@@ -163,7 +163,7 @@ const props = defineProps({
   // customColHidden: { type: String, default: 'Custom column' },
   popupMenuActions: { type: Array, default: () => [] },
 });
-const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow']);
+const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow', 'onMenuButtonClick']);
 
 const {
   data, columns, localStorageKey,
@@ -287,6 +287,7 @@ function editModeValue(row) {
 
 function closeOtherActionsPopupMenus(row) {
   rowMenuIsOpen.value = row ? row : undefined;
+  emit('onMenuButtonClick', row);
 }
 
 function cancelRow(row) {

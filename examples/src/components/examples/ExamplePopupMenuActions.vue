@@ -24,6 +24,7 @@
                                icon: ['fas', 'terminal'],
                                canCloseMenu: true
                              } ]"
+      @on-menu-button-click="onMenuOpened"
     />
     <!-- don't forget to load any fontawesome icons in /plugins/fontawesome.js!! -->
   </div>
@@ -43,6 +44,10 @@ const showAlert = (row) => {
   // eslint-disable-next-line no-alert
   alert(JSON.stringify(row));
 };
+
+const onMenuOpened = (row) => {
+  console.log(`Menu triggered for row  ${row.id}`)
+}
 
 const rows = [
   { id: 1, name: 'item1' },

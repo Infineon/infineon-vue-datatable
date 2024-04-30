@@ -89,7 +89,7 @@
         class="btn btn-outline-primary btn-sm me-1"
         :style="additionalActions.length > 0 ? 'margin-left: 4px;' : ''"
         style="position: relative"
-        @click="openPopupMenu"
+        @click="showPopupMenu"
       >
         <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
         <div 
@@ -221,7 +221,7 @@ const props = defineProps({
 const {
   row, columns, rowIndex, hiddenColumnKeys, canEdit, additionalActions, popupMenuActions, popupMenuOpen, isMenuOpen
 } = toRefs(props);
-const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick', 'editRow', 'editModeValue', 'openActionsPopupMenu']);
+const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick', 'editRow', 'editModeValue', 'onMenuButtonClick']);
 
 const shownColumns = computed(() => columns.value
 .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
@@ -249,8 +249,8 @@ const menuActionButtonRefs = ref([]);
 const forcedMenuClose = ref(false);
 const showMenu = ref(false);
 
-function openPopupMenu(event) {
-  emit('openActionsPopupMenu', row.value);
+function showPopupMenu(event) {
+  emit('onMenuButtonClick', row.value);
   showMenu.value =!showMenu.value || !menuButtonRef.value.contains(event.target);
 }
 
