@@ -4,6 +4,7 @@ import ExampleEdit from '../components/examples/ExampleEdit.vue';
 import ExampleHideColumns from '../components/examples/ExampleHideColumns.vue';
 import ExampleStoreHiddenColumnsPerView from '../components/examples/ExampleStoreHiddenColumnsPerView.vue';
 import ExampleAdditionalActions from '../components/examples/ExampleAdditionalActions.vue';
+import ExamplePopupMenuActions from '../components/examples/ExamplePopupMenuActions.vue';
 import ExampleDynamicColumnTitle from '../components/examples/ExampleDynamicColumnTitle.vue';
 import ExampleConditionallyHideColumns from '../components/examples/ExampleConditionallyHideColumns.vue';
 import ExampleCsvExport from '../components/examples/ExampleCsvExport.vue';
@@ -56,6 +57,11 @@ const router = createRouter({
       path: '/example-conditionally-hide-additional-actions',
       name: 'exampleConditionallyHideAdditionalActions',
       component: ExampleConditionallyHideAdditionalActions,
+    },
+    {
+      path: '/example-popup-menu-actions',
+      name: 'examplePopupMenuActions',
+      component: ExamplePopupMenuActions,
     },
     {
       path: '/example-conditionally-hide-columns',
