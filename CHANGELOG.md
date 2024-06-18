@@ -1,3 +1,15 @@
+# v0.10.0 (Tue Jun 18 2024)
+
+#### 🚀 Enhancement
+
+- Enhancement: Option to display some actions in a popup menu instead of the actions column [#40](https://github.com/Infineon/infineon-vue-datatable/pull/40) ([@fb-ifx](https://github.com/fb-ifx))
+
+#### Authors: 1
+
+- [@fb-ifx](https://github.com/fb-ifx)
+
+---
+
 # v0.9.0 (Mon Apr 15 2024)
 
 #### 🚀 Enhancement
