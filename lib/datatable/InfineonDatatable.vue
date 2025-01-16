@@ -112,9 +112,10 @@
       <DatatablePager
         v-model:currentPage="currentPage"
         class="flex-grow-1"
-        :page-size="pageSize"
+        :page-size="currentPageSize"
         :count="count"
         @update-page-size="updatePageSize"
+        @update:currentPage="updatePageNumber"
       />
       <DatatableShowColumnsPicker
         style="max-width:15em"
@@ -142,6 +143,7 @@
 <script setup>
 import {
   toRefs, computed, ref, watchEffect, watch,
+  toRef,
 } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -162,18 +164,27 @@ const props = defineProps({
   additionalExportColumns: { type: Array, default: () => [] },
   // customColHidden: { type: String, default: 'Custom column' },
   popupMenuActions: { type: Array, default: () => [] },
+  paging: {
+    onPageChange: Function,
+    pageNumber: Number,
+    pageSize: Number,
+    pageData: Array,
+    pageCount: Number,
+  },
 });
 const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow', 'onMenuButtonClick']);
 
 const {
-  data, columns, localStorageKey,
+  data, columns, localStorageKey, paging,
 } = toRefs(props);
+// const data = ref(paging.value ? paging.pageData : props.data)
 const sortColumn = ref(props.defaultSort);
-const currentPage = ref(0);
-const pageSize = ref(10);
+console.log(paging);
+const currentPage = ref(paging.value ? paging.value.pageNumber : 0);
+const currentPageSize = ref(paging.value ? paging.value.pageSize : 10);
 const rowInEditMode = ref(undefined);
 const rowMenuIsOpen = ref(undefined);
-const count = ref(0);
+const count = ref(paging.value ? paging.value.pageCount : 0);
 
 const hiddenColumnKeys = ref([]);
 
@@ -190,9 +201,13 @@ const shownColumns = computed(() => realColumns.value
 watch(
   data,
   (newData) => {
-    count.value = newData ? newData.length : 0;
-    if (count.value / pageSize.value < currentPage.value) {
-      currentPage.value = parseInt(count.value / pageSize.value, 10);
+    console.log('----- data watch triggered ----')
+    console.log(`Current data count: ${newData.length}`)
+    if (!paging.value) {
+      count.value = newData ? newData.length : 0;
+      if (count.value / currentPageSize.value < currentPage.value) {
+        currentPage.value = parseInt(count.value / currentPageSize.value, 10);
+      }
     }
   },
   { immediate: true },
@@ -236,10 +251,12 @@ const processedData = computed(() => {
     }
   }
 
-  const sliced = sortedData.slice(
-    currentPage.value * pageSize.value,
-    (currentPage.value + 1) * pageSize.value,
-  );
+  // Place where the currently displayed data is computed, gets triggered on currentPage and pageSizeChanges
+  const sliced = !paging.value ? sortedData.slice(
+    currentPage.value * currentPageSize.value,
+    (currentPage.value + 1) * currentPageSize.value,
+  ) : sortedData;
+  // const sliced = sortedData;
 
   return sliced;
 });
@@ -295,7 +312,17 @@ function cancelRow(row) {
   rowInEditMode.value = undefined;
 }
 function updatePageSize(size) {
-  pageSize.value = size;
+  currentPageSize.value = size;
+  if (paging.value) {
+    paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value)
+  }
+}
+
+function updatePageNumber(number) {
+  // currentPage.value = number;
+  if (paging.value) {
+    paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value)
+  }
 }
 async function exportCSV() {
   const { additionalExportColumns } = props;
