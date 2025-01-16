@@ -111,6 +111,10 @@ const links = ref([
         routeName: 'examplePopupMenuActions',
       },
       {
+        label: 'Paging Support',
+        routeName: 'examplePagingSupport',
+      },
+      {
         label: 'CSV Export',
         routeName: 'exampleCsvExport',
       },

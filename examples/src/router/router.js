@@ -11,6 +11,7 @@ import ExampleCsvExport from '../components/examples/ExampleCsvExport.vue';
 import ExampleColumnAlwaysHiddenButExportable from '../components/examples/ExampleColumnAlwaysHiddenButExportable.vue';
 import ExampleConditionallyHideAdditionalActions from '../components/examples/ExampleConditionallyHideAdditionalActions.vue';
 import IntroPage from '../components/IntroPage.vue';
+import ExamplePagingSupport from '../components/examples/ExamplePagingSupport.vue';
 
 // this file initializes the vue router
 // it maps the component of the route to the <router-view> in App.vue
@@ -62,6 +63,11 @@ const router = createRouter({
       path: '/example-popup-menu-actions',
       name: 'examplePopupMenuActions',
       component: ExamplePopupMenuActions,
+    },
+    {
+      path: '/example-paging-support',
+      name: 'examplePagingSupport',
+      component: ExamplePagingSupport,
     },
     {
       path: '/example-conditionally-hide-columns',
