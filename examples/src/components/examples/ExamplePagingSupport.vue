@@ -43,9 +43,6 @@ const pageNumber = ref(0);
 const pageSize = ref(10);
 const pageCount = computed(() => {
   return rows.value ? rows.value.length : 0;
-  // if (count / currentPageSize.value < currentPage.value) {
-  //   currentPage.value = parseInt(pageCount.value / currentPageSize.value, 10);
-  // }
 });
 const sorting = ref(undefined)
 
@@ -88,10 +85,6 @@ const pageData = computed(() => {
     }
   }
 
-  console.log('------------------------');
-  console.log(sortedData);
-  console.log('------------------------');
-
   return sortedData.slice(
     pageNumber.value * pageSize.value,
     (pageNumber.value + 1) * pageSize.value,
@@ -99,11 +92,6 @@ const pageData = computed(() => {
 });
 
 const onPageChange = (newPageNumber, newPageSize, incomingSorting) => {
-  // eslint-disable-next-line no-alert
-  // alert(`Page changed. \n Page number: ${pageNumber}, Page size: ${pageSize}, Sorted column: ${sortedColumn}, Sort order: ${sortOrder}`);
-  let newSorting = incomingSorting ? incomingSorting : { key: '-', type: '-' };
-  console.log(`Page changed. \n Page number: ${newPageNumber}, Page size: ${newPageSize}, Sorted column: ${newSorting.key}, Sort order: ${newSorting.type}`);
-  console.log(newSorting);
   pageNumber.value = newPageNumber;
   pageSize.value = newPageSize;
   sorting.value = incomingSorting; 

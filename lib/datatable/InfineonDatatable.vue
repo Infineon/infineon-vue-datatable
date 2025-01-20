@@ -98,9 +98,7 @@ const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow', 'onMenuButton
 const {
   data, columns, localStorageKey, paging,
 } = toRefs(props);
-// const data = ref(paging.value ? paging.pageData : props.data)
 const sortColumn = ref(props.defaultSort);
-console.log(paging);
 const currentPage = ref(paging.value ? paging.value.pageNumber : 0);
 const currentPageSize = ref(paging.value ? paging.value.pageSize : 10);
 const rowInEditMode = ref(undefined);
@@ -122,8 +120,6 @@ const shownColumns = computed(() => realColumns.value
 watch(
   data,
   (newData) => {
-    console.log('----- data watch triggered ----')
-    console.log(`Current data count: ${newData.length}`)
     if (!paging.value) {
       count.value = newData ? newData.length : 0;
       if (count.value / currentPageSize.value < currentPage.value) {
@@ -136,8 +132,6 @@ watch(
 
 const processedData = computed(() => {
   const sortedData = data.value.slice(0);
-  console.log('###############################');
-  // const tmp = sortColumn.value;
   if (!paging.value) {
     if (sortColumn.value && sortColumn.value.key) {
       const { key, type } = sortColumn.value;
@@ -175,7 +169,6 @@ const processedData = computed(() => {
       }
     } 
   } else {
-      console.log('Notify changed filter');
       paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value);
     }
 
@@ -184,8 +177,6 @@ const processedData = computed(() => {
     currentPage.value * currentPageSize.value,
     (currentPage.value + 1) * currentPageSize.value,
   ) : sortedData;
-  // const sliced = sortedData;
-
   return sliced;
 });
 
@@ -226,7 +217,6 @@ async function saveRow(row) {
   rowInEditMode.value = undefined;
 }
 function editModeValue(row) {
-  // console.log('edit mode val', row);
   emit('editModeValue', row);
 }
 
@@ -247,7 +237,6 @@ function updatePageSize(size) {
 }
 
 function updatePageNumber(number) {
-  // currentPage.value = number;
   if (paging.value) {
     paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value)
   }
