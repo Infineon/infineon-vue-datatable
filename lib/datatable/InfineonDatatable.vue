@@ -71,6 +71,7 @@ import DatatableRow from './InfineonDatatableRow.vue';
 import DatatablePager from './InfineonDatatablePager.vue';
 import DatatableSortIcon from './InfineonDatatableSortIcon.vue';
 import DatatableShowColumnsPicker from './InfineonDatatableShowColumnsPicker.vue';
+import { debounce } from '../plugins/treeView/src/utils';
 
 const props = defineProps({
   canEdit: Boolean,
@@ -89,6 +90,7 @@ const props = defineProps({
     pageNumber: Number,
     pageSize: Number,
     pageCount: Number,
+    fetchAllData: Function,
   },
 });
 const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow', 'onMenuButtonClick']);
@@ -259,7 +261,9 @@ async function exportCSV() {
   let csv = titles.join(',');
   csv += '\n';
 
-  data.value.forEach((row) => {
+  const exportData = paging.value ? paging.value.fetchAllData() : data.value;
+
+  exportData.forEach((row) => {
     const values = columnsToExport
       .map((col) => (col.valueResolver
         ? `"${(col.valueResolver(row) && col.valueResolver(row).replace && col.valueResolver(row).replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || col.valueResolver(row)}"`

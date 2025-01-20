@@ -12,6 +12,7 @@
         pageSize: pageSize,
         pageData: pageData,
         pageCount: pageCount,
+        fetchAllData: fetchAllData,
       }"
     />
   </div>
@@ -107,6 +108,8 @@ const onPageChange = (newPageNumber, newPageSize, incomingSorting) => {
   pageSize.value = newPageSize;
   sorting.value = incomingSorting; 
 }
+
+const fetchAllData = () => rows.value;
 
 const columns = [
   {
