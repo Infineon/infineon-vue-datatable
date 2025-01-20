@@ -1,137 +1,57 @@
 <template>
-  <div
-    class="d-flex flex-column justify-content-center flex-grow-1 pt-3"
-    style="overflow:auto"
-  >
-    <div
-      class="flex-grow-1"
-      style="overflow:auto"
-    >
-      <table
-        class="table table-sm table-hover w-100"
-        style="border-collapse: separate;border-spacing: 0;"
-      >
+  <div class="d-flex flex-column justify-content-center flex-grow-1 pt-3" style="overflow:auto">
+    <div class="flex-grow-1" style="overflow:auto">
+      <table class="table table-sm table-hover w-100" style="border-collapse: separate;border-spacing: 0;">
         <thead>
           <tr>
-            <th
-              v-if="hiddenColumns.length > 0"
-              style="width:0em"
-              class="p-0"
-            />
-            <th
-              v-if="canEdit || additionalActions.length > 0"
-              style="width:0em"
-              class="ps-2 pe-1"
-            >
-              <slot
-                :name="`column.actions`"
-                v-bind="{title: 'Actions'}"
-              />
-              <slot
-                v-if="!$slots[`column.actions`]"
-                name="column"
-                v-bind="{title: 'Actions'}"
-              >
+            <th v-if="hiddenColumns.length > 0" style="width:0em" class="p-0" />
+            <th v-if="canEdit || additionalActions.length > 0" style="width:0em" class="ps-2 pe-1">
+              <slot :name="`column.actions`" v-bind="{ title: 'Actions' }" />
+              <slot v-if="!$slots[`column.actions`]" name="column" v-bind="{ title: 'Actions' }">
                 Actions
               </slot>
             </th>
 
-            <th
-              v-for="(column, index) in shownColumns"
-              :key="index"
-              class="text-nowrap"
-              scope="col"
-            >
+            <th v-for="(column, index) in shownColumns" :key="index" class="text-nowrap" scope="col">
               <!--default column title slot - hidden for slot with specified column title-->
-              <slot
-                v-if="!$slots[`column.${column.title}`]"
-                name="column"
-                v-bind="column"
-              >
+              <slot v-if="!$slots[`column.${column.title}`]" name="column" v-bind="column">
                 {{ column.title }}
               </slot>
 
               <!--special column title slot-->
-              <slot
-                :name="`column.${column.title}`"
-                v-bind="column"
-              />
+              <slot :name="`column.${column.title}`" v-bind="column" />
 
-              <DatatableSortIcon
-                v-model:sort-column="sortColumn"
-                :column="column"
-              />
+              <DatatableSortIcon v-model:sort-column="sortColumn" :column="column" />
 
-              <a
-                v-if="column.hidable"
-                style="cursor: pointer"
-                @click="changeColumnVisibility(column.key)"
-              >
-                <font-awesome-icon
-                  class="fa-sm ms-2"
-                  :icon="['fas', 'times']"
-                />
+              <a v-if="column.hidable" style="cursor: pointer" @click="changeColumnVisibility(column.key)">
+                <font-awesome-icon class="fa-sm ms-2" :icon="['fas', 'times']" />
               </a>
             </th>
           </tr>
         </thead>
 
         <tbody>
-          <DatatableRow
-            v-for="(row,idx) in processedData"
-            :key="row.id"
-            :row-index="idx"
-            :row="row"
-            :columns="realColumns"
-            :hidden-column-keys="hiddenColumnKeys"
-            :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)"
-            :can-edit="canEdit"
-            :additional-actions="additionalActions"
-            :popup-menu-actions="popupMenuActions"
-            :is-menu-open="(row.id) === (rowMenuIsOpen?.id)"
-            @start-edit-row="startEditRow"
-            @save-row="saveRow"
-            @cancel-row="cancelRow"
-            @edit-mode-value="editModeValue"
-            @on-menu-button-click="closeOtherActionsPopupMenus"
-          >
-            <template
-              v-for="(_, name) in $slots"
-              #[name]="slotData"
-            >
-              <slot
-                :name="name"
-                v-bind="slotData || {}"
-              />
+          <DatatableRow v-for="(row, idx) in processedData" :key="row.id" :row-index="idx" :row="row"
+            :columns="realColumns" :hidden-column-keys="hiddenColumnKeys"
+            :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)" :can-edit="canEdit"
+            :additional-actions="additionalActions" :popup-menu-actions="popupMenuActions"
+            :is-menu-open="(row.id) === (rowMenuIsOpen?.id)" @start-edit-row="startEditRow" @save-row="saveRow"
+            @cancel-row="cancelRow" @edit-mode-value="editModeValue"
+            @on-menu-button-click="closeOtherActionsPopupMenus">
+            <template v-for="(_, name) in $slots" #[name]="slotData">
+              <slot :name="name" v-bind="slotData || {}" />
             </template>
           </DatatableRow>
         </tbody>
       </table>
     </div>
     <div class="mt-1 d-flex flex-row">
-      <DatatablePager
-        v-model:currentPage="currentPage"
-        class="flex-grow-1"
-        :page-size="currentPageSize"
-        :count="count"
-        @update-page-size="updatePageSize"
-        @update:currentPage="updatePageNumber"
-      />
-      <DatatableShowColumnsPicker
-        style="max-width:15em"
-        :columns="realColumns"
-        :hidden-column-keys="hiddenColumnKeys"
-        @change-column-visibility="changeColumnVisibility"
-      />
-      <div
-        v-if="exportable"
-        class="mt-1 ms-1"
-      >
-        <button
-          class="btn btn-sm btn-primary"
-          title="Download CSV File"
-          @click="exportCSV"
-        >
+      <DatatablePager v-model:currentPage="currentPage" class="flex-grow-1" :page-size="currentPageSize" :count="count"
+        @update-page-size="updatePageSize" @update:currentPage="updatePageNumber" />
+      <DatatableShowColumnsPicker style="max-width:15em" :columns="realColumns" :hidden-column-keys="hiddenColumnKeys"
+        @change-column-visibility="changeColumnVisibility" />
+      <div v-if="exportable" class="mt-1 ms-1">
+        <button class="btn btn-sm btn-primary" title="Download CSV File" @click="exportCSV">
           <font-awesome-icon :icon="['fas', 'file-download']" />
           Download
         </button>
@@ -168,7 +88,6 @@ const props = defineProps({
     onPageChange: Function,
     pageNumber: Number,
     pageSize: Number,
-    pageData: Array,
     pageCount: Number,
   },
 });
@@ -215,41 +134,48 @@ watch(
 
 const processedData = computed(() => {
   const sortedData = data.value.slice(0);
-  if (sortColumn.value && sortColumn.value.key) {
-    const { key, type } = sortColumn.value;
+  console.log('###############################');
+  // const tmp = sortColumn.value;
+  if (!paging.value) {
+    if (sortColumn.value && sortColumn.value.key) {
+      const { key, type } = sortColumn.value;
 
-    const foundColumn = realColumns.value.find((c) => c.key === key);
-    if (foundColumn) {
-      const {
-        sortType,
-        valueResolver,
-        filterResolverKey,
-      } = foundColumn;
-      if (filterResolverKey || !valueResolver) {
-        const vKey = filterResolverKey || key;
+      const foundColumn = realColumns.value.find((c) => c.key === key);
+      if (foundColumn) {
+        const {
+          sortType,
+          valueResolver,
+          filterResolverKey,
+        } = foundColumn;
+        if (filterResolverKey || !valueResolver) {
+          const vKey = filterResolverKey || key;
 
-        if (sortType === 'NUMBER' && type === 'D') {
-          sortedData.sort((a, b) => b[vKey] - a[vKey]);
-        } else if (sortType === 'NUMBER' && type === 'A') {
-          sortedData.sort((a, b) => a[vKey] - b[vKey]);
-        } else if (sortType === 'STRING' && type === 'D') {
-          sortedData.sort((a, b) => b[vKey]?.localeCompare(a[vKey]));
-        } else if (sortType === 'STRING' && type === 'A') {
-          sortedData.sort((a, b) => a[vKey]?.localeCompare(b[vKey]));
-        }
-      } else if (valueResolver) {
-        if (sortType === 'NUMBER' && type === 'D') {
-          sortedData.sort((a, b) => valueResolver(b) - valueResolver(a));
-        } else if (sortType === 'NUMBER' && type === 'A') {
-          sortedData.sort((a, b) => valueResolver(a) - valueResolver(b));
-        } else if (sortType === 'STRING' && type === 'D') {
-          sortedData.sort((a, b) => valueResolver(b)?.localeCompare(valueResolver(a)));
-        } else if (sortType === 'STRING' && type === 'A') {
-          sortedData.sort((a, b) => valueResolver(a)?.localeCompare(valueResolver(b)));
+          if (sortType === 'NUMBER' && type === 'D') {
+            sortedData.sort((a, b) => b[vKey] - a[vKey]);
+          } else if (sortType === 'NUMBER' && type === 'A') {
+            sortedData.sort((a, b) => a[vKey] - b[vKey]);
+          } else if (sortType === 'STRING' && type === 'D') {
+            sortedData.sort((a, b) => b[vKey]?.localeCompare(a[vKey]));
+          } else if (sortType === 'STRING' && type === 'A') {
+            sortedData.sort((a, b) => a[vKey]?.localeCompare(b[vKey]));
+          }
+        } else if (valueResolver) {
+          if (sortType === 'NUMBER' && type === 'D') {
+            sortedData.sort((a, b) => valueResolver(b) - valueResolver(a));
+          } else if (sortType === 'NUMBER' && type === 'A') {
+            sortedData.sort((a, b) => valueResolver(a) - valueResolver(b));
+          } else if (sortType === 'STRING' && type === 'D') {
+            sortedData.sort((a, b) => valueResolver(b)?.localeCompare(valueResolver(a)));
+          } else if (sortType === 'STRING' && type === 'A') {
+            sortedData.sort((a, b) => valueResolver(a)?.localeCompare(valueResolver(b)));
+          }
         }
       }
+    } 
+  } else {
+      console.log('Notify changed filter');
+      paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value);
     }
-  }
 
   // Place where the currently displayed data is computed, gets triggered on currentPage and pageSizeChanges
   const sliced = !paging.value ? sortedData.slice(

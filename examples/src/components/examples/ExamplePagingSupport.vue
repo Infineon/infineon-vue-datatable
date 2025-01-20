@@ -46,23 +46,66 @@ const pageCount = computed(() => {
   //   currentPage.value = parseInt(pageCount.value / currentPageSize.value, 10);
   // }
 });
-// const sorting = ref({ })
+const sorting = ref(undefined)
 
 const pageData = computed(() => {
-  return rows.value.slice(
+
+  const sortedData = rows.value.slice(0);
+  if (sorting.value && sorting.value.key) {
+    const { key, type } = sorting.value;
+    const realColumns = columns.filter((c) => c.visible === undefined || c.visible === false);
+    const foundColumn = realColumns.find((c) => c.key === key);
+    if (foundColumn) {
+      const {
+        sortType,
+        valueResolver,
+        filterResolverKey,
+      } = foundColumn;
+      if (filterResolverKey || !valueResolver) {
+        const vKey = filterResolverKey || key;
+
+        if (sortType === 'NUMBER' && type === 'D') {
+          sortedData.sort((a, b) => b[vKey] - a[vKey]);
+        } else if (sortType === 'NUMBER' && type === 'A') {
+          sortedData.sort((a, b) => a[vKey] - b[vKey]);
+        } else if (sortType === 'STRING' && type === 'D') {
+          sortedData.sort((a, b) => b[vKey]?.localeCompare(a[vKey]));
+        } else if (sortType === 'STRING' && type === 'A') {
+          sortedData.sort((a, b) => a[vKey]?.localeCompare(b[vKey]));
+        }
+      } else if (valueResolver) {
+        if (sortType === 'NUMBER' && type === 'D') {
+          sortedData.sort((a, b) => valueResolver(b) - valueResolver(a));
+        } else if (sortType === 'NUMBER' && type === 'A') {
+          sortedData.sort((a, b) => valueResolver(a) - valueResolver(b));
+        } else if (sortType === 'STRING' && type === 'D') {
+          sortedData.sort((a, b) => valueResolver(b)?.localeCompare(valueResolver(a)));
+        } else if (sortType === 'STRING' && type === 'A') {
+          sortedData.sort((a, b) => valueResolver(a)?.localeCompare(valueResolver(b)));
+        }
+      }
+    }
+  }
+
+  console.log('------------------------');
+  console.log(sortedData);
+  console.log('------------------------');
+
+  return sortedData.slice(
     pageNumber.value * pageSize.value,
     (pageNumber.value + 1) * pageSize.value,
   )
 });
 
-const onPageChange = (newPageNumber, newPageSize, sorting) => {
+const onPageChange = (newPageNumber, newPageSize, incomingSorting) => {
   // eslint-disable-next-line no-alert
   // alert(`Page changed. \n Page number: ${pageNumber}, Page size: ${pageSize}, Sorted column: ${sortedColumn}, Sort order: ${sortOrder}`);
-  let newSorting = sorting ? sorting : { key: '-', type: '-' };
+  let newSorting = incomingSorting ? incomingSorting : { key: '-', type: '-' };
   console.log(`Page changed. \n Page number: ${newPageNumber}, Page size: ${newPageSize}, Sorted column: ${newSorting.key}, Sort order: ${newSorting.type}`);
-  console.log(sorting);
+  console.log(newSorting);
   pageNumber.value = newPageNumber;
   pageSize.value = newPageSize;
+  sorting.value = incomingSorting; 
 }
 
 const columns = [
