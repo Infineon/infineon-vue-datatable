@@ -86,10 +86,10 @@ const props = defineProps({
   // customColHidden: { type: String, default: 'Custom column' },
   popupMenuActions: { type: Array, default: () => [] },
   paging: {
-    onPageChange: Function,
     pageNumber: Number,
     pageSize: Number,
-    pageCount: Number,
+    totalDataCount: Number,
+    onPageChange: Function,
     fetchAllData: Function,
   },
 });
@@ -101,9 +101,9 @@ const {
 const sortColumn = ref(props.defaultSort);
 const currentPage = ref(paging.value ? paging.value.pageNumber : 0);
 const currentPageSize = ref(paging.value ? paging.value.pageSize : 10);
+const count = ref(paging.value ? paging.value.totalDataCount : 0);
 const rowInEditMode = ref(undefined);
 const rowMenuIsOpen = ref(undefined);
-const count = ref(paging.value ? paging.value.pageCount : 0);
 
 const hiddenColumnKeys = ref([]);
 
@@ -122,9 +122,11 @@ watch(
   (newData) => {
     if (!paging.value) {
       count.value = newData ? newData.length : 0;
-      if (count.value / currentPageSize.value < currentPage.value) {
-        currentPage.value = parseInt(count.value / currentPageSize.value, 10);
-      }
+    } else {
+      count.value = paging.value.totalDataCount;
+    }
+    if (count.value / currentPageSize.value < currentPage.value) {
+      currentPage.value = parseInt(count.value / currentPageSize.value, 10);
     }
   },
   { immediate: true },
@@ -169,8 +171,8 @@ const processedData = computed(() => {
       }
     } 
   } else {
-      paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value);
-    }
+    paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value);
+  }
 
   // Place where the currently displayed data is computed, gets triggered on currentPage and pageSizeChanges
   const sliced = !paging.value ? sortedData.slice(
