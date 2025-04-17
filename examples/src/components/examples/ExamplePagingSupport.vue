@@ -110,8 +110,16 @@ const onPageChange = (newPageNumber, newPageSize, incomingSorting) => {
   sorting.value = incomingSorting;
 }
 
-const fetchAllData = () => rows.value;
+function waitForTime(time) {
+  return new Promise(resolve => {
+    setTimeout(resolve, time);
+  });
+}
 
+const fetchAllData = async () => {
+  await waitForTime(10000);
+  return rows.value;
+}
 const columns = [
   {
     key: 'id',

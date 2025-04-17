@@ -252,7 +252,7 @@ async function exportCSV() {
   let csv = titles.join(',');
   csv += '\n';
 
-  const exportData = paging.value ? paging.value.fetchAllData() : data.value;
+  const exportData = paging.value ? await paging.value.fetchAllData() : data.value;
 
   exportData.forEach((row) => {
     const values = columnsToExport
