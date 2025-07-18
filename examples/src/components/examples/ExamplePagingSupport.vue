@@ -12,7 +12,11 @@
         onPageChange: onPageChange,
         fetchAllData: fetchAllData,
       }" />
-    <button class="btn btn-sm btn-primary" title="Download CSV File" @click="loadDataRandom">
+    <button 
+      class="btn btn-sm btn-primary" 
+      title="Download CSV File" 
+      @click="loadDataRandom"
+    >
       Load Data
     </button>
     <div>
@@ -39,7 +43,7 @@ const loadData = (dataCount) => {
     data.push({
       id: i,
       name: 'item' + i,
-      description: 'description item ' + i
+      description: 'description item ${i}'
     });
   }
   return data;
