@@ -1,3 +1,15 @@
+# v0.11.0 (Thu Jul 24 2025)
+
+#### 🚀 Enhancement
+
+- Enhancement: Support for displaying page wise loaded data [#42](https://github.com/Infineon/infineon-vue-datatable/pull/42) ([@fb-ifx](https://github.com/fb-ifx))
+
+#### Authors: 1
+
+- [@fb-ifx](https://github.com/fb-ifx)
+
+---
+
 # v0.10.0 (Tue Jun 18 2024)
 
 #### 🚀 Enhancement
