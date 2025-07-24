@@ -93,6 +93,7 @@ const props = defineProps({
     fetchAllData: Function,
   },
 });
+
 const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow', 'onMenuButtonClick']);
 
 const {
