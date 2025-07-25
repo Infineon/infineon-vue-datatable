@@ -8,6 +8,7 @@ import ExamplePopupMenuActions from '../components/examples/ExamplePopupMenuActi
 import ExampleDynamicColumnTitle from '../components/examples/ExampleDynamicColumnTitle.vue';
 import ExampleConditionallyHideColumns from '../components/examples/ExampleConditionallyHideColumns.vue';
 import ExampleCsvExport from '../components/examples/ExampleCsvExport.vue';
+import ExampleExcelExport from '../components/examples/ExampleExcelExport.vue';
 import ExampleColumnAlwaysHiddenButExportable from '../components/examples/ExampleColumnAlwaysHiddenButExportable.vue';
 import ExampleConditionallyHideAdditionalActions from '../components/examples/ExampleConditionallyHideAdditionalActions.vue';
 import IntroPage from '../components/IntroPage.vue';
@@ -78,6 +79,11 @@ const router = createRouter({
       path: '/example-csv-export',
       name: 'exampleCsvExport',
       component: ExampleCsvExport,
+    },
+    {
+      path: '/example-excel-export',
+      name: 'exampleExcelExport',
+      component: ExampleExcelExport,
     },
     {
       path: '/example-always-hidden-but-exportable',

@@ -119,6 +119,10 @@ const links = ref([
         routeName: 'exampleCsvExport',
       },
       {
+        label: 'Excel Export',
+        routeName: 'exampleExcelExport',
+      },
+      {
         label: 'Export hidden column',
         routeName: 'exampleColumnAlwaysHiddenButExportable',
       },

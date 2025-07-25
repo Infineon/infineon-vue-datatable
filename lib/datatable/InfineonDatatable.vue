@@ -1,57 +1,137 @@
 <template>
-  <div class="d-flex flex-column justify-content-center flex-grow-1 pt-3" style="overflow:auto">
-    <div class="flex-grow-1" style="overflow:auto">
-      <table class="table table-sm table-hover w-100" style="border-collapse: separate;border-spacing: 0;">
+  <div
+    class="d-flex flex-column justify-content-center flex-grow-1 pt-3"
+    style="overflow:auto"
+  >
+    <div
+      class="flex-grow-1"
+      style="overflow:auto"
+    >
+      <table
+        class="table table-sm table-hover w-100"
+        style="border-collapse: separate;border-spacing: 0;"
+      >
         <thead>
           <tr>
-            <th v-if="hiddenColumns.length > 0" style="width:0em" class="p-0" />
-            <th v-if="canEdit || additionalActions.length > 0" style="width:0em" class="ps-2 pe-1">
-              <slot :name="`column.actions`" v-bind="{ title: 'Actions' }" />
-              <slot v-if="!$slots[`column.actions`]" name="column" v-bind="{ title: 'Actions' }">
+            <th
+              v-if="hiddenColumns.length > 0"
+              style="width:0em"
+              class="p-0"
+            />
+            <th
+              v-if="canEdit || additionalActions.length > 0"
+              style="width:0em"
+              class="ps-2 pe-1"
+            >
+              <slot
+                :name="`column.actions`"
+                v-bind="{ title: 'Actions' }"
+              />
+              <slot
+                v-if="!$slots[`column.actions`]"
+                name="column"
+                v-bind="{ title: 'Actions' }"
+              >
                 Actions
               </slot>
             </th>
 
-            <th v-for="(column, index) in shownColumns" :key="index" class="text-nowrap" scope="col">
+            <th
+              v-for="(column, index) in shownColumns"
+              :key="index"
+              class="text-nowrap"
+              scope="col"
+            >
               <!--default column title slot - hidden for slot with specified column title-->
-              <slot v-if="!$slots[`column.${column.title}`]" name="column" v-bind="column">
+              <slot
+                v-if="!$slots[`column.${column.title}`]"
+                name="column"
+                v-bind="column"
+              >
                 {{ column.title }}
               </slot>
 
               <!--special column title slot-->
-              <slot :name="`column.${column.title}`" v-bind="column" />
+              <slot
+                :name="`column.${column.title}`"
+                v-bind="column"
+              />
 
-              <DatatableSortIcon v-model:sort-column="sortColumn" :column="column" />
+              <DatatableSortIcon
+                v-model:sort-column="sortColumn"
+                :column="column"
+              />
 
-              <a v-if="column.hidable" style="cursor: pointer" @click="changeColumnVisibility(column.key)">
-                <font-awesome-icon class="fa-sm ms-2" :icon="['fas', 'times']" />
+              <a
+                v-if="column.hidable"
+                style="cursor: pointer"
+                @click="changeColumnVisibility(column.key)"
+              >
+                <font-awesome-icon
+                  class="fa-sm ms-2"
+                  :icon="['fas', 'times']"
+                />
               </a>
             </th>
           </tr>
         </thead>
 
         <tbody>
-          <DatatableRow v-for="(row, idx) in processedData" :key="row.id" :row-index="idx" :row="row"
-            :columns="realColumns" :hidden-column-keys="hiddenColumnKeys"
-            :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)" :can-edit="canEdit"
-            :additional-actions="additionalActions" :popup-menu-actions="popupMenuActions"
-            :is-menu-open="(row.id) === (rowMenuIsOpen?.id)" @start-edit-row="startEditRow" @save-row="saveRow"
-            @cancel-row="cancelRow" @edit-mode-value="editModeValue"
-            @on-menu-button-click="closeOtherActionsPopupMenus">
-            <template v-for="(_, name) in $slots" #[name]="slotData">
-              <slot :name="name" v-bind="slotData || {}" />
+          <DatatableRow
+            v-for="(row, idx) in processedData"
+            :key="row.id"
+            :row-index="idx"
+            :row="row"
+            :columns="realColumns"
+            :hidden-column-keys="hiddenColumnKeys"
+            :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)"
+            :can-edit="canEdit"
+            :additional-actions="additionalActions"
+            :popup-menu-actions="popupMenuActions"
+            :is-menu-open="(row.id) === (rowMenuIsOpen?.id)"
+            @start-edit-row="startEditRow"
+            @save-row="saveRow"
+            @cancel-row="cancelRow"
+            @edit-mode-value="editModeValue"
+            @on-menu-button-click="closeOtherActionsPopupMenus"
+          >
+            <template
+              v-for="(_, name) in $slots"
+              #[name]="slotData"
+            >
+              <slot
+                :name="name"
+                v-bind="slotData || {}"
+              />
             </template>
           </DatatableRow>
         </tbody>
       </table>
     </div>
     <div class="mt-1 d-flex flex-row">
-      <DatatablePager v-model:currentPage="currentPage" class="flex-grow-1" :page-size="currentPageSize" :count="count"
-        @update-page-size="updatePageSize" @update:currentPage="updatePageNumber" />
-      <DatatableShowColumnsPicker style="max-width:15em" :columns="realColumns" :hidden-column-keys="hiddenColumnKeys"
-        @change-column-visibility="changeColumnVisibility" />
-      <div v-if="exportable" class="mt-1 ms-1">
-        <button class="btn btn-sm btn-primary" title="Download CSV File" @click="exportCSV">
+      <DatatablePager
+        v-model:currentPage="currentPage"
+        class="flex-grow-1"
+        :page-size="currentPageSize"
+        :count="count"
+        @update-page-size="updatePageSize"
+        @update:current-page="updatePageNumber"
+      />
+      <DatatableShowColumnsPicker
+        style="max-width:15em"
+        :columns="realColumns"
+        :hidden-column-keys="hiddenColumnKeys"
+        @change-column-visibility="changeColumnVisibility"
+      />
+      <div
+        v-if="exportable"
+        class="mt-1 ms-1"
+      >
+        <button
+          class="btn btn-sm btn-primary"
+          title="Download"
+          @click="downloadFile"
+        >
           <font-awesome-icon :icon="['fas', 'file-download']" />
           Download
         </button>
@@ -63,15 +143,14 @@
 <script setup>
 import {
   toRefs, computed, ref, watchEffect, watch,
-  toRef,
 } from 'vue';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
+import { Workbook } from 'exceljs';
 import DatatableRow from './InfineonDatatableRow.vue';
 import DatatablePager from './InfineonDatatablePager.vue';
 import DatatableSortIcon from './InfineonDatatableSortIcon.vue';
 import DatatableShowColumnsPicker from './InfineonDatatableShowColumnsPicker.vue';
-import { debounce } from '../plugins/treeView/src/utils';
 
 const props = defineProps({
   canEdit: Boolean,
@@ -85,6 +164,7 @@ const props = defineProps({
   additionalExportColumns: { type: Array, default: () => [] },
   // customColHidden: { type: String, default: 'Custom column' },
   popupMenuActions: { type: Array, default: () => [] },
+  downloadFormat: { type: String, default: 'csv' },
   paging: {
     pageNumber: Number,
     pageSize: Number,
@@ -169,20 +249,19 @@ const processedData = computed(() => {
           }
         }
       }
-    } 
+    }
   } else {
     paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value);
   }
 
-  // Place where the currently displayed data is computed, gets triggered on currentPage and pageSizeChanges
+  // Location where the currently displayed data is calculated is triggered
+  // by currentPage and pageSizeChanges.
   const sliced = !paging.value ? sortedData.slice(
     currentPage.value * currentPageSize.value,
     (currentPage.value + 1) * currentPageSize.value,
   ) : sortedData;
   return sliced;
 });
-
-const closeRowMenusMap = ref(new Map(processedData.value.map((_, index) => [index, false])));
 
 // store hidden columns for a predefined property localStorageKey - if not defined, use default
 const hiddenColumnsLocalStorageKey = computed(() => localStorageKey.value || realColumns
@@ -223,7 +302,7 @@ function editModeValue(row) {
 }
 
 function closeOtherActionsPopupMenus(row) {
-  rowMenuIsOpen.value = row ? row : undefined;
+  rowMenuIsOpen.value = row || undefined;
   emit('onMenuButtonClick', row);
 }
 
@@ -234,20 +313,16 @@ function cancelRow(row) {
 function updatePageSize(size) {
   currentPageSize.value = size;
   if (paging.value) {
-    paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value)
+    paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value);
   }
 }
 
-function updatePageNumber(number) {
+function updatePageNumber() {
   if (paging.value) {
-    paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value)
+    paging.value.onPageChange(currentPage.value, currentPageSize.value, sortColumn.value);
   }
 }
-async function exportCSV() {
-  const { additionalExportColumns } = props;
-
-  const columnsToExport = [...shownColumns.value, ...additionalExportColumns];
-
+async function exportCSV(columnsToExport) {
   const titles = columnsToExport.map((col) => `"${(col.title && col.title.replace && col.title.replace(/(["])/g, '"$1').replace(/(?:\r\n|\r|\n)/g, ' ')) || col.title}"`);
   let csv = titles.join(',');
   csv += '\n';
@@ -271,6 +346,41 @@ async function exportCSV() {
   link.download = 'download.csv';
   link.click();
   URL.revokeObjectURL(link.href);
+}
+
+async function exportExcel(columnsToExport) {
+  const titles = columnsToExport.map((col) => col.title || '');
+  const exportData = paging.value ? await paging.value.fetchAllData() : data.value;
+  const workbook = new Workbook();
+  const worksheet = workbook.addWorksheet('Sheet1');
+  worksheet.addRow(titles);
+  exportData.forEach((row) => {
+    const values = columnsToExport.map((col) => {
+      if (col.valueResolver) {
+        return col.valueResolver(row);
+      }
+      return row[col.key];
+    });
+    worksheet.addRow(values);
+  });
+
+  const buffer = await workbook.xlsx.writeBuffer();
+  const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'download.xlsx';
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function downloadFile() {
+  const { additionalExportColumns, downloadFormat } = props;
+  const columnsToExport = [...shownColumns.value, ...additionalExportColumns];
+  if (downloadFormat === 'csv') {
+    exportCSV(columnsToExport);
+  } else if (downloadFormat === 'xlsx') {
+    exportExcel(columnsToExport);
+  }
 }
 
 </script>
