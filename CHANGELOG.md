@@ -1,3 +1,15 @@
+# v0.11.1 (Mon Aug 04 2025)
+
+#### 🐛 Bug Fix
+
+- Add support for Excel download [#45](https://github.com/Infineon/infineon-vue-datatable/pull/45) ([@PTUifx](https://github.com/PTUifx))
+
+#### Authors: 1
+
+- [@PTUifx](https://github.com/PTUifx)
+
+---
+
 # v0.11.0 (Thu Jul 24 2025)
 
 #### 🚀 Enhancement
