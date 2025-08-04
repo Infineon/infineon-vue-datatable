@@ -1,9 +1,9 @@
 <template>
   <div>
-    <InfineonDatatable 
-      :data="pageData" 
-      :columns="columns" 
-      :default-sort="{ key: 'name', type: 'D' }" 
+    <InfineonDatatable
+      :data="pageData"
+      :columns="columns"
+      :default-sort="{ key: 'name', type: 'D' }"
       :exportable="true"
       :paging="{
         pageNumber: pageNumber,
@@ -11,10 +11,11 @@
         totalDataCount: totalCount,
         onPageChange: onPageChange,
         fetchAllData: fetchAllData,
-      }" />
-    <button 
-      class="btn btn-sm btn-primary" 
-      title="Download CSV File" 
+      }"
+    />
+    <button
+      class="btn btn-sm btn-primary"
+      title="Download CSV File"
       @click="loadDataRandom"
     >
       Load Data
@@ -39,11 +40,11 @@ const loadData = (dataCount) => {
     { id: 6, name: 'item6, dealing with backslash\\', description: 'description item 6' },
     { id: 7, name: 'item7, dealing with backslash\\ and newline\nnewline should appear here', description: 'description item 7' },
   ];
-  for (let i = 8; i <= dataCount; i++) {
+  for (let i = 8; i <= dataCount; i += 1) {
     data.push({
       id: i,
-      name: 'item' + i,
-      description: 'description item ${i}'
+      name: `item${i}`,
+      description: `description item ${i}`,
     });
   }
   return data;
@@ -51,20 +52,17 @@ const loadData = (dataCount) => {
 
 const loadDataRandom = () => {
   const randomCount = Math.floor(Math.random() * (160 - 40 + 1)) + 40;
-  rows.value = loadData(randomCount)
+  rows.value = loadData(randomCount);
 };
 
 const rows = ref(loadData(50));
 
 const pageNumber = ref(0);
 const pageSize = ref(10);
-const totalCount = computed(() => {
-  return rows.value ? rows.value.length : 0;
-});
-const sorting = ref(undefined)
+const totalCount = computed(() => (rows.value ? rows.value.length : 0));
+const sorting = ref(undefined);
 
 const pageData = computed(() => {
-
   const sortedData = rows.value.slice(0);
   if (sorting.value && sorting.value.key) {
     const { key, type } = sorting.value;
@@ -105,17 +103,17 @@ const pageData = computed(() => {
   return sortedData.slice(
     pageNumber.value * pageSize.value,
     (pageNumber.value + 1) * pageSize.value,
-  )
+  );
 });
 
 const onPageChange = (newPageNumber, newPageSize, incomingSorting) => {
   pageNumber.value = newPageNumber;
   pageSize.value = newPageSize;
   sorting.value = incomingSorting;
-}
+};
 
 function waitForTime(time) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, time);
   });
 }
@@ -123,7 +121,7 @@ function waitForTime(time) {
 const fetchAllData = async () => {
   await waitForTime(10000);
   return rows.value;
-}
+};
 const columns = [
   {
     key: 'id',
