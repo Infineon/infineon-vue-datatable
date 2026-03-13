@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import ExampleBasic from '../components/examples/ExampleBasic.vue';
 import ExampleEdit from '../components/examples/ExampleEdit.vue';
+import ExampleRowBasedEnabledEdit from '../components/examples/ExampleRowBasedEnabledEdit.vue';
 import ExampleHideColumns from '../components/examples/ExampleHideColumns.vue';
 import ExampleStoreHiddenColumnsPerView from '../components/examples/ExampleStoreHiddenColumnsPerView.vue';
 import ExampleAdditionalActions from '../components/examples/ExampleAdditionalActions.vue';
@@ -34,6 +35,11 @@ const router = createRouter({
       path: '/example-edit',
       name: 'exampleEdit',
       component: ExampleEdit,
+    },
+    {
+      path: '/example-row-based-enabled-edit',
+      name: 'exampleRowBasedEnabledEdit',
+      component: ExampleRowBasedEnabledEdit,
     },
     {
       path: '/example-dynamic-column-title',
