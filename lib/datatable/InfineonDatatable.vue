@@ -158,6 +158,7 @@ const props = defineProps({
   canEdit: Boolean,
   canEditRow: { type: Function, default: undefined },
   disableActionButtonsFor: { type: Object, default: undefined },
+  disableHiddenColumnsFor: { type: Object, default: undefined },
   data: { type: Array, default: () => [] },
   columns: { type: Array, default: () => [] },
   localStorageKey: { type: String, default: undefined },
@@ -204,6 +205,18 @@ function rowMatchesDisabledActionRule(row) {
   }
 
   return Object.entries(props.disableActionButtonsFor).some(([columnKey, configuredValues]) => {
+    const values = Array.isArray(configuredValues) ? configuredValues : [configuredValues];
+    return values.includes(row?.[columnKey]);
+  });
+}
+
+// TODO
+function rowMatchesDisabledHiddenColumns(row) {
+  if (!props.disableHiddenColumnsFor) {
+    return false;
+  }
+
+  return Object.entries(props.disableHiddenColumnsFor).some(([columnKey, configuredValues]) => {
     const values = Array.isArray(configuredValues) ? configuredValues : [configuredValues];
     return values.includes(row?.[columnKey]);
   });

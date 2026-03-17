@@ -5,7 +5,8 @@
       :columns="columns"
       :default-sort="{ key: 'name', type: 'A' }"
       :can-edit="true"
-      :disable-action-buttons-for="{ system: ['System B', 'System C'] }"
+      :disable-action-buttons-for="{ columnName2: ['System B', 'System C'] }"
+      :disable-hidden-columns-for="{ columnName2: ['System B', 'System C'] }"
       @save-row="saveRow"
       @edit-mode-value="editModeValue"
       @cancel-row="cancelRow"
@@ -19,16 +20,32 @@ import { InfineonDatatable } from '../../../../lib';
 
 const rows = ref([
   {
-    id: 1, name: 'item1', system: 'System A', type: 'A',
+    id: 1,
+    columnName2: 'System A',
+    name: 'item1',
+    type: 'A',
+    longText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices gravida. Quisque condimentum pretium feugiat. Nam vel gravida ipsum. Fusce dapibus justo ut neque molestie, sed scelerisque leo aliquet. Curabitur convallis dictum maximus. Nullam a facilisis leo. Morbi dignissim facilisis nisi, quis hendrerit mi porta a. Sed id accumsan ipsum. Aenean rutrum iaculis feugiat. Proin feugiat enim sed tortor mollis, id elementum dolor pretium. Mauris condimentum arcu vitae tortor elementum tincidunt.',
   },
   {
-    id: 2, name: 'item2', system: 'System B', type: 'B',
+    id: 2,
+    columnName2: 'System B',
+    name: 'item2',
+    type: 'B',
+    longText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices gravida. Quisque condimentum pretium feugiat. Nam vel gravida ipsum. Fusce dapibus justo ut neque molestie, sed scelerisque leo aliquet. Curabitur convallis dictum maximus. Nullam a facilisis leo. Morbi dignissim facilisis nisi, quis hendrerit mi porta a. Sed id accumsan ipsum. Aenean rutrum iaculis feugiat. Proin feugiat enim sed tortor mollis, id elementum dolor pretium. Mauris condimentum arcu vitae tortor elementum tincidunt.',
   },
   {
-    id: 3, name: 'item3', system: 'System A', type: 'C',
+    id: 3,
+    columnName2: 'System A',
+    name: 'item3',
+    type: 'C',
+    longText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices gravida. Quisque condimentum pretium feugiat. Nam vel gravida ipsum. Fusce dapibus justo ut neque molestie, sed scelerisque leo aliquet. Curabitur convallis dictum maximus. Nullam a facilisis leo. Morbi dignissim facilisis nisi, quis hendrerit mi porta a. Sed id accumsan ipsum. Aenean rutrum iaculis feugiat. Proin feugiat enim sed tortor mollis, id elementum dolor pretium. Mauris condimentum arcu vitae tortor elementum tincidunt.',
   },
   {
-    id: 4, name: 'item4', system: 'System C', type: 'B',
+    id: 4,
+    columnName2: 'System C',
+    name: 'item4',
+    type: 'B',
+    longText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent laoreet ultrices gravida. Quisque condimentum pretium feugiat. Nam vel gravida ipsum. Fusce dapibus justo ut neque molestie, sed scelerisque leo aliquet. Curabitur convallis dictum maximus. Nullam a facilisis leo. Morbi dignissim facilisis nisi, quis hendrerit mi porta a. Sed id accumsan ipsum. Aenean rutrum iaculis feugiat. Proin feugiat enim sed tortor mollis, id elementum dolor pretium. Mauris condimentum arcu vitae tortor elementum tincidunt.',
   },
 ]);
 
@@ -79,7 +96,7 @@ const columns = [
     editable: true,
   },
   {
-    key: 'system',
+    key: 'columnName2',
     title: 'System',
     name: 'system',
     sortable: true,
@@ -104,6 +121,13 @@ const columns = [
     editable: true,
     valueResolver: (row) => getTypeForRow(row),
     possibleValues: dropdownOptions.value,
+  },
+  {
+    key: 'longText',
+    title: 'Text',
+    sortable: false,
+    hidable: true,
+    defaultHidden: true,
   },
 ];
 
