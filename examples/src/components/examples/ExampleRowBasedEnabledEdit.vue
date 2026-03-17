@@ -6,7 +6,7 @@
       :default-sort="{ key: 'name', type: 'A' }"
       :can-edit="true"
       :disable-action-buttons-for="{ columnName2: ['System B', 'System C'] }"
-      :disable-hidden-columns-for="{ columnName2: ['System B', 'System C'] }"
+      :disable-hidden-columns-for="{ columnName2: ['System B', 'System A'] }"
       @save-row="saveRow"
       @edit-mode-value="editModeValue"
       @cancel-row="cancelRow"

@@ -84,6 +84,8 @@
             :row="row"
             :columns="realColumns"
             :hidden-column-keys="hiddenColumnKeys"
+            :has-hidden-columns-column="hiddenColumns.length > 0"
+            :hidden-columns-enabled="!rowMatchesDisabledHiddenColumns(row)"
             :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)"
             :can-edit="canEdit"
             :actions-enabled="areActionButtonsEnabledForRow(row)"
@@ -210,7 +212,6 @@ function rowMatchesDisabledActionRule(row) {
   });
 }
 
-// TODO
 function rowMatchesDisabledHiddenColumns(row) {
   if (!props.disableHiddenColumnsFor) {
     return false;
