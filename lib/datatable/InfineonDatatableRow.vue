@@ -5,10 +5,11 @@
     class="mainrow"
   >
     <td
-      v-if="hiddenColumns.length > 0"
+      v-if="hasHiddenColumnsColumn"
       class="px-1"
     >
       <a
+        v-if="hiddenColumns.length > 0"
         href="javascript:void(0)"
         @click="expanded = !expanded"
       >
@@ -224,6 +225,8 @@ const props = defineProps({
   isMenuOpen: Boolean,
   rowIsInEditMode: Boolean,
   hiddenColumnKeys: { type: Array, default: () => [] },
+  hasHiddenColumnsColumn: Boolean,
+  hiddenColumnsEnabled: { type: Boolean, default: true },
   additionalActions: { type: Object, default: () => {} }, // { label: '', action: (row) => {} }
   popupMenuActions: { type: Array, default: () => [] },
 });
@@ -233,6 +236,8 @@ const {
   columns,
   rowIndex,
   hiddenColumnKeys,
+  hasHiddenColumnsColumn,
+  hiddenColumnsEnabled,
   canEdit,
   actionsEnabled,
   showActionColumn,
@@ -245,15 +250,21 @@ const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonCl
 const shownColumns = computed(() => columns.value
   .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
 
-const hiddenColumns = computed(() => columns.value
-  .filter((c) => c.hidable && hiddenColumnKeys.value.includes(c.key)));
+const hiddenColumns = computed(() => {
+  if (!hiddenColumnsEnabled.value) {
+    return [];
+  }
+
+  return columns.value
+    .filter((c) => c.hidable && hiddenColumnKeys.value.includes(c.key));
+});
 
 const calculateColspan = computed(() => {
   let colspan = shownColumns.value.length;
   if (showActionColumn.value) {
     colspan += 1;
   }
-  if (hiddenColumns.value.length > 0) {
+  if (hasHiddenColumnsColumn.value) {
     colspan += 1;
   }
   return colspan;
