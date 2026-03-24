@@ -26,7 +26,7 @@
       class="text-nowrap px-1"
     >
       <button
-        v-if="!rowIsInEditMode && canEdit && actionsEnabled"
+        v-if="!rowIsInEditMode && canEdit"
         class="btn btn-outline-primary btn-sm me-1"
         title="Start Edit"
         @click="startEditRow"
@@ -36,7 +36,7 @@
         />
       </button>
       <button
-        v-if="rowIsInEditMode && canEdit && actionsEnabled"
+        v-if="rowIsInEditMode && canEdit"
         class="btn btn-outline-primary btn-sm me-1"
         title="Save"
         @click="saveRow"
@@ -47,7 +47,7 @@
       </button>
 
       <button
-        v-if="rowIsInEditMode && canEdit && actionsEnabled"
+        v-if="rowIsInEditMode && canEdit"
         class="btn btn-outline-primary btn-sm me-1"
         title="Cancel Edit"
         @click="cancelRow"
@@ -58,7 +58,7 @@
       </button>
       <template
         v-for="(additionalAction, idx) in additionalActions"
-        v-if="actionsEnabled"
+        v-if="canEdit"
       >
         <button
           v-if="(!additionalAction.visible || additionalAction.visible(row))"
@@ -85,7 +85,7 @@
         </button>
       </template>
       <button
-        v-if="actionsEnabled && (popupMenuActions.length > 0)"
+        v-if="canEdit && (popupMenuActions.length > 0)"
         ref="menuButtonRef"
         class="btn btn-outline-primary btn-sm me-1"
         :style="additionalActions.length > 0 ? 'margin-left: 4px;' : ''"
@@ -220,7 +220,6 @@ const props = defineProps({
   rowIndex: { type: Number, default: undefined },
   columns: { type: Array, default: () => [] },
   canEdit: Boolean,
-  actionsEnabled: Boolean,
   showActionColumn: Boolean,
   isMenuOpen: Boolean,
   rowIsInEditMode: Boolean,
@@ -239,7 +238,6 @@ const {
   hasHiddenColumnsColumn,
   hiddenColumnsEnabled,
   canEdit,
-  actionsEnabled,
   showActionColumn,
   additionalActions,
   popupMenuActions,

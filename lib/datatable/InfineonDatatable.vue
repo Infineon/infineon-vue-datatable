@@ -85,10 +85,8 @@
             :columns="realColumns"
             :hidden-column-keys="hiddenColumnKeys"
             :has-hidden-columns-column="hiddenColumns.length > 0"
-            :hidden-columns-enabled="!rowMatchesDisabledHiddenColumns(row)"
             :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)"
-            :can-edit="canEdit"
-            :actions-enabled="areActionButtonsEnabledForRow(row)"
+            :can-edit="areActionButtonsEnabledForRow(row)"
             :show-action-column="showActionColumn"
             :additional-actions="additionalActions"
             :popup-menu-actions="popupMenuActions"
@@ -159,8 +157,6 @@ import DatatableShowColumnsPicker from './InfineonDatatableShowColumnsPicker.vue
 const props = defineProps({
   canEdit: Boolean,
   canEditRow: { type: Function, default: undefined },
-  disableActionButtonsFor: { type: Object, default: undefined },
-  disableHiddenColumnsFor: { type: Object, default: undefined },
   data: { type: Array, default: () => [] },
   columns: { type: Array, default: () => [] },
   localStorageKey: { type: String, default: undefined },
@@ -172,7 +168,16 @@ const props = defineProps({
   // customColHidden: { type: String, default: 'Custom column' },
   popupMenuActions: { type: Array, default: () => [] },
   downloadFormat: { type: String, default: 'csv' },
-  paging: { type: Object, default: undefined },
+  paging: {
+    type: {
+      pageNumber: Number,
+      pageSize: Number,
+      totalDataCount: Number,
+      onPageChange: Function,
+      fetchAllData: Function,
+    },
+    default: undefined,
+  },
 });
 const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow', 'onMenuButtonClick']);
 
@@ -198,58 +203,16 @@ const shownColumns = computed(() => realColumns.value
   .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
 
 const hasAnyActionButtons = computed(() => props.canEdit
-  || props.additionalActions.length > 0
-  || props.popupMenuActions.length > 0);
+  || props.canEditRow
+  || Boolean(props.additionalActions.length)
+  || Boolean(props.popupMenuActions.length));
 
-function rowMatchesDisabledActionRule(row) {
-  if (!props.disableActionButtonsFor) {
-    return false;
-  }
+const areActionButtonsEnabledForRow = (row) => hasAnyActionButtons.value
+  && (!props.canEditRow || props.canEditRow(row));
 
-  return Object.entries(props.disableActionButtonsFor).some(([columnKey, configuredValues]) => {
-    const values = Array.isArray(configuredValues) ? configuredValues : [configuredValues];
-    return values.includes(row?.[columnKey]);
-  });
-}
-
-function rowMatchesDisabledHiddenColumns(row) {
-  if (!props.disableHiddenColumnsFor) {
-    return false;
-  }
-
-  return Object.entries(props.disableHiddenColumnsFor).some(([columnKey, configuredValues]) => {
-    const values = Array.isArray(configuredValues) ? configuredValues : [configuredValues];
-    return values.includes(row?.[columnKey]);
-  });
-}
-
-function areActionButtonsEnabledForRow(row) {
-  if (!hasAnyActionButtons.value) {
-    return false;
-  }
-
-  if (rowMatchesDisabledActionRule(row)) {
-    return false;
-  }
-
-  if (props.canEditRow) {
-    return props.canEditRow(row);
-  }
-
-  return true;
-}
-
-const showActionColumn = computed(() => {
-  if (!hasAnyActionButtons.value) {
-    return false;
-  }
-
-  if (!props.canEditRow && !props.disableActionButtonsFor) {
-    return true;
-  }
-
-  return data.value.some((row) => areActionButtonsEnabledForRow(row));
-});
+const showActionColumn = computed(() => hasAnyActionButtons.value
+  && (!props.canEditRow
+    || data.value.some(areActionButtonsEnabledForRow)));
 
 // reset page & item count when data changes
 watch(

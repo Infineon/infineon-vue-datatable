@@ -4,9 +4,7 @@
       :data="rows"
       :columns="columns"
       :default-sort="{ key: 'name', type: 'A' }"
-      :can-edit="true"
-      :disable-action-buttons-for="{ columnName2: ['System B', 'System C'] }"
-      :disable-hidden-columns-for="{ columnName2: ['System B', 'System A'] }"
+      :can-edit-row="canEditRow"
       @save-row="saveRow"
       @edit-mode-value="editModeValue"
       @cancel-row="cancelRow"
@@ -61,6 +59,10 @@ const dropdownOptions = computed(() => [
 
 function getTypeForRow(row) {
   return dropdownOptions.value.find((r) => r.id === row.type)?.label;
+}
+
+function canEditRow(row) {
+  return !['System B', 'System C'].includes(row.columnName2);
 }
 
 const editModeValue = (changedRow) => {
