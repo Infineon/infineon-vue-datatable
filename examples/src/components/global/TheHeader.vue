@@ -83,6 +83,10 @@ const links = ref([
         routeName: 'exampleEdit',
       },
       {
+        label: 'Row-based Enabled Edit',
+        routeName: 'exampleRowBasedEnabledEdit',
+      },
+      {
         label: 'Dynamic Column Title',
         routeName: 'exampleDynamicColumnTitle',
       },

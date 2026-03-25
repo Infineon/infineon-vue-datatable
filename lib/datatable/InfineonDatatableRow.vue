@@ -5,10 +5,11 @@
     class="mainrow"
   >
     <td
-      v-if="hiddenColumns.length > 0"
+      v-if="hasHiddenColumnsColumn"
       class="px-1"
     >
       <a
+        v-if="hiddenColumns.length > 0"
         href="javascript:void(0)"
         @click="expanded = !expanded"
       >
@@ -21,7 +22,7 @@
       </a>
     </td>
     <td
-      v-if="canEdit || additionalActions.length > 0"
+      v-if="showActionColumn"
       class="text-nowrap px-1"
     >
       <button
@@ -69,21 +70,21 @@
           @click="additionalAction.action(row)"
         >
           <div style="display: flex;">
-            <div 
+            <div
               :style="additionalAction.label ? 'margin-right: 4px;' : ''"
             >
               <font-awesome-icon
                 v-if="additionalAction.icon"
                 :icon="additionalAction.icon"
               />
-            </div>  
+            </div>
             <span v-if="additionalAction.label">
               {{ additionalAction.label }}
             </span>
           </div>
         </button>
       </template>
-      <button 
+      <button
         v-if="canEdit && (popupMenuActions.length > 0)"
         ref="menuButtonRef"
         class="btn btn-outline-primary btn-sm me-1"
@@ -92,7 +93,7 @@
         @click="showPopupMenu"
       >
         <font-awesome-icon :icon="['fas', 'ellipsis-h']" />
-        <div 
+        <div
           v-show="showMenu && isMenuOpen"
           ref="menuRef"
           class="menu"
@@ -107,17 +108,21 @@
               :class="{'ms-1': idx > 0}"
               :title="popupMenuAction.title"
               :style="popupMenuAction.style ? popupMenuAction.style : ''"
-              @click="(event) => popupMenuActionOnClick(event, popupMenuAction.action, popupMenuAction.canCloseMenu)"
+              @click="popupMenuActionOnClick(
+                $event,
+                popupMenuAction.action,
+                popupMenuAction.canCloseMenu
+              )"
             >
               <div style="display: flex;">
-                <div 
+                <div
                   :style="popupMenuAction.label ? 'margin-right: 4px;' : ''"
                 >
                   <font-awesome-icon
                     v-if="popupMenuAction.icon"
                     :icon="popupMenuAction.icon"
                   />
-                </div>  
+                </div>
                 <span v-if="popupMenuAction.label">
                   {{ popupMenuAction.label }}
                 </span>
@@ -130,7 +135,7 @@
     <DatatableRowColumn
       v-for="(column, index) in shownColumns"
       :key="index"
-      v-model:editValue="editRow[column.key]"
+      v-model:edit-value="editRow[column.key]"
       :row="row"
       :column="column"
       :row-is-in-edit-mode="rowIsInEditMode"
@@ -162,37 +167,41 @@
         :class="{'expanded my-2': expanded && hiddenColumns.length > 0}"
       >
         <table class="table table-sm">
-          <tr class="p-0">
-            <th
-              v-for="(column, index) in hiddenColumns"
-              :key="index"
-              class="p-0"
-            >
-              {{ column.title }}
-            </th>
-          </tr>
-          <tr style="border-color:  var(--bs-gray-400)">
-            <DatatableRowColumn
-              v-for="(column, index) in hiddenColumns"
-              :key="index"
-              v-model:editValue="editRow[column.key]"
-              :row="row"
-              :column="column"
-              :row-is-in-edit-mode="rowIsInEditMode"
-              @input="editModeValue"
-              @update-selected-value="editModeValue"
-            >
-              <template
-                v-for="(_, name) in $slots"
-                #[name]="slotData"
+          <thead>
+            <tr class="p-0">
+              <th
+                v-for="(column, index) in hiddenColumns"
+                :key="index"
+                class="p-0"
               >
-                <slot
-                  :name="name"
-                  v-bind="slotData || {}"
-                />
-              </template>
-            </DatatableRowColumn>
-          </tr>
+                {{ column.title }}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-color:  var(--bs-gray-400)">
+              <DatatableRowColumn
+                v-for="(column, index) in hiddenColumns"
+                :key="index"
+                v-model:edit-value="editRow[column.key]"
+                :row="row"
+                :column="column"
+                :row-is-in-edit-mode="rowIsInEditMode"
+                @input="editModeValue"
+                @update-selected-value="editModeValue"
+              >
+                <template
+                  v-for="(_, name) in $slots"
+                  #[name]="slotData"
+                >
+                  <slot
+                    :name="name"
+                    v-bind="slotData || {}"
+                  />
+                </template>
+              </DatatableRowColumn>
+            </tr>
+          </tbody>
         </table>
       </div>
     </td>
@@ -202,7 +211,7 @@
 <script setup>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
-  toRefs, computed, ref, onMounted, watch
+  toRefs, computed, ref, onMounted, watch,
 } from 'vue';
 import DatatableRowColumn from './InfineonDatatableRowColumn.vue';
 
@@ -211,30 +220,49 @@ const props = defineProps({
   rowIndex: { type: Number, default: undefined },
   columns: { type: Array, default: () => [] },
   canEdit: Boolean,
+  showActionColumn: Boolean,
   isMenuOpen: Boolean,
   rowIsInEditMode: Boolean,
   hiddenColumnKeys: { type: Array, default: () => [] },
+  hasHiddenColumnsColumn: Boolean,
+  hiddenColumnsEnabled: { type: Boolean, default: true },
   additionalActions: { type: Object, default: () => {} }, // { label: '', action: (row) => {} }
   popupMenuActions: { type: Array, default: () => [] },
 });
 
 const {
-  row, columns, rowIndex, hiddenColumnKeys, canEdit, additionalActions, popupMenuActions, popupMenuOpen, isMenuOpen
+  row,
+  columns,
+  rowIndex,
+  hiddenColumnKeys,
+  hasHiddenColumnsColumn,
+  hiddenColumnsEnabled,
+  canEdit,
+  showActionColumn,
+  additionalActions,
+  popupMenuActions,
+  isMenuOpen,
 } = toRefs(props);
 const emit = defineEmits(['startEditRow', 'saveRow', 'cancelRow', 'onRowButtonClick', 'editRow', 'editModeValue', 'onMenuButtonClick']);
 
 const shownColumns = computed(() => columns.value
-.filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
+  .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
 
-const hiddenColumns = computed(() => columns.value
-.filter((c) => c.hidable && hiddenColumnKeys.value.includes(c.key)));
+const hiddenColumns = computed(() => {
+  if (!hiddenColumnsEnabled.value) {
+    return [];
+  }
+
+  return columns.value
+    .filter((c) => c.hidable && hiddenColumnKeys.value.includes(c.key));
+});
 
 const calculateColspan = computed(() => {
   let colspan = shownColumns.value.length;
-  if (canEdit.value || additionalActions.value.length > 0) {
+  if (showActionColumn.value) {
     colspan += 1;
   }
-  if (hiddenColumns.value.length > 0) {
+  if (hasHiddenColumnsColumn.value) {
     colspan += 1;
   }
   return colspan;
@@ -245,20 +273,19 @@ const expanded = ref(false);
 
 const menuRef = ref(null);
 const menuButtonRef = ref(null);
-const menuActionButtonRefs = ref([]);
 const forcedMenuClose = ref(false);
 const showMenu = ref(false);
 
 function showPopupMenu(event) {
   emit('onMenuButtonClick', row.value);
-  showMenu.value =!showMenu.value || !menuButtonRef.value.contains(event.target);
+  showMenu.value = !showMenu.value || !menuButtonRef.value.contains(event.target);
 }
 
 function popupMenuActionOnClick(_, action, canCloseMenu) {
   if (canCloseMenu) {
     forcedMenuClose.value = true;
   }
-  action(row.value)
+  action(row.value);
 }
 
 function closeMenuOnClickOutside(event) {
@@ -276,7 +303,7 @@ watch(isMenuOpen, () => {
   if (!isMenuOpen.value) {
     showMenu.value = false;
   }
-})
+});
 
 function startEditRow() {
   // aktuelle row in editier row kopieren

@@ -19,7 +19,7 @@
               class="p-0"
             />
             <th
-              v-if="canEdit || additionalActions.length > 0"
+              v-if="showActionColumn"
               style="width:0em"
               class="ps-2 pe-1"
             >
@@ -84,8 +84,10 @@
             :row="row"
             :columns="realColumns"
             :hidden-column-keys="hiddenColumnKeys"
+            :has-hidden-columns-column="hiddenColumns.length > 0"
             :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)"
-            :can-edit="canEdit"
+            :can-edit="areActionButtonsEnabledForRow(row)"
+            :show-action-column="showActionColumn"
             :additional-actions="additionalActions"
             :popup-menu-actions="popupMenuActions"
             :is-menu-open="(row.id) === (rowMenuIsOpen?.id)"
@@ -110,7 +112,7 @@
     </div>
     <div class="mt-1 d-flex flex-row">
       <DatatablePager
-        v-model:currentPage="currentPage"
+        v-model:current-page="currentPage"
         class="flex-grow-1"
         :page-size="currentPageSize"
         :count="count"
@@ -154,6 +156,7 @@ import DatatableShowColumnsPicker from './InfineonDatatableShowColumnsPicker.vue
 
 const props = defineProps({
   canEdit: Boolean,
+  canEditRow: { type: Function, default: undefined },
   data: { type: Array, default: () => [] },
   columns: { type: Array, default: () => [] },
   localStorageKey: { type: String, default: undefined },
@@ -166,11 +169,14 @@ const props = defineProps({
   popupMenuActions: { type: Array, default: () => [] },
   downloadFormat: { type: String, default: 'csv' },
   paging: {
-    pageNumber: Number,
-    pageSize: Number,
-    totalDataCount: Number,
-    onPageChange: Function,
-    fetchAllData: Function,
+    type: {
+      pageNumber: Number,
+      pageSize: Number,
+      totalDataCount: Number,
+      onPageChange: Function,
+      fetchAllData: Function,
+    },
+    default: undefined,
   },
 });
 const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow', 'onMenuButtonClick']);
@@ -195,6 +201,18 @@ const realColumns = computed(() => columns.value
 
 const shownColumns = computed(() => realColumns.value
   .filter((c) => !c.hidable || !hiddenColumnKeys.value.includes(c.key)));
+
+const hasAnyActionButtons = computed(() => props.canEdit
+  || props.canEditRow
+  || Boolean(props.additionalActions.length)
+  || Boolean(props.popupMenuActions.length));
+
+const areActionButtonsEnabledForRow = (row) => hasAnyActionButtons.value
+  && (!props.canEditRow || props.canEditRow(row));
+
+const showActionColumn = computed(() => hasAnyActionButtons.value
+  && (!props.canEditRow
+    || data.value.some(areActionButtonsEnabledForRow)));
 
 // reset page & item count when data changes
 watch(
