@@ -1,3 +1,16 @@
+# v0.11.2 (Wed Mar 25 2026)
+
+#### 🐛 Bug Fix
+
+- 48 option to enable or disable action buttons on a per row basis [#51](https://github.com/Infineon/infineon-vue-datatable/pull/51) ([@PTUifx](https://github.com/PTUifx) [@fb-ifx](https://github.com/fb-ifx))
+
+#### Authors: 2
+
+- [@fb-ifx](https://github.com/fb-ifx)
+- [@PTUifx](https://github.com/PTUifx)
+
+---
+
 # v0.11.1 (Mon Aug 04 2025)
 
 #### 🐛 Bug Fix
