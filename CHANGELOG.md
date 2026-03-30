@@ -1,3 +1,15 @@
+# v0.11.3 (Mon Mar 30 2026)
+
+#### 🐛 Bug Fix
+
+- Fix broken typing of paging config [#52](https://github.com/Infineon/infineon-vue-datatable/pull/52) ([@fb-ifx](https://github.com/fb-ifx))
+
+#### Authors: 1
+
+- [@fb-ifx](https://github.com/fb-ifx)
+
+---
+
 # v0.11.2 (Wed Mar 25 2026)
 
 #### 🐛 Bug Fix
