@@ -1,139 +1,58 @@
 <template>
-  <div
-    class="d-flex flex-column justify-content-center flex-grow-1 pt-3"
-    style="overflow:auto"
-  >
-    <div
-      class="flex-grow-1"
-      style="overflow:auto"
-    >
-      <table
-        class="table table-sm table-hover w-100"
-        style="border-collapse: separate;border-spacing: 0;"
-      >
+  <div class="d-flex flex-column justify-content-center flex-grow-1 pt-3" style="overflow:auto">
+    <div class="flex-grow-1" style="overflow:auto">
+      <table class="table table-sm table-hover w-100" style="border-collapse: separate;border-spacing: 0;">
         <thead>
           <tr>
-            <th
-              v-if="hiddenColumns.length > 0"
-              style="width:0em"
-              class="p-0"
-            />
-            <th
-              v-if="showActionColumn"
-              style="width:0em"
-              class="ps-2 pe-1"
-            >
-              <slot
-                :name="`column.actions`"
-                v-bind="{ title: 'Actions' }"
-              />
-              <slot
-                v-if="!$slots[`column.actions`]"
-                name="column"
-                v-bind="{ title: 'Actions' }"
-              >
+            <th v-if="hiddenColumns.length > 0" style="width:0em" class="p-0" />
+            <th v-if="showActionColumn" style="width:0em" class="ps-2 pe-1">
+              <slot :name="`column.actions`" v-bind="{ title: 'Actions' }" />
+              <slot v-if="!$slots[`column.actions`]" name="column" v-bind="{ title: 'Actions' }">
                 Actions
               </slot>
             </th>
 
-            <th
-              v-for="(column, index) in shownColumns"
-              :key="index"
-              class="text-nowrap"
-              scope="col"
-            >
+            <th v-for="(column, index) in shownColumns" :key="index" class="text-nowrap" scope="col">
               <!--default column title slot - hidden for slot with specified column title-->
-              <slot
-                v-if="!$slots[`column.${column.title}`]"
-                name="column"
-                v-bind="column"
-              >
+              <slot v-if="!$slots[`column.${column.title}`]" name="column" v-bind="column">
                 {{ column.title }}
               </slot>
 
               <!--special column title slot-->
-              <slot
-                :name="`column.${column.title}`"
-                v-bind="column"
-              />
+              <slot :name="`column.${column.title}`" v-bind="column" />
 
-              <DatatableSortIcon
-                v-model:sort-column="sortColumn"
-                :column="column"
-              />
+              <DatatableSortIcon v-model:sort-column="sortColumn" :column="column" />
 
-              <a
-                v-if="column.hidable"
-                style="cursor: pointer"
-                @click="changeColumnVisibility(column.key)"
-              >
-                <font-awesome-icon
-                  class="fa-sm ms-2"
-                  :icon="['fas', 'times']"
-                />
+              <a v-if="column.hidable" style="cursor: pointer" @click="changeColumnVisibility(column.key)">
+                <font-awesome-icon class="fa-sm ms-2" :icon="['fas', 'times']" />
               </a>
             </th>
           </tr>
         </thead>
 
         <tbody>
-          <DatatableRow
-            v-for="(row, idx) in processedData"
-            :key="row.id"
-            :row-index="idx"
-            :row="row"
-            :columns="realColumns"
-            :hidden-column-keys="hiddenColumnKeys"
+          <DatatableRow v-for="(row, idx) in processedData" :key="row.id" :row-index="idx" :row="row"
+            :columns="realColumns" :hidden-column-keys="hiddenColumnKeys"
             :has-hidden-columns-column="hiddenColumns.length > 0"
-            :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)"
-            :can-edit="areActionButtonsEnabledForRow(row)"
-            :show-action-column="showActionColumn"
-            :additional-actions="additionalActions"
-            :popup-menu-actions="popupMenuActions"
-            :is-menu-open="(row.id) === (rowMenuIsOpen?.id)"
-            @start-edit-row="startEditRow"
-            @save-row="saveRow"
-            @cancel-row="cancelRow"
-            @edit-mode-value="editModeValue"
-            @on-menu-button-click="closeOtherActionsPopupMenus"
-          >
-            <template
-              v-for="(_, name) in $slots"
-              #[name]="slotData"
-            >
-              <slot
-                :name="name"
-                v-bind="slotData || {}"
-              />
+            :row-is-in-edit-mode="(row.id) === (rowInEditMode?.id)" :can-edit="areActionButtonsEnabledForRow(row)"
+            :show-action-column="showActionColumn" :additional-actions="additionalActions"
+            :popup-menu-actions="popupMenuActions" :is-menu-open="(row.id) === (rowMenuIsOpen?.id)"
+            @start-edit-row="startEditRow" @save-row="saveRow" @cancel-row="cancelRow" @edit-mode-value="editModeValue"
+            @on-menu-button-click="closeOtherActionsPopupMenus">
+            <template v-for="(_, name) in $slots" #[name]="slotData">
+              <slot :name="name" v-bind="slotData || {}" />
             </template>
           </DatatableRow>
         </tbody>
       </table>
     </div>
     <div class="mt-1 d-flex flex-row">
-      <DatatablePager
-        v-model:current-page="currentPage"
-        class="flex-grow-1"
-        :page-size="currentPageSize"
-        :count="count"
-        @update-page-size="updatePageSize"
-        @update:current-page="updatePageNumber"
-      />
-      <DatatableShowColumnsPicker
-        style="max-width:15em"
-        :columns="realColumns"
-        :hidden-column-keys="hiddenColumnKeys"
-        @change-column-visibility="changeColumnVisibility"
-      />
-      <div
-        v-if="exportable"
-        class="mt-1 ms-1"
-      >
-        <button
-          class="btn btn-sm btn-primary"
-          title="Download"
-          @click="downloadFile"
-        >
+      <DatatablePager v-model:current-page="currentPage" class="flex-grow-1" :page-size="currentPageSize" :count="count"
+        @update-page-size="updatePageSize" @update:current-page="updatePageNumber" />
+      <DatatableShowColumnsPicker style="max-width:15em" :columns="realColumns" :hidden-column-keys="hiddenColumnKeys"
+        @change-column-visibility="changeColumnVisibility" />
+      <div v-if="exportable" class="mt-1 ms-1">
+        <button class="btn btn-sm btn-primary" title="Download" @click="downloadFile">
           <font-awesome-icon :icon="['fas', 'file-download']" />
           Download
         </button>
@@ -169,14 +88,11 @@ const props = defineProps({
   popupMenuActions: { type: Array, default: () => [] },
   downloadFormat: { type: String, default: 'csv' },
   paging: {
-    type: {
-      pageNumber: Number,
-      pageSize: Number,
-      totalDataCount: Number,
-      onPageChange: Function,
-      fetchAllData: Function,
-    },
-    default: undefined,
+    pageNumber: Number,
+    pageSize: Number,
+    totalDataCount: Number,
+    onPageChange: Function,
+    fetchAllData: Function,
   },
 });
 const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow', 'onMenuButtonClick']);
