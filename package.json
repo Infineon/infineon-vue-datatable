@@ -16,10 +16,7 @@
       "import": "./dist/infineon-vue-datatable.js",
       "require": "./dist/infineon-vue-datatable.umd.cjs"
     },
-    "./dist/style.css": {
-      "import": "./dist/style.css",
-      "require": "./dist/style.css"
-    }
+    "./dist/style.css": "./dist/style.css"
   },
   "keywords": [
     "vue3",

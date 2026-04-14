@@ -12,6 +12,7 @@ export default defineConfig({
       name: 'infineon-vue-datatable',
       // the proper extensions will be added
       fileName: 'infineon-vue-datatable',
+      cssFileName: 'style',
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
