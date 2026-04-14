@@ -1,3 +1,16 @@
+# v0.11.4 (Tue Apr 14 2026)
+
+#### ⚠️ Pushed to `master`
+
+- Upgrade node version in github workflows ([@fb-ifx](https://github.com/fb-ifx))
+- Dependency upgrade ([@fb-ifx](https://github.com/fb-ifx))
+
+#### Authors: 1
+
+- [@fb-ifx](https://github.com/fb-ifx)
+
+---
+
 # v0.11.3 (Mon Mar 30 2026)
 
 #### 🐛 Bug Fix
