@@ -1,3 +1,15 @@
+# v0.11.5 (Tue Apr 14 2026)
+
+#### ⚠️ Pushed to `master`
+
+- Adapt deployment config to new versions ([@fb-ifx](https://github.com/fb-ifx))
+
+#### Authors: 1
+
+- [@fb-ifx](https://github.com/fb-ifx)
+
+---
+
 # v0.11.4 (Tue Apr 14 2026)
 
 #### ⚠️ Pushed to `master`
