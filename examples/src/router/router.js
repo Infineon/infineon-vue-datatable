@@ -14,6 +14,7 @@ import ExampleColumnAlwaysHiddenButExportable from '../components/examples/Examp
 import ExampleConditionallyHideAdditionalActions from '../components/examples/ExampleConditionallyHideAdditionalActions.vue';
 import IntroPage from '../components/IntroPage.vue';
 import ExamplePagingSupport from '../components/examples/ExamplePagingSupport.vue';
+import ExampleStickyHeader from '../components/examples/ExampleStickyHeader.vue';
 
 // this file initializes the vue router
 // it maps the component of the route to the <router-view> in App.vue
@@ -95,6 +96,11 @@ const router = createRouter({
       path: '/example-always-hidden-but-exportable',
       name: 'exampleColumnAlwaysHiddenButExportable',
       component: ExampleColumnAlwaysHiddenButExportable,
+    },
+    {
+      path: '/example-sticky-header',
+      name: 'exampleStickyHeader',
+      component: ExampleStickyHeader,
     },
   ],
 });
