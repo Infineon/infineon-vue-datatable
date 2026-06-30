@@ -18,10 +18,9 @@
       nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
       duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer.
     </div>
-      <InfineonDatatable :data="rows" :columns="columns" :default-sort="{ key: 'name', type: 'D' }" :sticky-header="true" />
-    
+    <InfineonDatatable :data="rows" :columns="columns" :default-sort="{ key: 'name', type: 'D' }"
+      :sticky-header="true" />
   </div>
-
 </template>
 
 <script setup>
