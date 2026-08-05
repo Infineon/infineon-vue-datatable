@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex flex-column justify-content-center flex-grow-1 pt-3" style="overflow:auto">
-    <div class="flex-grow-1" style="overflow:auto">
+    <div class="flex-grow-1" style="overflow-y: auto; overflow-x: auto; position: relative;">
       <table class="table table-sm table-hover w-100" style="border-collapse: separate;border-spacing: 0;">
-        <thead>
+        <thead :class="{ stickyHeader: stickyHeader }">
           <tr>
             <th v-if="hiddenColumns.length > 0" style="width:0em" class="p-0" />
             <th v-if="showActionColumn" style="width:0em" class="ps-2 pe-1">
@@ -94,11 +94,12 @@ const props = defineProps({
     onPageChange: Function,
     fetchAllData: Function,
   },
+  stickyHeader: { type: Boolean, default: false },
 });
 const emit = defineEmits(['saveRow', 'editModeValue', 'cancelRow', 'onMenuButtonClick']);
 
 const {
-  data, columns, localStorageKey, paging,
+  data, columns, localStorageKey, paging, stickyHeader
 } = toRefs(props);
 const sortColumn = ref(props.defaultSort);
 const currentPage = ref(paging.value ? paging.value.pageNumber : 0);
@@ -328,7 +329,11 @@ function downloadFile() {
 .stickyHeader {
   position: sticky;
   top: 0;
-  border-bottom: 2px solid black;
-  background-color: white
+  z-index: 1;
+  background-color: white;
+}
+
+.stickyHeader th {
+  border-bottom: 2px solid #dee2e6;
 }
 </style>

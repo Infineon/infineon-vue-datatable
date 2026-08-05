@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-row  h-100">
+  <div style="height: 100vh; overflow: hidden;" class="d-flex flex-row  h-100">
     <the-header />
     <router-view
       class="flex-grow-1"

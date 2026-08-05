@@ -130,6 +130,10 @@ const links = ref([
         label: 'Export hidden column',
         routeName: 'exampleColumnAlwaysHiddenButExportable',
       },
+      {
+        label: 'Sticky Header',
+        routeName: 'exampleStickyHeader',
+      },
     ],
   },
 ]);
