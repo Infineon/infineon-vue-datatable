@@ -278,7 +278,8 @@ const showMenu = ref(false);
 
 function showPopupMenu(event) {
   emit('onMenuButtonClick', row.value);
-  showMenu.value = !showMenu.value || !menuButtonRef.value.contains(event.target);
+  const clickedButton = menuButtonRef.value?.contains(event?.target);
+  showMenu.value = !showMenu.value || !clickedButton;
 }
 
 function popupMenuActionOnClick(_, action, canCloseMenu) {
