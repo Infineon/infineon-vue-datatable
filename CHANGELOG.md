@@ -1,3 +1,17 @@
+# v0.11.6 (Wed Aug 05 2026)
+
+#### 🐛 Bug Fix
+
+- Add null check or guard to function showPopupMenu [#56](https://github.com/Infineon/infineon-vue-datatable/pull/56) ([@PTUifx](https://github.com/PTUifx))
+- Add optional sticky header to data table component [#54](https://github.com/Infineon/infineon-vue-datatable/pull/54) ([@fb-ifx](https://github.com/fb-ifx))
+
+#### Authors: 2
+
+- [@fb-ifx](https://github.com/fb-ifx)
+- [@PTUifx](https://github.com/PTUifx)
+
+---
+
 # v0.11.5 (Tue Apr 14 2026)
 
 #### ⚠️ Pushed to `master`
